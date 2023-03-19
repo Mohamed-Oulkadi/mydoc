@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mydoc/screens/auth/login_screen.dart';
 
+import '../widgets/navbar_roots.dart';
+
 class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class WelcomeScreen extends StatelessWidget {
                     onTap:() {
                       Navigator.push(context,
                        MaterialPageRoute(
-                        builder: (context) =>LoginScreen(),
+                        builder: (context) =>NavBarRoots(),
                       ));
                     },
                     child: Padding(padding: EdgeInsets.symmetric(vertical: 15,horizontal: 40),
