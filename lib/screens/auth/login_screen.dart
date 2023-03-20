@@ -17,13 +17,13 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Padding(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Image.asset("images/doctors.png"),
               ),
-              SizedBox(height: 10),
-              Padding(
+              const SizedBox(height: 10),
+              const Padding(
                 padding: EdgeInsets.all(12),
                 child: TextField(
                   decoration: InputDecoration(
@@ -34,13 +34,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(12),
+                padding: const EdgeInsets.all(12),
                 child: TextField(
                   obscureText: passToggle ? true : false,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    label: Text("Password"),
-                    prefixIcon: Icon(Icons.lock),
+                    border: const OutlineInputBorder(),
+                    label: const Text("Password"),
+                    prefixIcon: const Icon(Icons.lock),
                     suffixIcon: InkWell(
                       onTap: () {
                         if (passToggle == true) {
@@ -48,34 +48,33 @@ class _LoginScreenState extends State<LoginScreen> {
                         } else {
                           passToggle = true;
                         }
-                        setState(() {
-                          
-                        });
+                        setState(() {});
                       },
                       child: passToggle
-                          ? Icon(CupertinoIcons.eye_slash_fill)
-                          : Icon(CupertinoIcons.eye_fill),
+                          ? const Icon(CupertinoIcons.eye_slash_fill)
+                          : const Icon(CupertinoIcons.eye_fill),
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: SizedBox(
                   width: double.infinity,
                   child: Material(
-                      color: Color(0xFF7165D6),
-                      borderRadius: BorderRadius.circular(10),
-
-                      child: InkWell(
-                        onTap:() {
-                           // Navigator.push(context,
-                           // MaterialPageRoute(
-                          //  builder: (context) =>LoginScreen(),
-                          //));
-                        },
-                        child: Padding(padding: EdgeInsets.symmetric(vertical: 15,horizontal: 40),
+                    color: const Color(0xFF7165D6),
+                    borderRadius: BorderRadius.circular(10),
+                    child: InkWell(
+                      onTap: () {
+                        // Navigator.push(context,
+                        // MaterialPageRoute(
+                        //  builder: (context) =>LoginScreen(),
+                        //));
+                      },
+                      child: const Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                         child: Center(
                           child: Text(
                             "Login",
@@ -86,16 +85,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                        ),
                       ),
                     ),
+                  ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Don't have any account?",
                     style: TextStyle(
                       fontSize: 16,
@@ -103,20 +102,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Colors.black54,
                     ),
                   ),
-                  TextButton(onPressed: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(
-                        builder: (context) => SignUpScreen(),
-                        ));
-                  },
-                   child: Text(
-                    "Create Account",
-                    style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color:Color(0xFF7165D6),),
-                   ),
-                   ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignUpScreen(),
+                          ));
+                    },
+                    child: const Text(
+                      "Create Account",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF7165D6),
+                      ),
+                    ),
+                  ),
                 ],
               )
             ],
