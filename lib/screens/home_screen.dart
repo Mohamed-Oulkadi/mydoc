@@ -20,15 +20,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        padding: EdgeInsets.only(top: 40),
+        padding: const EdgeInsets.only(top: 40),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   Text(
                     "Hello Alex",
                     style: TextStyle(
@@ -43,18 +43,18 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 InkWell(
                   onTap: () {},
                   child: Container(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                        color: Color(0xFF7165D6),
+                        color: const Color(0xFF7165D6),
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black12,
                             blurRadius: 6,
@@ -65,19 +65,19 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
+                          padding: const EdgeInsets.all(8),
+                          decoration: const BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.add,
                             color: Color(0xFF7165D6),
                             size: 35,
                           ),
                         ),
-                        SizedBox(height: 30),
-                        Text(
+                        const SizedBox(height: 30),
+                        const Text(
                           "Clinic Visit",
                           style: TextStyle(
                             fontSize: 18,
@@ -85,8 +85,8 @@ class HomeScreen extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        SizedBox(height: 5),
-                        Text(
+                        const SizedBox(height: 5),
+                        const Text(
                           "Make an appointment",
                           style: TextStyle(
                             color: Colors.white54,
@@ -99,11 +99,11 @@ class HomeScreen extends StatelessWidget {
                 InkWell(
                   onTap: () {},
                   child: Container(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black12,
                             blurRadius: 6,
@@ -114,19 +114,19 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
+                          padding: const EdgeInsets.all(8),
+                          decoration: const BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.home,
                             color: Color(0xFF7165D6),
                             size: 35,
                           ),
                         ),
-                        SizedBox(height: 30),
-                        Text(
+                        const SizedBox(height: 30),
+                        const Text(
                           "Home Visit",
                           style: TextStyle(
                             fontSize: 18,
@@ -134,8 +134,8 @@ class HomeScreen extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        SizedBox(height: 5),
-                        Text(
+                        const SizedBox(height: 5),
+                        const Text(
                           "Call the doctor home",
                           style: TextStyle(
                             color: Colors.black54,
@@ -147,8 +147,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 25),
-            Padding(
+            const SizedBox(height: 25),
+            const Padding(
               padding: EdgeInsets.only(left: 15),
               child: Text(
                 "What are your symptoms?",
@@ -167,12 +167,13 @@ class HomeScreen extends StatelessWidget {
                 itemCount: Symptoms.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                    padding: EdgeInsets.symmetric(horizontal: 25),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
-                        color: Color(0xFFF4F6FA),
+                        color: const Color(0xFFF4F6FA),
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black12,
                             blurRadius: 4,
@@ -182,7 +183,7 @@ class HomeScreen extends StatelessWidget {
                     child: Center(
                       child: Text(
                         Symptoms[index],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
@@ -193,8 +194,8 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(height: 15),
-            Padding(
+            const SizedBox(height: 15),
+            const Padding(
               padding: EdgeInsets.only(left: 15),
               child: Text(
                 "Popular Doctors",
@@ -206,28 +207,28 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
               ),
               itemCount: 4,
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AppointmentScreen(),
-                            ));
+                          builder: (context) => AppointmentScreen(),
+                        ));
                   },
                   child: Container(
-                    margin: EdgeInsets.all(10),
-                    padding: EdgeInsets.symmetric(vertical: 10),
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black12,
                             blurRadius: 4,
@@ -241,7 +242,7 @@ class HomeScreen extends StatelessWidget {
                           radius: 35,
                           backgroundImage: AssetImage("images/${imgs[index]}"),
                         ),
-                        Text(
+                        const Text(
                           "Dr . Doctor Name",
                           style: TextStyle(
                             fontSize: 18,
@@ -249,7 +250,7 @@ class HomeScreen extends StatelessWidget {
                             color: Colors.black54,
                           ),
                         ),
-                        Text(
+                        const Text(
                           "Therapist",
                           style: TextStyle(
                             color: Colors.black45,
@@ -258,7 +259,7 @@ class HomeScreen extends StatelessWidget {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Icon(
                               Icons.star,
                               color: Colors.amber,

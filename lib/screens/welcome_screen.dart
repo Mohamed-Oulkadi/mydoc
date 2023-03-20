@@ -10,14 +10,16 @@ class WelcomeScreen extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            SizedBox(height: 100),
-            Padding(padding: EdgeInsets.all(20),child: Image.asset("images/doctors.png"),
+            const SizedBox(height: 100),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Image.asset("images/doctors.png"),
             ),
-            SizedBox(height: 50),
-            Text(
+            const SizedBox(height: 50),
+            const Text(
               "Doctors Appointment",
               style: TextStyle(
                 color: Color(0xFF7165D6),
@@ -27,8 +29,8 @@ class WelcomeScreen extends StatelessWidget {
                 wordSpacing: 2,
               ),
             ),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               "Appoint Your Doctor",
               style: TextStyle(
                 color: Colors.black54,
@@ -36,29 +38,32 @@ class WelcomeScreen extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            SizedBox(height: 60),
+            const SizedBox(height: 60),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Material(
-                  color: Color(0xFF7165D6),
+                  color: const Color(0xFF7165D6),
                   borderRadius: BorderRadius.circular(10),
                   child: InkWell(
-                    onTap:() {
-                      Navigator.push(context,
-                       MaterialPageRoute(
-                        builder: (context) =>NavBarRoots(),
-                      ));
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NavBarRoots(),
+                          ));
                     },
-                    child: Padding(padding: EdgeInsets.symmetric(vertical: 15,horizontal: 40),
-                    child: Text(
-                      "Get Started",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
+                    child: const Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      child: Text(
+                        "Get Started",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
                     ),
                   ),
                 )
