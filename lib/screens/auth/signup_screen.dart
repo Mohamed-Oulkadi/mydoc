@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:mydoc/screens/auth/login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
   @override
   State<StatefulWidget> createState() => _SignUpScreenState();
 }
@@ -127,7 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
+                            builder: (context) => const LoginScreen(),
                           ));
                     },
                     child: const Text(

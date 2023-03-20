@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mydoc/screens/appointment_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  List Symptoms = [
+  List sumptoms = [
     "Temperature",
     "Snuffle",
     "Fever",
@@ -16,6 +16,8 @@ class HomeScreen extends StatelessWidget {
     "doctor3.jpg",
     "doctor4.jpg",
   ];
+
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +166,7 @@ class HomeScreen extends StatelessWidget {
               child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemCount: Symptoms.length,
+                itemCount: sumptoms.length,
                 itemBuilder: (context, index) {
                   return Container(
                     margin: const EdgeInsets.symmetric(
@@ -182,7 +184,7 @@ class HomeScreen extends StatelessWidget {
                         ]),
                     child: Center(
                       child: Text(
-                        Symptoms[index],
+                        sumptoms[index],
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,

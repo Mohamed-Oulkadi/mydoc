@@ -9,6 +9,8 @@ class AppointmentScreen extends StatelessWidget {
     "doctor4.jpg",
   ];
 
+  AppointmentScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

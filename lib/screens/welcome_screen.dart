@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mydoc/screens/auth/login_screen.dart';
 
 import '../widgets/navbar_roots.dart';
 
 class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -50,7 +51,7 @@ class WelcomeScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => NavBarRoots(),
+                            builder: (context) => const NavBarRoots(),
                           ));
                     },
                     child: const Padding(
