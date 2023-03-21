@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:mydoc/screens/home_screen.dart';
 
 class NavBarRoots extends StatefulWidget {
-  const NavBarRoots({super.key});
+  const NavBarRoots({Key? key}) : super(key: key);
 
   @override
-  State<NavBarRoots> createState() => _NavBarRootsState();
+  _NavBarRootsState createState() => _NavBarRootsState();
 }
 
 class _NavBarRootsState extends State<NavBarRoots> {
-  int _selectedIndex = 0;
-  final _screens = [
+  late int _selectedIndex = 0;
+  final List<Widget> _screens = [
     HomeScreen(),
     Container(),
     Container(),

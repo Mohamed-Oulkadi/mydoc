@@ -24,45 +24,46 @@ class DioProvider {
   }
 
   // login
-  Future<dynamic> login(String email, String password) async {
+  Future<Map<String, dynamic>> login(String email, String password) async {
     try {
-      var response = await _dio
-          .post('/api/login', data: {'email': email, 'password': password});
+      var response = await _dio.post('/api/login',
+          data: json.encode({'email': email, 'password': password}));
 
-      if (response.statusCode == 200 && response.data != '') {
+      if (response.statusCode == 200) {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString(
-            'token', response.headers['authorization'] as String);
-        return true;
-      } else {
-        return false;
+            'token', response.headers['authorization'].toString());
       }
-    } catch (error) {
-      return error;
+      return response.data;
+    } on DioError catch (e) {
+      return {'error': e.message};
     }
   }
 
   // get user data
-  Future<dynamic> getUser(String token) async {
+  Future<Map<String, dynamic>> getUser(String token) async {
     try {
-      var user = await _dio.get('/api/user',
+      var response = await _dio.get('/api/user',
           options: Options(headers: {'Authorization': 'Bearer $token'}));
-      if (user.statusCode == 200 && user.data != '') {
-        return json.encode(user.data);
-      }
+
+      return response.data;
     } catch (error) {
-      return error;
+      return {'error': error.toString()};
     }
   }
 
   // register new user
   Future<dynamic> registerUser(
-      String username, String email, String password) async {
+      String username, String email, String password, String password2) async {
     try {
-      var user = await _dio.post('/api/register',
-          data: {'name': username, 'email': email, 'password': password});
-      if (user.statusCode == 201 && user.data != '') {
-        return true;
+      var user = await _dio.post('/api/register', data: {
+        'name': username,
+        'email': email,
+        'password': password,
+        'password2': password2
+      });
+      if (user.statusCode == 201) {
+        return user.data;
       } else {
         return false;
       }

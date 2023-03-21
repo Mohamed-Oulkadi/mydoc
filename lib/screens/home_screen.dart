@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
     "doctor4.jpg",
   ];
 
-  HomeScreen({super.key});
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
