@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentScreen extends StatelessWidget {
-  List imgs = [
+  final List imgs = [
     "doctor1.jpg",
     "doctor2.jpg",
     "doctor3.jpg",
