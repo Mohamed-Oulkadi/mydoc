@@ -9,7 +9,9 @@ class DioProvider {
     baseUrl: 'http://127.0.0.1:8000',
     // responseType: ResponseType.json,
     responseType: ResponseType.plain,
-    contentType: 'application/json',
+    validateStatus: (_) => true,
+    contentType: Headers.jsonContentType,
+    receiveDataWhenStatusError: true,
     connectTimeout: const Duration(seconds: 5),
     receiveTimeout: const Duration(seconds: 5),
   ));
@@ -33,6 +35,7 @@ class DioProvider {
       await prefs.setString(
           'token', response.headers['authorization'].toString());
     }
+
     return loginModelFromJson(response.data.toString());
   }
 

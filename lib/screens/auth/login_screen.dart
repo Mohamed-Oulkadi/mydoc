@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/models/login_model.dart';
 import 'package:mydoc/widgets/navbar_roots.dart';
-import 'package:validators/validators.dart';
+import 'package:mydoc/providers/validators.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 import 'package:mydoc/screens/auth/signup_screen.dart';
 
@@ -16,22 +16,48 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool passToggle = true;
   final _formKey = GlobalKey<FormState>();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  Future<void> loginHandler(context) async {
-    LoginModel res = await DioProvider()
-        .login(_emailController.text, _passwordController.text);
+  void showHome() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ));
+  }
 
-    if (res.error == 'false') {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const NavBarRoots(),
-          ));
+  Future<void> loginHandler(context) async {
+    if (_formKey.currentState!.validate()) {
+      LoginModel res = await DioProvider()
+          .login(_emailController.text, _passwordController.text);
+
+      if (res.error == 'false') {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const NavBarRoots(),
+            ));
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            Future.delayed(const Duration(seconds: 5), () {
+              Navigator.of(context).pop(true);
+            });
+            return Theme(
+              data:
+                  Theme.of(context).copyWith(dialogBackgroundColor: Colors.red),
+              child: AlertDialog(
+                title: Text(res.message),
+              ),
+            );
+          },
+        );
+      }
     }
-    // TODO: fix alertbox success and failure messages
-    // And make them more modern
+    // TODO: make the alertbox more modern
     /* if (res.error == 'true') {
       showDialog(
         context: context,
@@ -47,23 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         },
       );
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          Future.delayed(const Duration(seconds: 5), () {
-            Navigator.of(context).pop(true);
-          });
-          return Theme(
-            data:
-                Theme.of(context).copyWith(dialogBackgroundColor: Colors.green),
-            child: AlertDialog(
-              title: Text(res.message),
-            ),
-          );
-        },
-      );
-      }
+    }
 */
   }
 
@@ -81,6 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: SingleChildScrollView(
         child: SafeArea(
           child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               key: _formKey,
               child: Column(
                 children: [
@@ -94,12 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.all(12),
                     child: TextFormField(
                       controller: _emailController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'This field is required';
-                        }
-                        return !isEmail(value) ? "Invalid Email" : null;
-                      },
+                      validator: (value) => validateEmail(value),
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Email',
@@ -111,15 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.all(12),
                     child: TextFormField(
                       controller: _passwordController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'This field is required';
-                        } else if (value.length < 8) {
-                          return 'password should be at least 8 characters';
-                        }
-
-                        return null;
-                      },
+                      validator: (value) => validatePassword(value),
                       obscureText: passToggle ? true : false,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
@@ -150,11 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: const Color(0xFF7165D6),
                         borderRadius: BorderRadius.circular(10),
                         child: InkWell(
-                          onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              loginHandler(context);
-                            }
-                          },
+                          onTap: () => loginHandler(context),
                           child: const Padding(
                             padding: EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 40),
