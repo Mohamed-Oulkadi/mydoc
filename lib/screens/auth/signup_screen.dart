@@ -16,16 +16,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool passToggle = true;
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _password2Controller = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _password2Controller = TextEditingController();
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _passwordController.dispose();
+    _password2Controller.dispose();
     super.dispose();
   }
 
