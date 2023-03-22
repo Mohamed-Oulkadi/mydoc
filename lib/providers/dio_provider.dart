@@ -2,17 +2,17 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mydoc/models/login_model.dart';
 
 class DioProvider {
-  static BaseOptions opts = BaseOptions(
+  static final _dio = Dio(BaseOptions(
     baseUrl: 'http://127.0.0.1:8000',
-    responseType: ResponseType.json,
+    // responseType: ResponseType.json,
+    responseType: ResponseType.plain,
     contentType: 'application/json',
     connectTimeout: const Duration(seconds: 5),
     receiveTimeout: const Duration(seconds: 5),
-  );
-
-  static final _dio = Dio(opts);
+  ));
 
   dynamic requestInterceptor(RequestOptions options) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -24,20 +24,16 @@ class DioProvider {
   }
 
   // login
-  Future<Map<String, dynamic>> login(String email, String password) async {
-    try {
-      var response = await _dio.post('/api/login',
-          data: json.encode({'email': email, 'password': password}));
+  Future<LoginModel> login(String email, String password) async {
+    var response = await _dio.post('/api/login',
+        data: json.encode({'email': email, 'password': password}));
 
-      if (response.statusCode == 200) {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString(
-            'token', response.headers['authorization'].toString());
-      }
-      return response.data;
-    } on DioError catch (e) {
-      return {'error': e.message};
+    if (response.statusCode == 200) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString(
+          'token', response.headers['authorization'].toString());
     }
+    return loginModelFromJson(response.data.toString());
   }
 
   // get user data
@@ -55,20 +51,16 @@ class DioProvider {
   // register new user
   Future<dynamic> registerUser(
       String username, String email, String password, String password2) async {
-    try {
-      var user = await _dio.post('/api/register', data: {
-        'name': username,
-        'email': email,
-        'password': password,
-        'password2': password2
-      });
-      if (user.statusCode == 201) {
-        return user.data;
-      } else {
-        return false;
-      }
-    } catch (error) {
-      return error;
+    var user = await _dio.post('/api/register', data: {
+      'name': username,
+      'email': email,
+      'password': password,
+      'password2': password2
+    });
+    if (user.statusCode == 201) {
+      return user.data;
+    } else {
+      return false;
     }
   }
 

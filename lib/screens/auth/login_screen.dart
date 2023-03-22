@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mydoc/models/login_model.dart';
 import 'package:mydoc/widgets/navbar_roots.dart';
 import 'package:validators/validators.dart';
 import 'package:mydoc/providers/dio_provider.dart';
@@ -19,46 +20,51 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> loginHandler(context) async {
-    var res = await DioProvider()
+    LoginModel res = await DioProvider()
         .login(_emailController.text, _passwordController.text);
-    // TODO: fix alertbox success and failure messages
-    // And make them more moder
-    /*if (res['error'] != null) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        Future.delayed(const Duration(seconds: 5), () {
-          Navigator.of(context).pop(true);
-        });
-        return Theme(
-          data: Theme.of(context).copyWith(dialogBackgroundColor: Colors.red),
-          child: AlertDialog(
-            title: Text(res['error']),
-          ),
-        );
-      },
-    );
-  } else {
-    showDialog(
-      context: context,
-      builder: (context) {
-        Future.delayed(const Duration(seconds: 5), () {
-          Navigator.of(context).pop(true);
-        });
-        return Theme(
-          data: Theme.of(context).copyWith(dialogBackgroundColor: Colors.green),
-          child: AlertDialog(
-            title: Text(res['message']),
-          ),
-        );
-      },
-    );*/
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const NavBarRoots(),
-        ));
+    if (res.error == 'false') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const NavBarRoots(),
+          ));
+    }
+    // TODO: fix alertbox success and failure messages
+    // And make them more modern
+    /* if (res.error == 'true') {
+      showDialog(
+        context: context,
+        builder: (context) {
+          Future.delayed(const Duration(seconds: 5), () {
+            Navigator.of(context).pop(true);
+          });
+          return Theme(
+            data: Theme.of(context).copyWith(dialogBackgroundColor: Colors.red),
+            child: AlertDialog(
+              title: Text(res.message),
+            ),
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          Future.delayed(const Duration(seconds: 5), () {
+            Navigator.of(context).pop(true);
+          });
+          return Theme(
+            data:
+                Theme.of(context).copyWith(dialogBackgroundColor: Colors.green),
+            child: AlertDialog(
+              title: Text(res.message),
+            ),
+          );
+        },
+      );
+      }
+*/
   }
 
   @override

@@ -6,10 +6,10 @@ class NavBarRoots extends StatefulWidget {
   const NavBarRoots({Key? key}) : super(key: key);
 
   @override
-  _NavBarRootsState createState() => _NavBarRootsState();
+  NavBarRootsState createState() => NavBarRootsState();
 }
 
-class _NavBarRootsState extends State<NavBarRoots> {
+class NavBarRootsState extends State<NavBarRoots> {
   late int _selectedIndex = 0;
   final List<Widget> _screens = [
     HomeScreen(),
