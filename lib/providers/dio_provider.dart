@@ -40,6 +40,18 @@ class DioProvider {
     return response.data;
   }
 
+  // get all doctors data
+  Future getDoctors() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var response = await _dio.get('/api/doctors',
+        options: Options(
+            headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
+
+    prefs.setString('doctors', json.encode(response.data));
+    return response.data;
+  }
+
   // register new user
   Future registerUser(String username, String email, String phonenumber,
       String password, String password2) async {
