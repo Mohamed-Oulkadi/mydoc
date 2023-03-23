@@ -39,6 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final res = await DioProvider().registerUser(
         _nameController.text,
         _emailController.text,
+        _phoneController.text,
         _passwordController.text,
         _password2Controller.text);
 
