@@ -21,12 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
     Navigator.pushNamed(context, '/home');
   }
 
-  void _togglePasswordVisibility() {
-    setState(() {
-      _passToggle = !_passToggle;
-    });
-  }
-
   Future<void> loginHandler(context) async {
     if (_formKey.currentState!.validate()) {
       var res = await DioProvider()
@@ -108,7 +102,14 @@ class _LoginScreenState extends State<LoginScreen> {
           labelText: 'Password',
           prefixIcon: const Icon(Icons.lock),
           suffixIcon: InkWell(
-            onTap: _togglePasswordVisibility,
+            onTap: () {
+              if (_passToggle == true) {
+                _passToggle = false;
+              } else {
+                _passToggle = true;
+              }
+              setState(() {});
+            },
             child: Icon(
               _passToggle
                   ? CupertinoIcons.eye_slash_fill
