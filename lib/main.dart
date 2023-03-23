@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mydoc/screens/auth/login_screen.dart';
+import 'package:mydoc/screens/auth/signup_screen.dart';
 import 'package:mydoc/screens/welcome_screen.dart';
+import 'package:mydoc/widgets/navbar_roots.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,10 +13,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'MyDoc',
-      debugShowCheckedModeBanner: false,
-      home: WelcomeScreen(),
-    );
+    return MaterialApp(
+        title: 'MyDoc',
+        debugShowCheckedModeBanner: false,
+        home: const WelcomeScreen(),
+        routes: {
+          '/login': (context) => const LoginScreen(),
+          '/register': (context) => const SignUpScreen(),
+          '/home': (context) => const NavBarRoots(),
+        });
   }
 }

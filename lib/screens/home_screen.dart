@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mydoc/screens/appointment_screen.dart';
+import 'package:mydoc/providers/dio_provider.dart';
+import 'dart:developer';
 
 class HomeScreen extends StatelessWidget {
-  final List symptoms = [
+  final List __symptoms = [
     "Temperature",
     "Snuffle",
     "Fever",
@@ -10,17 +12,23 @@ class HomeScreen extends StatelessWidget {
     "Cold",
   ];
 
-  final List imgs = [
+  void func() async {
+    var _user = await DioProvider().getUser();
+    var _patient = await DioProvider().getPatient();
+  }
+
+  final List _imgs = [
     "doctor1.jpg",
     "doctor2.jpg",
     "doctor3.jpg",
     "doctor4.jpg",
   ];
 
-  HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    func();
     return SingleChildScrollView(
         padding: const EdgeInsets.only(top: 40),
         child: Column(
@@ -166,7 +174,7 @@ class HomeScreen extends StatelessWidget {
               child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemCount: symptoms.length,
+                itemCount: __symptoms.length,
                 itemBuilder: (context, index) {
                   return Container(
                     margin: const EdgeInsets.symmetric(
@@ -184,7 +192,7 @@ class HomeScreen extends StatelessWidget {
                         ]),
                     child: Center(
                       child: Text(
-                        symptoms[index],
+                        __symptoms[index],
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -242,7 +250,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 35,
-                          backgroundImage: AssetImage("images/${imgs[index]}"),
+                          backgroundImage: AssetImage("images/${_imgs[index]}"),
                         ),
                         const Text(
                           "Dr . Doctor Name",

@@ -2,13 +2,11 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mydoc/models/login_model.dart';
 
 class DioProvider {
   static final _dio = Dio(BaseOptions(
     baseUrl: 'http://127.0.0.1:8000',
-    // responseType: ResponseType.json,
-    responseType: ResponseType.plain,
+    responseType: ResponseType.json,
     validateStatus: (_) => true,
     contentType: Headers.jsonContentType,
     receiveDataWhenStatusError: true,
@@ -16,43 +14,34 @@ class DioProvider {
     receiveTimeout: const Duration(seconds: 5),
   ));
 
-  dynamic requestInterceptor(RequestOptions options) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token = prefs.get("token");
-
-    options.headers.addAll({"Authorization": "bearer $token"});
-
-    return options;
-  }
-
   // login
-  Future<LoginModel> login(String email, String password) async {
+  Future login(String email, String password) async {
     var response = await _dio.post('/api/login',
         data: json.encode({'email': email, 'password': password}));
 
     if (response.statusCode == 200) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString(
-          'token', response.headers['authorization'].toString());
+          'token', response.data['Authorization'].toString().split(' ')[1]);
     }
 
-    return loginModelFromJson(response.data.toString());
+    return response.data;
   }
 
   // get user data
-  Future<Map<String, dynamic>> getUser(String token) async {
-    try {
-      var response = await _dio.get('/api/user',
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
+  Future getUser() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      return response.data;
-    } catch (error) {
-      return {'error': error.toString()};
-    }
+    var response = await _dio.get('/api/users',
+        options: Options(
+            headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
+
+    prefs.setString('user', json.encode(response.data));
+    return response.data;
   }
 
   // register new user
-  Future<dynamic> registerUser(
+  Future registerUser(
       String username, String email, String password, String password2) async {
     var user = await _dio.post('/api/register', data: {
       'name': username,
@@ -60,15 +49,23 @@ class DioProvider {
       'password': password,
       'password2': password2
     });
-    if (user.statusCode == 201) {
-      return user.data;
-    } else {
-      return false;
-    }
+
+    return user.data;
+  }
+
+// get patient data
+  Future getPatient() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var user = json.decode(prefs.getString('user')!);
+    var response = await _dio.get("/api/patients/${user['user']['id']}",
+        options: Options(
+            headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
+
+    return response.data;
   }
 
   // store booking details
-  Future<dynamic> bookAppointment(
+  Future bookAppointment(
       String date, String day, String time, int doctor, String token) async {
     try {
       var response = await _dio.post('/api/book',
@@ -86,7 +83,7 @@ class DioProvider {
   }
 
   // retrieve booking details
-  Future<dynamic> getAppointments(String token) async {
+  Future getAppointments(String token) async {
     try {
       var response = await _dio.get('/api/appointments',
           options: Options(headers: {'Authorization': 'Bearer $token'}));
@@ -102,7 +99,7 @@ class DioProvider {
   }
 
   // store rating details
-  Future<dynamic> storeReviews(
+  Future storeReviews(
       String reviews, double ratings, int id, int doctor, String token) async {
     try {
       var response = await _dio.post('/api/reviews',
@@ -125,7 +122,7 @@ class DioProvider {
   }
 
   // store fav doctor
-  Future<dynamic> storeFavDoc(String token, List<dynamic> favList) async {
+  Future storeFavDoc(String token, List favList) async {
     try {
       var response = await _dio.post('/api/fav',
           data: {
@@ -144,7 +141,7 @@ class DioProvider {
   }
 
 // logout
-  Future<dynamic> logout(String token) async {
+  Future logout(String token) async {
     try {
       var response = await _dio.post('/api/logout',
           options: Options(headers: {'Authorization': 'Bearer $token'}));

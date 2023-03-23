@@ -32,25 +32,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void showLogin() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
-        ));
+    Navigator.pushNamed(context, '/login');
   }
 
   Future<void> registerHandler() async {
-    if (_formKey.currentState!.validate()) {
-      final res = await DioProvider().registerUser(
-          _nameController.text,
-          _emailController.text,
-          _passwordController.text,
-          _password2Controller.text);
+    final res = await DioProvider().registerUser(
+        _nameController.text,
+        _emailController.text,
+        _passwordController.text,
+        _password2Controller.text);
 
-      if (res.error == 'false') {
-        showLogin();
-      }
+    if (res.error == 'false') {
+      showLogin();
     }
+
     // TODO: check TODO in login_screen.dart
     /*if (res['error'].isNotEmpty) {
     showDialog(
@@ -77,7 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         return Theme(
           data: Theme.of(context).copyWith(dialogBackgroundColor: Colors.green),
           child: AlertDialog(
-            title: Text(res['message']),
+            title: Text(res['message']),  
           ),
         );
       },
@@ -201,7 +196,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         color: const Color(0xFF7165D6),
                         borderRadius: BorderRadius.circular(10),
                         child: InkWell(
-                          onTap: () => registerHandler(),
+                          onTap: () {
+                            if (_formKey.currentState!.validate()) {
+                              registerHandler();
+                            }
+                          },
                           child: const Padding(
                             padding: EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 40),
