@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mydoc/screens/appointment_screen.dart';
+import 'package:mydoc/screens/patient/appointment_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override

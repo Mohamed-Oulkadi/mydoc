@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mydoc/screens/auth/login_screen.dart';
 import 'package:mydoc/screens/auth/signup_screen.dart';
-import 'package:mydoc/screens/welcome_screen.dart';
+import 'package:mydoc/screens/auth/welcome_screen.dart';
 import 'package:mydoc/widgets/navbar_roots.dart';
 
 void main() {

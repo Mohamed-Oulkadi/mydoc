@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/screens/patient/home_screen.dart';
+import 'package:mydoc/screens/patient/schedule_screen.dart';
+import 'package:mydoc/screens/chat/messages_screen.dart';
+import 'package:mydoc/screens/patient/settings_screen.dart';
 
 class NavBarRoots extends StatefulWidget {
   const NavBarRoots({Key? key}) : super(key: key);
@@ -13,9 +16,9 @@ class NavBarRootsState extends State<NavBarRoots> {
   late int _selectedIndex = 0;
   final List<Widget> _screens = [
     HomeScreen(),
-    Container(),
-    Container(),
-    Container(),
+    ScheduleScreen(),
+    MessagesScreen(),
+    SettingScreen(),
   ];
 
   @override
