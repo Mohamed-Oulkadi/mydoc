@@ -39,6 +39,8 @@ dependencies:
   dio: ^5.0.3
   shared_preferences: ^2.0.18
   custom_clippers: ^2.0.0
+  table_calendar: ^3.0.8
+  font_awesome_flutter: ^10.2.1
 
 dev_dependencies:
   flutter_test:
