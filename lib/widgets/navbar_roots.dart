@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mydoc/screens/home_screen.dart';
+import 'package:mydoc/screens/patient/home_screen.dart';
 
 class NavBarRoots extends StatefulWidget {
   const NavBarRoots({Key? key}) : super(key: key);
