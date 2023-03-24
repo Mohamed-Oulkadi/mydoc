@@ -21,8 +21,8 @@ class MessagesScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 40),
-          Padding(
+          const SizedBox(height: 40),
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
               "Messages",
@@ -32,15 +32,15 @@ class MessagesScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
                     blurRadius: 10,
@@ -51,19 +51,19 @@ class MessagesScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 300,
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Search",
                           border: InputBorder.none,
                         ),
                       ),
                     ),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.search,
                     color: Color(0xFF7165D6),
                   ),
@@ -71,9 +71,9 @@ class MessagesScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+          const SizedBox(height: 20),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
               "Recent Chat",
               style: TextStyle(
@@ -142,7 +142,7 @@ class MessagesScreen extends StatelessWidget {
             ),
           ), */
           ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: 6,
             shrinkWrap: true,
             itemBuilder: (context, index) {
@@ -152,7 +152,7 @@ class MessagesScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ChatScreen(),
+                        builder: (context) => const ChatScreen(),
                       ));
                 },
                 leading: CircleAvatar(
@@ -161,14 +161,14 @@ class MessagesScreen extends StatelessWidget {
                     "images/${imgs[index]}",
                   ),
                 ),
-                title: Text(
+                title: const Text(
                   "Dr . Doctor Name",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                subtitle: Text(
+                subtitle: const Text(
                   "Hello, Doctor....",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -177,7 +177,7 @@ class MessagesScreen extends StatelessWidget {
                     color: Colors.black54,
                   ),
                 ),
-                trailing: Text(
+                trailing: const Text(
                   "12:30",
                   style: TextStyle(
                     fontSize: 15,

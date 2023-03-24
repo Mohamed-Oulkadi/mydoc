@@ -16,9 +16,9 @@ class NavBarRootsState extends State<NavBarRoots> {
   late int _selectedIndex = 0;
   final List<Widget> _screens = [
     HomeScreen(),
-    ScheduleScreen(),
-    MessagesScreen(),
-    SettingScreen(),
+    const ScheduleScreen(),
+    const MessagesScreen(),
+    const SettingScreen(),
   ];
 
   @override

@@ -9,7 +9,7 @@ class PatientProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Patient Profile'),
+        title: const Text('Patient Profile'),
         centerTitle: true,
       ),
       body: Padding(
@@ -17,20 +17,20 @@ class PatientProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 20),
-            CircleAvatar(
+            const SizedBox(height: 20),
+            const CircleAvatar(
               radius: 50,
               backgroundImage: AssetImage('images/doctor1.jpg'),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Full Name',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'Age',
               style: TextStyle(
@@ -38,7 +38,7 @@ class PatientProfileScreen extends StatelessWidget {
                 color: Colors.grey[700],
               ),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Text(
               'Birthday: dd/mm/yyyy',
               style: TextStyle(
@@ -46,7 +46,7 @@ class PatientProfileScreen extends StatelessWidget {
                 color: Colors.grey[700],
               ),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Text(
               'ID Card Number',
               style: TextStyle(
@@ -54,7 +54,7 @@ class PatientProfileScreen extends StatelessWidget {
                 color: Colors.grey[700],
               ),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Text(
               'Phone Number',
               style: TextStyle(
@@ -62,21 +62,20 @@ class PatientProfileScreen extends StatelessWidget {
                 color: Colors.grey[700],
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             ElevatedButton.icon(
               onPressed: () {
                 Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditProfileScreen(
-                          ),
-                        ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EditProfileScreen(),
+                    ));
               },
-              icon: Icon(Icons.edit),
-              label: Text('Edit Profile'),
+              icon: const Icon(Icons.edit),
+              label: const Text('Edit Profile'),
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue[700],
-                onPrimary: Colors.white,
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue[700],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

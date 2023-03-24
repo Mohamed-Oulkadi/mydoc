@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mydoc/screens/patient/appointment_screen.dart';
-import 'package:mydoc/providers/dio_provider.dart';
-import 'dart:developer';
+// import 'package:mydoc/providers/dio_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   final List __symptoms = [
@@ -13,8 +12,8 @@ class HomeScreen extends StatelessWidget {
   ];
 
   void func() async {
-    var _user = await DioProvider().getUser();
-    var _patient = await DioProvider().getPatient();
+    //var _user = await DioProvider().getUser();
+    //var _patient = await DioProvider().getPatient();
   }
 
   final List _imgs = [

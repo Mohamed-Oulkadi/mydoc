@@ -6,24 +6,24 @@ class UpcomingSchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "About patient",
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black12,
                   blurRadius: 4,
@@ -35,7 +35,7 @@ class UpcomingSchedule extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
-                  ListTile(
+                  const ListTile(
                     title: Text(
                       "Ali Zoubair",
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -45,7 +45,7 @@ class UpcomingSchedule extends StatelessWidget {
                       backgroundImage: AssetImage("images/doctor1.jpg"),
                     ),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     child: Divider(
                       thickness: 1,
@@ -56,7 +56,7 @@ class UpcomingSchedule extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                        children: [
+                        children: const [
                           Icon(
                             Icons.calendar_month,
                             color: Colors.black54,
@@ -71,7 +71,7 @@ class UpcomingSchedule extends StatelessWidget {
                         ],
                       ),
                       Row(
-                        children: [
+                        children: const [
                           Icon(
                             Icons.access_time_filled,
                             color: Colors.black54,
@@ -82,20 +82,20 @@ class UpcomingSchedule extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.black54,
                             ),
-                            ),
+                          ),
                         ],
                       ),
                       Row(
                         children: [
                           Container(
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
+                            padding: const EdgeInsets.all(5),
+                            decoration: const BoxDecoration(
                               color: Colors.green,
                               shape: BoxShape.circle,
                             ),
                           ),
-                          SizedBox(width: 5),
-                          Text(
+                          const SizedBox(width: 5),
+                          const Text(
                             "Confirmed",
                             style: TextStyle(
                               color: Colors.black54,
@@ -105,8 +105,7 @@ class UpcomingSchedule extends StatelessWidget {
                       ),
                     ],
                   ),
-
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -114,19 +113,18 @@ class UpcomingSchedule extends StatelessWidget {
                         onTap: () {},
                         child: Container(
                           width: 150,
-                          padding: EdgeInsets.symmetric(vertical: 12),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
-                            color: Color(0xFFF4F6FA),
+                            color: const Color(0xFFF4F6FA),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               "Cancel",
                               style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black
-                              ),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
                             ),
                           ),
                         ),
@@ -135,19 +133,18 @@ class UpcomingSchedule extends StatelessWidget {
                         onTap: () {},
                         child: Container(
                           width: 150,
-                          padding: EdgeInsets.symmetric(vertical: 12),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
-                            color: Color(0xFFF7165D6),
+                            color: const Color(0xFF7165D6),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               "Confirm",
                               style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black
-                              ),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
                             ),
                           ),
                         ),

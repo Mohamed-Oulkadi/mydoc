@@ -4,17 +4,17 @@ class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
-  _EditProfileScreenState createState() => _EditProfileScreenState();
+  EditProfileScreenState createState() => EditProfileScreenState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
+class EditProfileScreenState extends State<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _ageController = TextEditingController();
-  TextEditingController _birthdayController = TextEditingController();
-  TextEditingController _idCardNumberController = TextEditingController();
-  TextEditingController _phoneNumberController = TextEditingController();
-  String _profileImageURL = 'images/doctor1.jpg';
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _birthdayController = TextEditingController();
+  final TextEditingController _idCardNumberController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final String _profileImageURL = 'images/doctor1.jpg';
 
   @override
   void dispose() {
@@ -30,10 +30,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        title: const Text('Edit Profile'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
           child: Column(
@@ -44,7 +44,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   radius: 50,
                   backgroundImage: NetworkImage(_profileImageURL),
                   child: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.camera_alt,
                       color: Colors.white,
                     ),
@@ -54,10 +54,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Full Name',
                 ),
                 validator: (value) {
@@ -67,11 +67,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _ageController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Age',
                 ),
                 validator: (value) {
@@ -81,10 +81,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _birthdayController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Birthday',
                 ),
                 validator: (value) {
@@ -94,10 +94,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _idCardNumberController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'ID Card Number',
                 ),
                 validator: (value) {
@@ -107,11 +107,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _phoneNumberController,
                 keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Phone Number',
                 ),
                 validator: (value) {
@@ -121,7 +121,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
@@ -129,7 +129,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       // TODO: Implement profile update
                     }
                   },
-                  child: Text('Save Changes'),
+                  child: const Text('Save Changes'),
                 ),
               ),
             ],
