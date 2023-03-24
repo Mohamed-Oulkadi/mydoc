@@ -1,8 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mydoc/providers/dio_provider.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
+
+  Future<void> logoutHandler(context) async {
+    var res = await DioProvider().logout();
+    // TODO prompt "logout successful"
+    Navigator.pushNamed(context, '/login');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +139,7 @@ class SettingScreen extends StatelessWidget {
             ),
             const Divider(height: 40),
             ListTile(
-              onTap: () {},
+              onTap: () => logoutHandler(context),
               leading: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
