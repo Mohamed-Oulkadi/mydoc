@@ -1,4 +1,4 @@
-import 'package:doctor_appointment_app/utils/config.dart';
+import 'package:mydoc/utils/config.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
