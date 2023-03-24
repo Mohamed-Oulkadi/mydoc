@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mydoc/screens/patient/patient_profile.dart';
 
 class SettingScreen extends StatelessWidget {
   @override
@@ -34,7 +35,15 @@ class SettingScreen extends StatelessWidget {
             ),
             Divider(height: 50),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PatientProfileScreen(
+                            
+                          ),
+                        ));
+              },
               leading: Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
