@@ -128,7 +128,7 @@ class DioProvider {
   */
 
 // logout
-  Future logout(String token) async {
+  Future logout() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
     var response = await _dio.post('/api/logout',
