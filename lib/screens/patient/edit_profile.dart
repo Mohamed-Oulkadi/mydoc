@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mydoc/providers/validators.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
@@ -60,26 +61,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Full Name',
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _ageController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Age',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your age';
-                  }
-                  return null;
-                },
+                validator: (value) => validateFullName(value),
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -88,6 +70,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                   labelText: 'Birthday',
                 ),
                 validator: (value) {
+                  // TODO proper birthday validation
+                  // (to add in providers/validators.dart)
                   if (value == null || value.isEmpty) {
                     return 'Please enter your birthday';
                   }
@@ -100,12 +84,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                 decoration: const InputDecoration(
                   labelText: 'ID Card Number',
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your ID card number';
-                  }
-                  return null;
-                },
+                validator: (value) => validateIdCard(value),
               ),
               const SizedBox(height: 16),
               TextFormField(

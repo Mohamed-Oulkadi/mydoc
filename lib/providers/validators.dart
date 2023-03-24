@@ -55,3 +55,14 @@ String? validatePhoneNumber(String? value) {
 
   return null;
 }
+
+String? validateIdCard(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'This field is required';
+  }
+
+  RegExp regExp = RegExp(r'^[A-Za-z]{2}\d+$');
+  if (!regExp.hasMatch(value)) {
+    return 'Not a valid moroccan CIN';
+  }
+}
