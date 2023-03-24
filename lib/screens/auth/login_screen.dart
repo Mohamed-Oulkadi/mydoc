@@ -24,9 +24,9 @@ class _LoginScreenState extends State<LoginScreen> {
           .login(_emailController.text, _passwordController.text);
 
       if (res['error'] == false) {
-        if (res['role'] == 'patient') {
+        if (res['user']['role'] == 'patient') {
           showScreen(context, '/home');
-        } else if (res['role'] == 'doctor') {
+        } else if (res['user']['role'] == 'doctor') {
           showScreen(context, '/drhome');
         } else {
           // TODO admin redirect
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: TextFormField(
         controller: _passwordController,
         validator: (value) => validatePassword(value),
-        obscureText: !_passToggle,
+        obscureText: _passToggle,
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
           labelText: 'Password',
