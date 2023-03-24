@@ -65,4 +65,5 @@ String? validateIdCard(String? value) {
   if (!regExp.hasMatch(value)) {
     return 'Not a valid moroccan CIN';
   }
+  return null;
 }
