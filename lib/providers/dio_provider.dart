@@ -78,40 +78,32 @@ class DioProvider {
   }
 
   // store booking details
-  Future bookAppointment(
-      String date, String day, String time, int doctor, String token) async {
-    try {
-      var response = await _dio.post('/api/book',
-          data: {'date': date, 'time': time, 'doctor_id': doctor},
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
+  Future bookAppointment(int doctorId, String date, String time) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
+    var response = await _dio.post('/api/book',
+        data: {
+          'appointment_date': date,
+          'appointment_time': time,
+          'doctor_id': doctorId
+        },
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
 
-      if (response.statusCode == 200 && response.data != '') {
-        return response.statusCode;
-      } else {
-        return 'Error';
-      }
-    } catch (error) {
-      return error;
-    }
+    return response.data;
   }
 
-  // retrieve booking details
+  // retrieve all bookings
   Future getAppointments(String token) async {
-    try {
-      var response = await _dio.get('/api/appointments',
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
+    var response = await _dio.get('/api/appointments',
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
 
-      if (response.statusCode == 200 && response.data != '') {
-        return json.encode(response.data);
-      } else {
-        return 'Error';
-      }
-    } catch (error) {
-      return error;
-    }
+    return response.data;
   }
 
   // store rating details
+  /*
   Future storeReviews(
       String reviews, double ratings, int id, int doctor, String token) async {
     try {
@@ -133,39 +125,15 @@ class DioProvider {
       return error;
     }
   }
-
-  // store fav doctor
-  Future storeFavDoc(String token, List favList) async {
-    try {
-      var response = await _dio.post('/api/fav',
-          data: {
-            'favList': favList,
-          },
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
-
-      if (response.statusCode == 200 && response.data != '') {
-        return response.statusCode;
-      } else {
-        return 'Error';
-      }
-    } catch (error) {
-      return error;
-    }
-  }
+  */
 
 // logout
   Future logout(String token) async {
-    try {
-      var response = await _dio.post('/api/logout',
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
+    var response = await _dio.post('/api/logout',
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
 
-      if (response.statusCode == 200 && response.data != '') {
-        return response.statusCode;
-      } else {
-        return 'Error';
-      }
-    } catch (error) {
-      return error;
-    }
+    return response.data;
   }
 }
