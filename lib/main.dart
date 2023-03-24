@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mydoc/screens/auth/login_screen.dart';
 import 'package:mydoc/screens/auth/signup_screen.dart';
 import 'package:mydoc/screens/auth/welcome_screen.dart';
+import 'package:mydoc/screens/doctor/home_screen.dart';
+import 'package:mydoc/widgets/dr_navbar_roots.dart';
 import 'package:mydoc/widgets/navbar_roots.dart';
 
 void main() {
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
           '/login': (context) => const LoginScreen(),
           '/register': (context) => const SignUpScreen(),
           '/home': (context) => const NavBarRoots(),
+          '/drhome': (context) => const DrNavBarRoots(),
         });
   }
 }

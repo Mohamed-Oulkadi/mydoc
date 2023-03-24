@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/validators.dart';
+import 'package:mydoc/providers/utils.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,17 +18,19 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void showHome(context) {
-    Navigator.pushNamed(context, '/home');
-  }
-
   Future<void> loginHandler(context) async {
     if (_formKey.currentState!.validate()) {
       var res = await DioProvider()
           .login(_emailController.text, _passwordController.text);
 
       if (res['error'] == false) {
-        showHome(context);
+        if (res['role'] == 'patient') {
+          showScreen(context, '/home');
+        } else if (res['role'] == 'doctor') {
+          showScreen(context, '/drhome');
+        } else {
+          // TODO admin redirect
+        }
       }
     }
   }

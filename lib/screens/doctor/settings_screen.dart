@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 
-class SettingScreen extends StatelessWidget {
-  const SettingScreen({super.key});
+class DrSettingScreen extends StatelessWidget {
+  const DrSettingScreen({super.key});
 
   Future<void> logoutHandler(context) async {
     var res = await DioProvider().logout();

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mydoc/screens/patient/appointment_screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class DrHomeScreen extends StatelessWidget {
+  const DrHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
