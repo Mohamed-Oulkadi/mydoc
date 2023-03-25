@@ -182,6 +182,7 @@ class DioProvider {
         options: Options(
             headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
 
+    prefs.setString('patient', json.encode(response.data));
     return response.data;
   }
 

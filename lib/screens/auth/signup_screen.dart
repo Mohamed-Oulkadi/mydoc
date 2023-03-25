@@ -43,7 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _passwordController.text,
         _password2Controller.text);
 
-    if (res.error == 'false') {
+    if (res['error'] == 'false') {
       showLogin();
     }
 

@@ -1,7 +1,8 @@
 import 'package:mydoc/components/button.dart';
 import 'package:mydoc/components/custom_appbar.dart';
 import 'package:mydoc/models/booking_datetime_converted.dart';
-import 'package:mydoc/components/dio_provider.dart';
+import 'package:mydoc/providers/dio_provider.dart';
+import 'package:mydoc/providers/utils.dart';
 import 'package:mydoc/utils/config.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class BookingPage extends StatefulWidget {
-  BookingPage({Key? key}) : super(key: key);
+  const BookingPage({Key? key}) : super(key: key);
 
   @override
   State<BookingPage> createState() => _BookingPageState();
@@ -26,9 +27,21 @@ class _BookingPageState extends State<BookingPage> {
   bool _timeSelected = false;
   String? token; //get token for insert booking date and time into database
 
-  Future<void> getToken() async {
+  Future<void> appointmentHanlder() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('token') ?? '';
+
+    //convert date/day/time into string first
+    final getDate = DateConverted.getDate(_currentDay);
+    final getDay = DateConverted.getDay(_currentDay.weekday);
+    final getTime = DateConverted.getTime(_currentIndex!);
+
+    final res = await DioProvider()
+        .bookAppointment(getDate, getDay, getTime, doctor['doctor_id'], token!);
+
+    // TODO redirection or prompt booking successful
+    if (res['error'] == 'false') {
+      // showScreen(context, '/successBooking');
+    }
   }
 
   @override
@@ -130,22 +143,7 @@ class _BookingPageState extends State<BookingPage> {
               child: Button(
                 width: double.infinity,
                 title: 'Make Appointment',
-                onPressed: () async {
-                  //convert date/day/time into string first
-                  final getDate = DateConverted.getDate(_currentDay);
-                  final getDay = DateConverted.getDay(_currentDay.weekday);
-                  final getTime = DateConverted.getTime(_currentIndex!);
-
-                  final booking = await DioProvider().bookAppointment(
-                      getDate, getDay, getTime, doctor['doctor_id'], token!);
-
-                  //if booking return status code 200, then redirect to success booking page
-
-                  /* if (booking == 200) {
-                    MyApp.navigatorKey.currentState!
-                        .pushNamed('success_booking');
-                  } */
-                },
+                onPressed: () => appointmentHandler(),
                 disable: _timeSelected && _dateSelected ? false : true,
               ),
             ),

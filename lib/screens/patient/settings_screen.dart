@@ -1,7 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 import 'package:mydoc/screens/patient/patient_profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+var patient;
+
+void fetchData() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  patient = await json.decode(prefs.get('patient') as String);
+}
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -14,6 +24,7 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    fetchData();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
@@ -28,20 +39,7 @@ class SettingScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            const ListTile(
-              leading: CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage("images/doctor1.jpg"),
-              ),
-              title: Text(
-                "Patient Name",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 25,
-                ),
-              ),
-              subtitle: Text("Profile"),
-            ),
+            const PatientName(),
             const Divider(height: 50),
             ListTile(
               onTap: () {
@@ -172,5 +170,31 @@ class SettingScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class PatientName extends StatelessWidget {
+  const PatientName({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(builder: (BuildContext context) {
+      return ListTile(
+        leading: const CircleAvatar(
+          radius: 30,
+          backgroundImage: AssetImage("images/doctor1.jpg"),
+        ),
+        title: Text(
+          patient['full_name'],
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 25,
+          ),
+        ),
+        subtitle: const Text("Profile"),
+      );
+    });
   }
 }
