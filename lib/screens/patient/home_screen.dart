@@ -172,8 +172,8 @@ class DoctorsBuilder extends StatelessWidget {
                               color: Colors.black54,
                             ),
                           ),
-                          const Text(
-                            "Therapist",
+                          Text(
+                            "${snapshot.data[index]['qualifications']}",
                             style: TextStyle(
                               color: Colors.black45,
                             ),
