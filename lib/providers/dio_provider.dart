@@ -100,26 +100,23 @@ class DioProvider {
     return response.data;
   }
 
-  // store booking details
-  Future bookAppointment(int doctorId, String date, String time) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.get('token');
-    var response = await _dio.post('/api/book',
-        data: {
-          'appointment_date': date,
-          'appointment_time': time,
-          'doctor_id': doctorId
-        },
-        options: Options(headers: {'Authorization': 'Bearer $token'}));
-
-    return response.data;
-  }
-
   // retrieve all appointments
   Future getAppointments(String token) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
     var response = await _dio.get('/api/appointments',
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+    return response.data;
+  }
+
+  //store booking details
+  Future bookAppointment(
+      String date, String day, String time, int doctorId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
+    var response = await Dio().post('/api/appointments',
+        data: {'date': date, 'day': day, 'time': time, 'doctor_id': doctorId},
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     return response.data;
@@ -132,6 +129,23 @@ class DioProvider {
     var response = await _dio.post('/api/logout',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
+    return response.data;
+  }
+
+  //store rating details
+  // TODO not implemented on backend
+  Future storeReviews(
+      String reviews, double ratings, int id, int doctorId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
+    var response = await Dio().post('http://192.168.43.63:8000/api/reviews',
+        data: {
+          'ratings': ratings,
+          'reviews': reviews,
+          'appointment_id': id,
+          'doctor_id': doctorId
+        },
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
     return response.data;
   }
 }
