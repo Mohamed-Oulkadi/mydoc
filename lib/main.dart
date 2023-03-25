@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mydoc/screens/auth/login_screen.dart';
 import 'package:mydoc/screens/auth/signup_screen.dart';
 import 'package:mydoc/screens/auth/welcome_screen.dart';
+import 'package:mydoc/screens/patient/appointment_screen.dart';
 import 'package:mydoc/widgets/dr_navbar_roots.dart';
 import 'package:mydoc/widgets/patient_navbar_roots.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
           '/register': (context) => const SignUpScreen(),
           '/home': (context) => const NavBarRoots(),
           '/drhome': (context) => const DrNavBarRoots(),
+          '/appointments': (context) => AppointmentScreen()
         });
   }
 }

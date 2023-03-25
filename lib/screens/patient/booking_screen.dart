@@ -1,6 +1,5 @@
 import 'package:mydoc/components/button.dart';
 import 'package:mydoc/components/custom_appbar.dart';
-import 'package:mydoc/main.dart';
 import 'package:mydoc/models/booking_datetime_converted.dart';
 import 'package:mydoc/components/dio_provider.dart';
 import 'package:mydoc/utils/config.dart';
@@ -43,9 +42,9 @@ class _BookingPageState extends State<BookingPage> {
     Config().init(context);
     final doctor = ModalRoute.of(context)!.settings.arguments as Map;
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         appTitle: 'Appointment',
-        icon: const FaIcon(Icons.arrow_back_ios),
+        icon: FaIcon(Icons.arrow_back_ios),
       ),
       body: CustomScrollView(
         slivers: <Widget>[
