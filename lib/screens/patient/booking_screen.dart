@@ -35,8 +35,7 @@ class _BookingPageState extends State<BookingPage> {
     final getTime = DateConverted.getTime(_currentIndex!);
 
     //  TODO get doctor id
-    // final res = await DioProvider()
-    // .bookAppointment(getDate, getDay, getTime, doctor['doctor_id']);
+    final res = await DioProvider().bookAppointment(getDate, getTime, 1);
 
     // TODO redirection or prompt booking successful
     if (res['error'] == 'false') {

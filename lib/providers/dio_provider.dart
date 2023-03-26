@@ -219,12 +219,11 @@ class DioProvider {
   }
 
   //store appointment details
-  Future bookAppointment(
-      String date, String day, String time, int doctorId) async {
+  Future bookAppointment(String date, String time, int doctorId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
     var response = await _dio.post('/api/appointments',
-        data: {'date': date, 'day': day, 'time': time, 'doctor_id': doctorId},
+        data: {'date': date, 'time': time, 'doctor_id': doctorId},
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     return response.data;
