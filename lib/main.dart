@@ -5,6 +5,7 @@ import 'package:mydoc/screens/auth/signup_screen.dart';
 import 'package:mydoc/screens/auth/welcome_screen.dart';
 import 'package:mydoc/screens/patient/appointment_screen.dart';
 import 'package:mydoc/screens/patient/booking_screen.dart';
+import 'package:mydoc/screens/patient/success_booked.dart';
 import 'package:mydoc/widgets/dr_navbar_roots.dart';
 import 'package:mydoc/widgets/patient_navbar_roots.dart';
 
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
           '/drhome': (context) => const DrNavBarRoots(),
           '/Admhome': (context) => const AdminNavBar(),
           '/appointments': (context) => AppointmentScreen(),
-          '/booking': (context) => const BookingPage()
+          '/booking': (context) => const BookingPage(),
+          '/successBooked': (context) => const AppointmentBooked(),
         });
   }
 }
