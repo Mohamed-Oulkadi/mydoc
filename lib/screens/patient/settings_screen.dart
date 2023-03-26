@@ -39,7 +39,7 @@ class SettingScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            const PatientName(),
+            PatientName(),
             const Divider(height: 50),
             ListTile(
               onTap: () {
@@ -180,21 +180,29 @@ class PatientName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (BuildContext context) {
-      return ListTile(
-        leading: const CircleAvatar(
-          radius: 30,
-          backgroundImage: AssetImage("images/doctor1.jpg"),
-        ),
-        title: Text(
-          patient['full_name'],
-          style: const TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 25,
-          ),
-        ),
-        subtitle: const Text("Profile"),
-      );
-    });
+    return FutureBuilder(
+        future: DioProvider().getCurrentPatient(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text('Loading...');
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return ListTile(
+              leading: const CircleAvatar(
+                radius: 30,
+                backgroundImage: AssetImage("images/doctor1.jpg"),
+              ),
+              title: Text(
+                patient['full_name'],
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 25,
+                ),
+              ),
+              subtitle: const Text("Profile"),
+            );
+          }
+        });
   }
 }

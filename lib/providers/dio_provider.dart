@@ -83,7 +83,7 @@ class DioProvider {
         options: Options(
             headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
 
-    prefs.setString('doctors', json.encode(response.data));
+    await prefs.setString('doctors', json.encode(response.data));
     return response.data;
   }
 
@@ -182,7 +182,7 @@ class DioProvider {
         options: Options(
             headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
 
-    prefs.setString('patient', json.encode(response.data));
+    await prefs.setString('patient', json.encode(response.data));
     return response.data;
   }
 

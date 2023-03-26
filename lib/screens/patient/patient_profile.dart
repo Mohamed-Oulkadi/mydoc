@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:mydoc/providers/dio_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'edit_profile.dart';
@@ -14,6 +15,7 @@ void fetchData() async {
 
 class PatientProfileScreen extends StatelessWidget {
   const PatientProfileScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     fetchData();
@@ -33,10 +35,10 @@ class PatientProfileScreen extends StatelessWidget {
               backgroundImage: AssetImage('images/doctor1.jpg'),
             ),
             const SizedBox(height: 20),
-            const FullNameWidget(),
+            const FullName(),
             const SizedBox(height: 10),
             const SizedBox(height: 5),
-            const BirthdayWidget(),
+            BirthdayWidget(),
             const SizedBox(height: 5),
             const IdCardWidget(),
             const SizedBox(height: 5),
@@ -74,15 +76,23 @@ class PhoneNumberWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (BuildContext context) {
-      return Text(
-        patient['phone_number'],
-        style: TextStyle(
-          fontSize: 18,
-          color: Colors.grey[700],
-        ),
-      );
-    });
+    return FutureBuilder(
+        future: DioProvider().getCurrentPatient(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text('Loading...');
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Text(
+              patient['phone_number'],
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey[700],
+              ),
+            );
+          }
+        });
   }
 }
 
@@ -93,15 +103,23 @@ class IdCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (BuildContext context) {
-      return Text(
-        patient['id_card'].toString(),
-        style: TextStyle(
-          fontSize: 18,
-          color: Colors.grey[700],
-        ),
-      );
-    });
+    return FutureBuilder(
+        future: DioProvider().getCurrentPatient(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text('Loading...');
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Text(
+              patient['id_card'].toString(),
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey[700],
+              ),
+            );
+          }
+        });
   }
 }
 
@@ -112,33 +130,49 @@ class BirthdayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (BuildContext context) {
-      return Text(
-        patient['birth_day'].toString(),
-        style: TextStyle(
-          fontSize: 18,
-          color: Colors.grey[700],
-        ),
-      );
-    });
+    return FutureBuilder(
+        future: DioProvider().getCurrentPatient(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text('Loading...');
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Text(
+              patient['birth_day'].toString(),
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey[700],
+              ),
+            );
+          }
+        });
   }
 }
 
-class FullNameWidget extends StatelessWidget {
-  const FullNameWidget({
+class FullName extends StatelessWidget {
+  const FullName({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (BuildContext context) {
-      return Text(
-        patient['full_name'],
-        style: TextStyle(
-          fontSize: 18,
-          color: Colors.grey[700],
-        ),
-      );
-    });
+    return FutureBuilder(
+        future: DioProvider().getDoctors(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text('Loading...');
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Text(
+              patient['full_name'],
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey[700],
+              ),
+            );
+          }
+        });
   }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mydoc/providers/dio_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 var doctors;
@@ -369,16 +370,24 @@ class DoctorName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (BuildContext context) {
-      return Text(
-        doctors['full_name'],
-        style: const TextStyle(
-          fontSize: 23,
-          fontWeight: FontWeight.w500,
-          color: Colors.white,
-        ),
-      );
-    });
+    return FutureBuilder(
+        future: DioProvider().getDoctors(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text('Loading...');
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Text(
+              doctors[0]['full_name'],
+              style: const TextStyle(
+                fontSize: 23,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
+            );
+          }
+        });
   }
 }
 
@@ -389,14 +398,22 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (BuildContext context) {
-      return Text(
-        doctors['qualifications'],
-        style: const TextStyle(
-          fontSize: 16,
-          color: Colors.black54,
-        ),
-      );
-    });
+    return FutureBuilder(
+        future: DioProvider().getDoctors(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text('Loading...');
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Text(
+              doctors[0]['qualifications'],
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.black54,
+              ),
+            );
+          }
+        });
   }
 }
