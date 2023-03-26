@@ -28,8 +28,8 @@ class _LoginScreenState extends State<LoginScreen> {
           showScreen(context, '/home');
         } else if (res['user']['role'] == 'doctor') {
           showScreen(context, '/drhome');
-        } else {
-          // TODO admin redirect
+        } else if (res['user']['role'] == 'admin'){
+          showScreen(context, '/Admhome');
         }
       }
     }

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:mydoc/screens/admin/AdminHome_screen.dart';
 import 'add_doctor.dart';
 
-class DrNavBarRoots extends StatefulWidget {
-  const DrNavBarRoots({Key? key}) : super(key: key);
+class AdminNavBar extends StatefulWidget {
+  const AdminNavBar({Key? key}) : super(key: key);
 
   @override
-  DrNavBarRootsState createState() => DrNavBarRootsState();
+  AdminNavBarRootsState createState() => AdminNavBarRootsState();
 }
 
-class DrNavBarRootsState extends State<DrNavBarRoots> {
+class AdminNavBarRootsState extends State<AdminNavBar> {
   late int _selectedIndex = 0;
   final List<Widget> _screens = [
     const AdminHomeScreen(),

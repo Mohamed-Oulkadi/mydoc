@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:mydoc/components/button.dart';
 import 'package:mydoc/components/custom_appbar.dart';
 import 'package:mydoc/models/booking_datetime_converted.dart';
@@ -34,8 +35,8 @@ class _BookingPageState extends State<BookingPage> {
     final getTime = DateConverted.getTime(_currentIndex!);
 
     //  TODO get doctor id
-    final res =
-        await DioProvider().bookAppointment(getDate, getDay, getTime, 1);
+    // final res = await DioProvider()
+    // .bookAppointment(getDate, getDay, getTime, doctor['doctor_id']);
 
     // TODO redirection or prompt booking successful
     if (res['error'] == 'false') {
