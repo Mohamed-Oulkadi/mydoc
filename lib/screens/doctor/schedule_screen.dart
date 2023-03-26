@@ -25,6 +25,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
       child: Material(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
