@@ -138,13 +138,14 @@ class _AvailabilityScreen extends State<AvailabilityScreen> {
                   final getDay = DateConverted.getDay(_currentDay.weekday);
                   final getTime = DateConverted.getTime(_currentIndex!);
 
-                  final res = await DioProvider().storeAvailability(
-                      getDate, getDay, getTime, doctor['doctor_id'], token!);
-                  
+                  // TODO fix availability backend wise
+                  // final res = await DioProvider().storeAvailability(
+                  //getDate, getDay, getTime, doctor['doctor_id']);
+
                   // redirect to doctor home page upon 200 status code
-                  if (res == 200) {
-                    MyApp.navigatorKey.currentState!.pushNamed('drhome');
-                  }
+                  //if (res == 200) {
+                  //MyApp.navigatorKey.currentState!.pushNamed('drhome');
+                  // }
                 },
                 disable: _timeSelected && _dateSelected ? false : true,
               ),
