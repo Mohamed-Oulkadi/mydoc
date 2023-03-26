@@ -343,7 +343,7 @@ class AppointmentScreen extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             InkWell(
-              onTap: () {},
+              onTap: () => bookingHandler(context),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.symmetric(vertical: 18),
