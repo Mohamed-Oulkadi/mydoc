@@ -186,6 +186,18 @@ class DioProvider {
     return response.data;
   }
 
+  // get current patient data
+  Future getCurrentDoctor() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var user = json.decode(prefs.getString('user')!);
+    var response = await _dio.get("/api/doctor/${user['id']}",
+        options: Options(
+            headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
+
+    await prefs.setString('patient', json.encode(response.data));
+    return response.data;
+  }
+
   // retrieve all appointments
   Future getAppointments() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -211,7 +223,7 @@ class DioProvider {
       String date, String day, String time, int doctorId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await Dio().post('/api/appointments',
+    var response = await _dio.post('/api/appointments',
         data: {'date': date, 'day': day, 'time': time, 'doctor_id': doctorId},
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/dio_provider.dart';
+import 'package:mydoc/providers/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 var doctors;
@@ -10,6 +11,10 @@ var doctors;
 void fetchData() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   doctors = await json.decode(prefs.get('doctors') as String);
+}
+
+Future<void> bookingHandler(context) async {
+  showScreen(context, '/booking');
 }
 
 class AppointmentScreen extends StatelessWidget {
@@ -325,7 +330,7 @@ class AppointmentScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "600DH",
+                  "400DH",
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.black54,
@@ -336,7 +341,7 @@ class AppointmentScreen extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             InkWell(
-              onTap: () {},
+              onTap: () => bookingHandler(context),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.symmetric(vertical: 18),

@@ -25,30 +25,27 @@ class _BookingPageState extends State<BookingPage> {
   bool _isWeekend = false;
   bool _dateSelected = false;
   bool _timeSelected = false;
-  String? token; //get token for insert booking date and time into database
 
-  Future<void> appointmentHandler() async {
+  Future<void> appointmentHandler(context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     //convert date/day/time into string first
     final getDate = DateConverted.getDate(_currentDay);
-    final getDay = DateConverted.getDay(_currentDay.weekday);
     final getTime = DateConverted.getTime(_currentIndex!);
 
     //  TODO get doctor id
-    // final res = await DioProvider()
-    // .bookAppointment(getDate, getDay, getTime, doctor['doctor_id']);
+    final res =
+        await DioProvider().bookAppointment(getDate, getDay, getTime, 1);
 
     // TODO redirection or prompt booking successful
-    //if (res['error'] == 'false') {
-    // showScreen(context, '/successBooking');
-    //}
+    if (res['error'] == 'false') {
+      showScreen(context, '/home');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     Config().init(context);
-    final doctor = ModalRoute.of(context)!.settings.arguments as Map;
     return Scaffold(
       appBar: const CustomAppBar(
         appTitle: 'Appointment',
@@ -138,7 +135,7 @@ class _BookingPageState extends State<BookingPage> {
               child: Button(
                 width: double.infinity,
                 title: 'Make Appointment',
-                onPressed: () => appointmentHandler(),
+                onPressed: () => appointmentHandler(context),
                 disable: _timeSelected && _dateSelected ? false : true,
               ),
             ),

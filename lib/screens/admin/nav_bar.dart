@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/screens/admin/AdminHome_screen.dart';
 import 'add_doctor.dart';

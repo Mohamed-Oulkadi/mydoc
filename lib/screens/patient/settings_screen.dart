@@ -39,7 +39,7 @@ class SettingScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            PatientName(),
+            const PatientName(),
             const Divider(height: 50),
             ListTile(
               onTap: () {
