@@ -41,6 +41,8 @@ class _BookingPageState extends State<BookingPage> {
     // TODO redirection or prompt booking successful
     if (res['error'] == 'false') {
       showScreen(context, '/home');
+    } else {
+      showScreen(context, '/successBooked');
     }
   }
 

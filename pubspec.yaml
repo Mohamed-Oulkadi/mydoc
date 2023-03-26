@@ -42,6 +42,7 @@ dependencies:
   table_calendar: ^3.0.8
   font_awesome_flutter: ^10.2.1
   intl: ^0.18.0
+  lottie: ^2.0.0
 
 dev_dependencies:
   flutter_test:
