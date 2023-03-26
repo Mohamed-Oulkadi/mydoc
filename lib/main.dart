@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
           '/register': (context) => const SignUpScreen(),
           '/home': (context) => const NavBarRoots(),
           '/drhome': (context) => const DrNavBarRoots(),
+          '/Admhome': (context) => const AdminNavBar(),
           '/appointments': (context) => AppointmentScreen(),
           '/booking': (context) => const BookingPage()
         });

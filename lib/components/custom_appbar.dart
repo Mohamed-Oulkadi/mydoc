@@ -38,7 +38,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Config.primaryColor,
+                color: Color(0xFF7165D6),
               ),
               child: IconButton(
                 onPressed: () {
