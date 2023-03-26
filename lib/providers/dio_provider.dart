@@ -294,3 +294,27 @@ Future getReview(id) async {
 
   return response.data;
 }
+
+// store availability date
+Future storeAvailability(
+    String date, String day, String time, int doctor, String token) async {
+  var response = await Dio().post('/api/availability',
+      data: {'date': date, 'day': day, 'time': time, 'doctor_id': doctor},
+      options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+  if (response.statusCode == 200 && response.data != '') {
+    return response.statusCode;
+  } else {
+    return 'Error';
+  }
+}
+
+// get availability date
+Future getAvailability(id) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final token = prefs.get('token');
+  var response = await Dio().get('/api/availability/$id',
+      options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+  return response.data;
+}
