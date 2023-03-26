@@ -223,7 +223,11 @@ class DioProvider {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
     var response = await _dio.post('/api/appointments',
-        data: {'date': date, 'time': time, 'doctor_id': doctorId},
+        data: {
+          'appointment_date': date,
+          'appointment_time': time,
+          'doctor_id': doctorId
+        },
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     return response.data;
