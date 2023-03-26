@@ -8,8 +8,10 @@ class DrHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return SafeArea(
+        child: SingleChildScrollView(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Row(
@@ -35,7 +37,7 @@ class DrHomeScreen extends StatelessWidget {
         ),
       ),
       const PatientsBuilder()
-    ]));
+    ])));
   }
 }
 

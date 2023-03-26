@@ -25,9 +25,9 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     fetchData();
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
+    return SafeArea(
+      minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

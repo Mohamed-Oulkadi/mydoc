@@ -7,9 +7,10 @@ class AppointmentBooked extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
+    return SafeArea(
+      minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
+      child: Scaffold(
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Expanded(

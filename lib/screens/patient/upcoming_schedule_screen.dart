@@ -37,7 +37,7 @@ class UpcomingSchedule extends StatelessWidget {
                 children: [
                   const ListTile(
                     title: Text(
-                      "Dr Doctor Name",
+                      "Dr. ahmed karim",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     trailing: CircleAvatar(
