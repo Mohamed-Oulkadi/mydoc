@@ -14,7 +14,7 @@ class AppointmentBooked extends StatelessWidget {
           children: <Widget>[
             Expanded(
               flex: 3,
-              child: Lottie.asset('assets/success.json'),
+              child: Lottie.asset('images/success.json'),
             ),
             Container(
               width: double.infinity,
