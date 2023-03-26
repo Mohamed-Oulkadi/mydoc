@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mydoc/screens/admin/nav_bar.dart';
 import 'package:mydoc/screens/auth/login_screen.dart';
 import 'package:mydoc/screens/auth/signup_screen.dart';
 import 'package:mydoc/screens/auth/welcome_screen.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
           '/register': (context) => const SignUpScreen(),
           '/home': (context) => const NavBarRoots(),
           '/drhome': (context) => const DrNavBarRoots(),
+          '/Admhome': (context) => const AdminNavBar(),
           '/appointments': (context) => AppointmentScreen()
         });
   }

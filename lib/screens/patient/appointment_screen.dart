@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'booking_screen.dart';
+
 var doctors;
 
 void fetchData() async {
@@ -336,7 +338,13 @@ class AppointmentScreen extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const BookingPage(),
+                    ));
+              },
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.symmetric(vertical: 18),
