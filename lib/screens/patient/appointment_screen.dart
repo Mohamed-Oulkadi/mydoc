@@ -1,5 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+var doctors;
+
+void fetchData() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  doctors = await json.decode(prefs.get('doctors') as String);
+}
 
 class AppointmentScreen extends StatelessWidget {
   final List imgs = [
@@ -13,6 +23,7 @@ class AppointmentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    fetchData();
     return Scaffold(
       backgroundColor: const Color(0xFF7165D6),
       body: SingleChildScrollView(
@@ -61,14 +72,7 @@ class AppointmentScreen extends StatelessWidget {
                                     AssetImage("images/doctor1.jpg"),
                               ),
                               const SizedBox(height: 15),
-                              const Text(
-                                "Dr . Doctor Name",
-                                style: TextStyle(
-                                  fontSize: 23,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                ),
-                              ),
+                              const DoctorName(),
                               const SizedBox(height: 5),
                               const Text(
                                 "Therapist",
@@ -143,13 +147,7 @@ class AppointmentScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 5),
-                  const Text(
-                    "o  fou   g  g fgâ   fhuoahfoaoahf hfhzfoh hzfaiozha ",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black54,
-                    ),
-                  ),
+                  const AboutPage(),
                   const SizedBox(height: 10),
                   Row(
                     children: [
@@ -361,5 +359,44 @@ class AppointmentScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class DoctorName extends StatelessWidget {
+  const DoctorName({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(builder: (BuildContext context) {
+      return Text(
+        doctors['full_name'],
+        style: const TextStyle(
+          fontSize: 23,
+          fontWeight: FontWeight.w500,
+          color: Colors.white,
+        ),
+      );
+    });
+  }
+}
+
+class AboutPage extends StatelessWidget {
+  const AboutPage({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(builder: (BuildContext context) {
+      return Text(
+        doctors['qualifications'],
+        style: const TextStyle(
+          fontSize: 16,
+          color: Colors.black54,
+        ),
+      );
+    });
   }
 }

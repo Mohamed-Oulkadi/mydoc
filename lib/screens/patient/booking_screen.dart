@@ -27,7 +27,7 @@ class _BookingPageState extends State<BookingPage> {
   bool _timeSelected = false;
   String? token; //get token for insert booking date and time into database
 
-  Future<void> appointmentHanlder() async {
+  Future<void> appointmentHandler() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     //convert date/day/time into string first
@@ -35,19 +35,14 @@ class _BookingPageState extends State<BookingPage> {
     final getDay = DateConverted.getDay(_currentDay.weekday);
     final getTime = DateConverted.getTime(_currentIndex!);
 
-    final res = await DioProvider()
-        .bookAppointment(getDate, getDay, getTime, doctor['doctor_id'], token!);
+    //  TODO get doctor id
+    // final res = await DioProvider()
+    // .bookAppointment(getDate, getDay, getTime, doctor['doctor_id']);
 
     // TODO redirection or prompt booking successful
-    if (res['error'] == 'false') {
-      // showScreen(context, '/successBooking');
-    }
-  }
-
-  @override
-  void initState() {
-    getToken();
-    super.initState();
+    //if (res['error'] == 'false') {
+    // showScreen(context, '/successBooking');
+    //}
   }
 
   @override
