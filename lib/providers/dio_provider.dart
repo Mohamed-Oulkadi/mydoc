@@ -123,7 +123,7 @@ class DioProvider {
   Future registerUser(String fullname, String email, String phonenumber,
       String idcard, String birthday, String password, String password2) async {
     var user = await _dio.post('/api/register', data: {
-      'fullname': fullname,
+      'full_name': fullname,
       'email': email,
       'phone_number': phonenumber,
       'id_card': idcard,
