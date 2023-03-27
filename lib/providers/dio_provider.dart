@@ -25,7 +25,6 @@ class DioProvider {
           'token', response.data['Authorization'].toString().split(' ')[1]);
       await prefs.setString('user', json.encode(response.data['user']));
     }
-
     return response.data;
   }
 
@@ -177,12 +176,13 @@ class DioProvider {
 // get current patient data
   Future getCurrentPatient() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var user = json.decode(prefs.getString('user')!);
-    var response = await _dio.get("/api/patients/${user['id']}",
+
+    var response = await _dio.get("/api/patients",
         options: Options(
             headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
 
     await prefs.setString('patient', json.encode(response.data));
+
     return response.data;
   }
 
