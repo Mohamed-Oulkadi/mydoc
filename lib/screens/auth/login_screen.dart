@@ -33,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       }
     }
+    
   }
 
   @override
@@ -82,6 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Padding(
       padding: const EdgeInsets.all(12),
       child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
         controller: _emailController,
         validator: (value) => validateEmail(value),
         decoration: const InputDecoration(

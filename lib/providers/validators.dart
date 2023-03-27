@@ -67,3 +67,26 @@ String? validateIdCard(String? value) {
   }
   return null;
 }
+
+String? validateBirthdayDate(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'This field is required';
+  }
+  
+  DateTime? date;
+  try {
+    date = DateTime.parse(value);
+  } catch (e) {
+    return 'Please enter a valid date (yyyy-mm-dd)';
+  }
+
+  if (date.isAfter(DateTime.now())) {
+    return 'Please enter a date that is not in the future';
+  }
+  
+  if (DateTime.now().difference(date).inDays ~/ 365.25 < 18) {
+    return 'You must be at least 18 years old';
+  }
+
+  return null;
+}

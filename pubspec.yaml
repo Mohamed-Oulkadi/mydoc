@@ -43,6 +43,8 @@ dependencies:
   font_awesome_flutter: ^10.2.1
   intl: ^0.18.0
   lottie: ^2.0.0
+  date_format: ^2.0.7
+  flutter_holo_date_picker: ^1.0.3
 
 dev_dependencies:
   flutter_test:

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_holo_date_picker/date_picker.dart';
+import 'package:flutter_holo_date_picker/i18n/date_picker_i18n.dart';
+import 'package:intl/intl.dart';
 import 'package:mydoc/screens/auth/login_screen.dart';
 import 'package:mydoc/providers/validators.dart';
 import 'package:mydoc/providers/dio_provider.dart';
+import 'package:date_format/date_format.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -18,6 +22,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _cinController = TextEditingController();
+  final TextEditingController _birthdayController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _password2Controller = TextEditingController();
 
@@ -26,6 +32,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _nameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
+    _cinController.dispose();
+    _birthdayController.dispose();
     _passwordController.dispose();
     _password2Controller.dispose();
     super.dispose();
@@ -40,13 +48,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _nameController.text,
         _emailController.text,
         _phoneController.text,
+        _cinController.text,
+        _birthdayController.text,
         _passwordController.text,
         _password2Controller.text);
 
     if (res['error'] == 'false') {
       showLogin();
     }
-
     // TODO: check TODO in login_screen.dart
     /*if (res['error'].isNotEmpty) {
     showDialog(
@@ -114,6 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding:
                         const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
                     child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
                       controller: _emailController,
                       validator: (value) => validateEmail(value),
                       decoration: const InputDecoration(
@@ -127,6 +137,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding:
                         const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
                     child: TextFormField(
+                      keyboardType: TextInputType.number,
                       controller: _phoneController,
                       validator: (value) => validatePhoneNumber(value),
                       decoration: const InputDecoration(
@@ -134,6 +145,48 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.phone),
                       ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                    child: TextFormField(
+                      controller: _cinController,
+                      validator: (value) => validateIdCard(value),
+                      decoration: const InputDecoration(
+                        labelText: "CIN",
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.badge),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                    child: TextFormField(
+                      controller: _birthdayController,
+                      readOnly: true,
+                      validator: (value) => validateBirthdayDate(value),
+                      decoration: const InputDecoration(
+                        labelText: "Birthday Date",
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.calendar_today),
+                      ),
+                      onTap: () async {
+                        var pickedDate = await DatePicker.showSimpleDatePicker(
+                          context,
+                          initialDate: DateTime(1994),
+                          firstDate: DateTime(1960),
+                          lastDate: DateTime(2012),
+                          dateFormat: "dd-MMMM-yyyy",
+                          locale: DateTimePickerLocale.en_us,
+                          looping: true,
+                        );
+                        if (pickedDate != null) {
+                          _birthdayController.text =
+                              DateFormat('yyyy-MM-dd').format(pickedDate);
+                        }
+                      },
                     ),
                   ),
                   Padding(

@@ -194,13 +194,13 @@ class PatientName extends StatelessWidget {
                 backgroundImage: AssetImage("images/doctor1.jpg"),
               ),
               title: Text(
-                patient['full_name'],
+                "${patient['full_name']}",
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 25,
                 ),
               ),
-              subtitle: const Text("Profile"),
+              subtitle: const Text("Patient"),
             );
           }
         });
