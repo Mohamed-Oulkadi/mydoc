@@ -120,12 +120,14 @@ class DioProvider {
   }
 
   // register new user
-  Future registerUser(String username, String email, String phonenumber,
-      String password, String password2) async {
+  Future registerUser(String fullname, String email, String phonenumber,
+      String idcard, String birthday, String password, String password2) async {
     var user = await _dio.post('/api/register', data: {
-      'fullname': username,
+      'fullname': fullname,
       'email': email,
       'phone_number': phonenumber,
+      'id_card': idcard,
+      'birthday': birthday,
       'password': password,
       'password_confirmation': password2
     });
