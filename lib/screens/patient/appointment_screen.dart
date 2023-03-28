@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/dio_provider.dart';
@@ -59,14 +59,6 @@ class AppointmentScreen extends StatelessWidget {
                                 size: 25,
                               ),
                             ),
-                            InkWell(
-                              onTap: () {},
-                              child: const Icon(
-                                Icons.more_vert,
-                                color: Colors.white,
-                                size: 25,
-                              ),
-                            )
                           ],
                         ),
                         Padding(
@@ -83,7 +75,7 @@ class AppointmentScreen extends StatelessWidget {
                               const DoctorName(),
                               const SizedBox(height: 5),
                               const Text(
-                                "Therapist",
+                                "Gynécologue",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -93,29 +85,46 @@ class AppointmentScreen extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xFF9F97E2),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: const Icon(
-                                      Icons.call,
-                                      color: Colors.white,
-                                      size: 25,
+                                  InkWell(
+                                    borderRadius: BorderRadius.circular(30),
+                                    onTap: () async{
+                                      Uri phoneno = Uri.parse('tel:+97798345348734');
+                                          if (await canLaunchUrl(phoneno)) {
+                                              await launchUrl(phoneno);
+                                          }else{
+                                              throw 'Could not launch ';
+                                          }
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFF9F97E2),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.call,
+                                        color: Colors.white,
+                                        size: 25,
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(width: 20),
-                                  Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xFF9F97E2),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: const Icon(
-                                      CupertinoIcons.chat_bubble_text_fill,
-                                      color: Colors.white,
-                                      size: 25,
+                                  InkWell(
+                                    borderRadius: BorderRadius.circular(30),
+                                    onTap: () {
+                                      
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFF9F97E2),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        CupertinoIcons.chat_bubble_text_fill,
+                                        color: Colors.white,
+                                        size: 25,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -182,18 +191,6 @@ class AppointmentScreen extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
                           color: Color(0xFF7165D6),
-                        ),
-                      ),
-                      const Spacer(),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "See all",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            color: Color(0xFF7165D6),
-                          ),
                         ),
                       ),
                     ],
@@ -299,7 +296,6 @@ class AppointmentScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    subtitle: const Text("address line of medical center,"),
                   )
                 ],
               ),

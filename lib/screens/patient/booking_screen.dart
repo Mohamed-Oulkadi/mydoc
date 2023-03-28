@@ -52,7 +52,7 @@ class _BookingPageState extends State<BookingPage> {
     return Scaffold(
       appBar: const CustomAppBar(
         appTitle: 'Appointment',
-        icon: FaIcon(Icons.arrow_back_ios),
+        icon: FaIcon(Icons.arrow_back_ios_new),
       ),
       body: CustomScrollView(
         slivers: <Widget>[

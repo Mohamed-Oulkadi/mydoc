@@ -254,6 +254,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             if (_formKey.currentState!.validate()) {
                               registerHandler();
                             }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ));
                           },
                           child: const Padding(
                             padding: EdgeInsets.symmetric(
