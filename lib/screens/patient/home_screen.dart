@@ -6,6 +6,8 @@ import 'package:mydoc/screens/patient/appointment_screen.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 import 'dart:developer';
 
+import '../../utils/config.dart';
+
 class HomeScreen extends StatelessWidget {
   final List __symptoms = [
     "Temperature",
@@ -94,9 +96,10 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final patient_id = ModalRoute.of(context)!.settings.arguments as int;
+    Config().init(context);
+    final patient = ModalRoute.of(context)!.settings.arguments as Map;
     return FutureBuilder(
-        future: DioProvider().getPatient(patient_id),
+        future: DioProvider().getPatient(patient['patient_id']),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text('Loading...');
