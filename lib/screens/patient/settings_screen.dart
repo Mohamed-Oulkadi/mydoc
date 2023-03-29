@@ -6,6 +6,8 @@ import 'package:mydoc/providers/dio_provider.dart';
 import 'package:mydoc/screens/patient/patient_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../utils/config.dart';
+
 var patient;
 
 void fetchData() async {
@@ -46,7 +48,7 @@ class SettingScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>  ProfileDetails(),
+                      builder: (context) => ProfileDetails(),
                     ));
               },
               leading: Container(
@@ -180,8 +182,10 @@ class PatientName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Config().init(context);
+    final patient = ModalRoute.of(context)!.settings.arguments as Map;
     return FutureBuilder(
-        future: DioProvider().getCurrentPatient(),
+        future: DioProvider().getPatient(patient['patient_id']),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text('Loading...');
@@ -194,7 +198,7 @@ class PatientName extends StatelessWidget {
                 backgroundImage: AssetImage("images/doctor1.jpg"),
               ),
               title: Text(
-                "${patient['full_name']}",
+                "${snapshot.data['full_name']}",
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 25,
