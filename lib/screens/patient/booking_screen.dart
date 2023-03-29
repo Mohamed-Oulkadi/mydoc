@@ -5,6 +5,7 @@ import 'package:mydoc/components/custom_appbar.dart';
 import 'package:mydoc/models/booking_datetime_converted.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 import 'package:mydoc/providers/utils.dart';
+import 'package:mydoc/screens/doctor/availability_screen.dart';
 import 'package:mydoc/utils/config.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,15 +29,14 @@ class _BookingPageState extends State<BookingPage> {
   bool _dateSelected = false;
   bool _timeSelected = false;
 
-  Future<void> appointmentHandler(context) async {
+  Future<void> appointmentHandler(context, doctor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     //convert date/day/time into string first
     final getDate = DateConverted.getDate(_currentDay);
     final getTime = DateConverted.getTime(_currentIndex!);
 
-    //  TODO get doctor id
-    final res = await DioProvider().bookAppointment(getDate, getTime, 1);
+    final res = await DioProvider().bookAppointment(getDate, getTime, doctor['doctor_id']);
 
     // TODO redirection or prompt booking successful
     if (res['error'] == 'false') {
@@ -49,6 +49,7 @@ class _BookingPageState extends State<BookingPage> {
   @override
   Widget build(BuildContext context) {
     Config().init(context);
+    final doctor = ModalRoute.of(context)!.settings.arguments as Map;
     return Scaffold(
       appBar: const CustomAppBar(
         appTitle: 'Appointment',
@@ -138,7 +139,7 @@ class _BookingPageState extends State<BookingPage> {
               child: Button(
                 width: double.infinity,
                 title: 'Make Appointment',
-                onPressed: () => appointmentHandler(context),
+                onPressed: () => appointmentHandler(context, doctor),
                 disable: _timeSelected && _dateSelected ? false : true,
               ),
             ),
