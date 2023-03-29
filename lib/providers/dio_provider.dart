@@ -335,3 +335,27 @@ Future getAvailability(id) async {
 
   return response.data;
 }
+
+// get all messages related to the current user
+Future getMessages() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final token = prefs.get('token');
+  var response = await Dio().get('/api/chat',
+      options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+  prefs.setString('messages', json.encode(response.data['messsages']));
+
+  return response.data;
+}
+
+// send a message to a specific user
+Future sendMessage(receiverId, message) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final token = prefs.get('token');
+
+  var response = await Dio().post('/api/chat',
+      data: {'receiver_id': receiverId, 'message': message},
+      options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+  return response.data;
+}
