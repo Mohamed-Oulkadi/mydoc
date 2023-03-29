@@ -282,80 +282,80 @@ class DioProvider {
         options: Options(headers: {'Authorization': 'Bearer $token'}));
     return response.data;
   }
-}
 
-// delete specefic review
-Future deleteReview(id) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final token = prefs.get('token');
-  var response = await Dio().delete('/api/reviews/$id',
-      options: Options(headers: {'Authorization': 'Bearer $token'}));
-  return response.data;
-}
-
-// retrieve all reviews
-Future getReviews() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final token = prefs.get('token');
-  var response = await Dio().delete('/api/reviews',
-      options: Options(headers: {'Authorization': 'Bearer $token'}));
-  return response.data;
-}
-
-// get specifc review
-Future getReview(id) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final token = prefs.get('token');
-  var response = await Dio().delete('/api/reviews/$id',
-      options: Options(headers: {'Authorization': 'Bearer $token'}));
-
-  return response.data;
-}
-
-// store availability date
-Future storeAvailability(
-    String date, String day, String time, int doctor, String token) async {
-  var response = await Dio().post('/api/availability',
-      data: {'date': date, 'day': day, 'time': time, 'doctor_id': doctor},
-      options: Options(headers: {'Authorization': 'Bearer $token'}));
-
-  if (response.statusCode == 200 && response.data != '') {
-    return response.statusCode;
-  } else {
-    return 'Error';
+  // delete specefic review
+  Future deleteReview(id) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
+    var response = await Dio().delete('/api/reviews/$id',
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+    return response.data;
   }
-}
 
-// get availability date
-Future getAvailability(id) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final token = prefs.get('token');
-  var response = await Dio().get('/api/availability/$id',
-      options: Options(headers: {'Authorization': 'Bearer $token'}));
+  // retrieve all reviews
+  Future getReviews() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
+    var response = await Dio().delete('/api/reviews',
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+    return response.data;
+  }
 
-  return response.data;
-}
+  // get specifc review
+  Future getReview(id) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
+    var response = await Dio().delete('/api/reviews/$id',
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
 
-// get all messages related to the current user
-Future getMessages() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final token = prefs.get('token');
-  var response = await Dio().get('/api/chat',
-      options: Options(headers: {'Authorization': 'Bearer $token'}));
+    return response.data;
+  }
 
-  prefs.setString('messages', json.encode(response.data['messsages']));
+  // store availability date
+  Future storeAvailability(
+      String date, String day, String time, int doctor, String token) async {
+    var response = await Dio().post('/api/availability',
+        data: {'date': date, 'day': day, 'time': time, 'doctor_id': doctor},
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
 
-  return response.data;
-}
+    if (response.statusCode == 200 && response.data != '') {
+      return response.statusCode;
+    } else {
+      return 'Error';
+    }
+  }
 
-// send a message to a specific user
-Future sendMessage(receiverId, message) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final token = prefs.get('token');
+  // get availability date
+  Future getAvailability(id) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
+    var response = await Dio().get('/api/availability/$id',
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
 
-  var response = await Dio().post('/api/chat',
-      data: {'receiver_id': receiverId, 'message': message},
-      options: Options(headers: {'Authorization': 'Bearer $token'}));
+    return response.data;
+  }
 
-  return response.data;
+  // get all messages related to the current user
+  Future getMessages() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
+    var response = await Dio().get('/api/chat',
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+    prefs.setString('messages', json.encode(response.data['messsages']));
+
+    return response.data;
+  }
+
+  // send a message to a specific user
+  Future sendMessage(receiverId, message) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
+
+    var response = await Dio().post('/api/chat',
+        data: {'receiver_id': receiverId, 'message': message},
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+    return response.data;
+  }
 }
