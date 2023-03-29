@@ -27,24 +27,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (res['error'] == false) {
         if (res['user']['role'] == 'patient') {
-          showScreen(context, '/home');
+          Navigator.pushNamed(context, '/home', arguments: res['patient_id']);
         } else if (res['user']['role'] == 'doctor') {
           showScreen(context, '/drhome');
-        } else if (res['user']['role'] == 'admin'){
+        } else if (res['user']['role'] == 'admin') {
           showScreen(context, '/Admhome');
         }
-      }else{
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: CustomSnackBar(errorText: "Your Email or password is incorrect"),
-              behavior: SnackBarBehavior.floating,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-            ),
-          );
+          const SnackBar(
+            content: CustomSnackBar(
+                errorText: "Your Email or password is incorrect"),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
+        );
       }
     }
-    
   }
 
   @override

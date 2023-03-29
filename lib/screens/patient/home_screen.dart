@@ -94,8 +94,9 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final patient_id = ModalRoute.of(context)!.settings.arguments as int;
     return FutureBuilder(
-        future: DioProvider().getCurrentPatient(),
+        future: DioProvider().getPatient(patient_id),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text('Loading...');
@@ -104,7 +105,7 @@ class Header extends StatelessWidget {
           } else {
             var fullName = snapshot.data['full_name'];
             return Text(
-              "Hello $fullName",
+              "Hello ${fullName}",
               style: const TextStyle(
                 fontSize: 35,
                 fontWeight: FontWeight.w500,
