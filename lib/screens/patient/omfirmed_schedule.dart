@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class UpcomingSchedule extends StatelessWidget {
-  const UpcomingSchedule({super.key});
+class ComfirmedSchedule extends StatelessWidget {
+  const ComfirmedSchedule({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -90,13 +90,13 @@ class UpcomingSchedule extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(5),
                             decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 255, 201, 86),
+                              color: Color.fromARGB(255, 80, 233, 80),
                               shape: BoxShape.circle,
                             ),
                           ),
                           const SizedBox(width: 5),
                           const Text(
-                            "Upcoming",
+                            "Comfirmed",
                             style: TextStyle(
                               color: Colors.black54,
                             ),
@@ -140,7 +140,7 @@ class UpcomingSchedule extends StatelessWidget {
                           ),
                           child: const Center(
                             child: Text(
-                              "Reschedule",
+                              "Comfirm",
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,

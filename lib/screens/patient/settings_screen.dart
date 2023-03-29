@@ -46,7 +46,7 @@ class SettingScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const PatientProfileScreen(),
+                      builder: (context) =>  ProfileDetails(),
                     ));
               },
               leading: Container(

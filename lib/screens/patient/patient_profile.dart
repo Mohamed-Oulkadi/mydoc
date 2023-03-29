@@ -1,178 +1,152 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:mydoc/providers/dio_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../providers/utils.dart';
 import 'edit_profile.dart';
 
-var patient;
-
-void fetchData() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  patient = await json.decode(prefs.get('patient') as String);
-}
-
-class PatientProfileScreen extends StatelessWidget {
-  const PatientProfileScreen({Key? key}) : super(key: key);
+class ProfileDetails extends StatelessWidget {
+  Widget textfield({@required hintText, @required prefixIcon}) {
+    return Material(
+      elevation: 4,
+      shadowColor: Colors.grey,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: TextFormField(
+        decoration: InputDecoration(
+            prefixIcon: prefixIcon,
+            hintText: hintText,
+            hintStyle: TextStyle(
+              letterSpacing: 2,
+              color: Colors.black54,
+              fontWeight: FontWeight.bold,
+            ),
+            fillColor: Colors.white30,
+            filled: true,
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: BorderSide.none)),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    fetchData();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Patient Profile'),
-        centerTitle: true,
+        elevation: 0.0,
+        backgroundColor: Color(0xFF7165D6),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_outlined,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: [
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () => showScreen(context, '/edit_profile'),
+                child: const Icon(Icons.edit),
+              ))
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20),
-            const CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('images/doctor1.jpg'),
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                height: 450,
+                width: double.infinity,
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    textfield(
+                      hintText: 'Username',
+                      prefixIcon: Icon(Icons.person),
+                    ),
+                    textfield(
+                      hintText: 'Email',
+                      prefixIcon: Icon(Icons.email),
+                    ),
+                    textfield(
+                      hintText: 'Phone Number',
+                      prefixIcon: Icon(Icons.phone),
+                    ),
+                    textfield(
+                      hintText: 'ID Card',
+                      prefixIcon: Icon(Icons.badge),
+                    ),
+                    textfield(
+                      hintText: 'Birthday Date',
+                      prefixIcon: Icon(Icons.calendar_today),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+          CustomPaint(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
             ),
-            const SizedBox(height: 20),
-            const FullName(),
-            const SizedBox(height: 10),
-            const SizedBox(height: 5),
-            BirthdayWidget(),
-            const SizedBox(height: 5),
-            const IdCardWidget(),
-            const SizedBox(height: 5),
-            const PhoneNumberWidget(),
-            const SizedBox(height: 30),
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const EditProfileScreen(),
-                    ));
-              },
-              icon: const Icon(Icons.edit),
-              label: const Text('Edit Profile'),
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.blue[700],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+            painter: HeaderCurvedContainer(),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(20),
+                child: Text(
+                  "Profile",
+                  style: TextStyle(
+                    fontSize: 35,
+                    letterSpacing: 1.5,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
+              Container(
+                padding: EdgeInsets.all(10.0),
+                width: MediaQuery.of(context).size.width / 3.5,
+                height: MediaQuery.of(context).size.width / 3.5,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white, width: 5),
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage('images/doctor1.jpg'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 }
 
-class PhoneNumberWidget extends StatelessWidget {
-  const PhoneNumberWidget({
-    super.key,
-  });
+class HeaderCurvedContainer extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()..color = Color(0xFF7165D6);
+    Path path = Path()
+      ..relativeLineTo(0, 150)
+      ..quadraticBezierTo(size.width / 2, 225, size.width, 150)
+      ..relativeLineTo(0, -150)
+      ..close();
+    canvas.drawPath(path, paint);
+  }
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: DioProvider().getCurrentPatient(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Loading...');
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            return Text(
-              patient['phone_number'],
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[700],
-              ),
-            );
-          }
-        });
-  }
-}
-
-class IdCardWidget extends StatelessWidget {
-  const IdCardWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: DioProvider().getCurrentPatient(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Loading...');
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            return Text(
-              patient['id_card'].toString(),
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[700],
-              ),
-            );
-          }
-        });
-  }
-}
-
-class BirthdayWidget extends StatelessWidget {
-  const BirthdayWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: DioProvider().getCurrentPatient(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Loading...');
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            return Text(
-              patient['birth_day'].toString(),
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[700],
-              ),
-            );
-          }
-        });
-  }
-}
-
-class FullName extends StatelessWidget {
-  const FullName({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: DioProvider().getDoctors(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Loading...');
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            return Text(
-              patient['full_name'],
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[700],
-              ),
-            );
-          }
-        });
-  }
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

@@ -4,6 +4,8 @@ import 'package:mydoc/providers/validators.dart';
 import 'package:mydoc/providers/utils.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 
+import '../../utils/flash_message_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -31,6 +33,15 @@ class _LoginScreenState extends State<LoginScreen> {
         } else if (res['user']['role'] == 'admin'){
           showScreen(context, '/Admhome');
         }
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: CustomSnackBar(errorText: "Your Email or password is incorrect"),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
+          );
       }
     }
     
@@ -45,9 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      child: SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
         child: SafeArea(
           child: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,

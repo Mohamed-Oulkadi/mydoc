@@ -60,6 +60,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                 controller: _nameController,
                 decoration: const InputDecoration(
                   labelText: 'Full Name',
+                  prefixIcon: Icon(Icons.person),
                 ),
                 validator: (value) => validateFullName(value),
               ),
@@ -68,6 +69,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                 controller: _birthdayController,
                 decoration: const InputDecoration(
                   labelText: 'Birthday',
+                  prefixIcon: Icon(Icons.calendar_today),
                 ),
                 validator: (value) {
                   // TODO proper birthday validation
@@ -82,6 +84,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
               TextFormField(
                 controller: _idCardNumberController,
                 decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.badge),
                   labelText: 'ID Card Number',
                 ),
                 validator: (value) => validateIdCard(value),
@@ -92,6 +95,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
                   labelText: 'Phone Number',
+                  prefixIcon: Icon(Icons.phone),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {

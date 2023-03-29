@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mydoc/screens/patient/upcoming_schedule_screen.dart';
 
+import 'omfirmed_schedule.dart';
+
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({Key? key}) : super(key: key);
 
@@ -13,12 +15,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   final _scheduleWidgets = [
     const UpcomingSchedule(),
-    const Center(
-      child: Text("Completed"),
-    ),
-    Container(
-      child: const Text("Canceled"),
-    ),
+    const ComfirmedSchedule(),
   ];
 
   @override
@@ -89,36 +86,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
-                            "Completed",
+                            "Comfirmed",
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
                                 color: _buttonIndex == 1
-                                    ? Colors.white
-                                    : Colors.black38),
-                          ),
-                        )),
-                    InkWell(
-                        onTap: () {
-                          setState(() {
-                            _buttonIndex = 2;
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 15),
-                          decoration: BoxDecoration(
-                            color: _buttonIndex == 2
-                                ? const Color(0xFF7165D6)
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Text(
-                            "Canceled",
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: _buttonIndex == 2
                                     ? Colors.white
                                     : Colors.black38),
                           ),

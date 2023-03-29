@@ -88,7 +88,7 @@ class AppointmentScreen extends StatelessWidget {
                                   InkWell(
                                     borderRadius: BorderRadius.circular(30),
                                     onTap: () async{
-                                      Uri phoneno = Uri.parse('tel:+97798345348734');
+                                      Uri phoneno = Uri.parse('tel:066666666');
                                           if (await canLaunchUrl(phoneno)) {
                                               await launchUrl(phoneno);
                                           }else{
