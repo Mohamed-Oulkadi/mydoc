@@ -26,18 +26,6 @@ class _AvailabilityScreen extends State<AvailabilityScreen> {
   bool _isWeekend = false;
   bool _dateSelected = false;
   bool _timeSelected = false;
-  String? token; //get token for insert booking date and time into database
-
-  Future<void> getToken() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('token') ?? '';
-  }
-
-  @override
-  void initState() {
-    getToken();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,15 +125,12 @@ class _AvailabilityScreen extends State<AvailabilityScreen> {
                   final getDate = DateConverted.getDate(_currentDay);
                   final getDay = DateConverted.getDay(_currentDay.weekday);
                   final getTime = DateConverted.getTime(_currentIndex!);
-
-                  // TODO fix availability backend wise
-                  // final res = await DioProvider().storeAvailability(
-                  //getDate, getDay, getTime, doctor['doctor_id']);
-
+                  final res = await DioProvider()
+                      .storeAvailability(getDate, getDay, getTime, 1); // TODO Fix doctor id
                   // redirect to doctor home page upon 200 status code
-                  //if (res == 200) {
-                  //MyApp.navigatorKey.currentState!.pushNamed('drhome');
-                  // }
+                  if (res == 200) {
+                    MyApp.navigatorKey.currentState!.pushNamed('/drhome');
+                  }
                 },
                 disable: _timeSelected && _dateSelected ? false : true,
               ),
