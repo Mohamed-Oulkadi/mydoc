@@ -136,7 +136,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           const SizedBox(height: 30),
           InkWell(
               onTap: () async {
-                showScreen(context, '/availability');
+                Navigator.pushNamed(context, '/availability',
+                  //TODO Fix get doctor id
+                  arguments: {"doctor_id": 1});
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
