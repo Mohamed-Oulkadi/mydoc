@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+
+import '../../components/button.dart';
+import '../../main.dart';
+import '../../providers/utils.dart';
 // import 'package:mydoc/screens/schedule/upcoming_schedule_screen.dart';
 
 class ScheduleScreen extends StatefulWidget {
@@ -128,6 +132,31 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               )),
           const SizedBox(height: 30),
           _scheduleWidgets[_buttonIndex],
+
+          const SizedBox(height: 30),
+          InkWell(
+              onTap: () async {
+                showScreen(context, '/availability');
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.symmetric(vertical: 18),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF7165D6),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Center(
+                  child: Text(
+                    "Change availability date",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            )
         ],
       )),
     );

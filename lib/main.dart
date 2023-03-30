@@ -3,6 +3,7 @@ import 'package:mydoc/screens/admin/nav_bar.dart';
 import 'package:mydoc/screens/auth/login_screen.dart';
 import 'package:mydoc/screens/auth/signup_screen.dart';
 import 'package:mydoc/screens/auth/welcome_screen.dart';
+import 'package:mydoc/screens/doctor/availability_screen.dart';
 import 'package:mydoc/screens/patient/appointment_screen.dart';
 import 'package:mydoc/screens/patient/booking_screen.dart';
 import 'package:mydoc/screens/patient/edit_profile.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
           '/booking': (context) => const BookingPage(),
           '/successBooked': (context) => const AppointmentBooked(),
           '/edit_profile': (context) => const EditProfileScreen(),
+          '/availability': (context) => const AvailabilityScreen(),
         });
   }
 }
