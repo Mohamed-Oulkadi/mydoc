@@ -313,7 +313,9 @@ class DioProvider {
 
   // store availability date
   Future storeAvailability(
-      String date, String day, String time, int doctor, String token) async {
+      String date, String day, String time, int doctor) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
     var response = await Dio().post('/api/availability',
         data: {'date': date, 'day': day, 'time': time, 'doctor_id': doctor},
         options: Options(headers: {'Authorization': 'Bearer $token'}));
