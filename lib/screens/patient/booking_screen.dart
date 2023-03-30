@@ -184,6 +184,8 @@ class _BookingPageState extends State<BookingPage> {
           } else {
             _isWeekend = false;
           }
+
+          // TODO check if unavailable date is selected
         });
       }),
     );
