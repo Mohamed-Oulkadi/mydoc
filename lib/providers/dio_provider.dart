@@ -156,9 +156,10 @@ class DioProvider {
   }
 
 // update specific patient data
-  Future updatePatient(id) async {
+  Future updatePatient(String full_name, String phone_number, String id_card, String birthday, int id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var response = await _dio.patch("/api/patients/$id",
+        data: {'patient_id': id,'full_name': full_name, 'phone_number': phone_number, 'id_card': id_card, 'birthday': birthday},
         options: Options(
             headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
 
