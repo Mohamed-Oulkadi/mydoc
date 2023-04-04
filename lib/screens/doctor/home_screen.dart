@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 
+import '../../utils/config.dart';
+
 class DrHomeScreen extends StatelessWidget {
   const DrHomeScreen({super.key});
 
@@ -46,8 +48,10 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Config().init(context);
+    final doctor = ModalRoute.of(context)!.settings.arguments as Map;
     return FutureBuilder(
-        future: DioProvider().getCurrentDoctor(),
+        future: DioProvider().getDoctor(doctor['doctor_id']),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text('Loading...');
@@ -55,7 +59,7 @@ class Header extends StatelessWidget {
             return Text('Error: ${snapshot.error}');
           } else {
             return Text(
-              "Hello Dr. $snapshot.data['full_name']",
+              "Hello Dr. ${snapshot.data['full_name']}",
               style: const TextStyle(
                 fontSize: 35,
                 fontWeight: FontWeight.w500,

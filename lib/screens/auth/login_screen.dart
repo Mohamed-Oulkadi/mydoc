@@ -30,7 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.pushNamed(context, '/home',
               arguments: {"patient_id": res['user']['id']});
         } else if (res['user']['role'] == 'doctor') {
-          showScreen(context, '/drhome');
+          Navigator.pushNamed(context, '/drhome',
+              arguments: {"doctor_id": res['user']['id']});
         } else if (res['user']['role'] == 'admin') {
           showScreen(context, '/Admhome');
         }
