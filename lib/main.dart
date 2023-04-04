@@ -11,6 +11,8 @@ import 'package:mydoc/screens/patient/success_booked.dart';
 import 'package:mydoc/widgets/dr_navbar_roots.dart';
 import 'package:mydoc/widgets/patient_navbar_roots.dart';
 
+import 'screens/patient/patient_profile.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
           '/successBooked': (context) => const AppointmentBooked(),
           '/edit_profile': (context) => const EditProfileScreen(),
           '/availability': (context) => const AvailabilityScreen(),
+          '/patient_profile': (context) => ProfileDetails(),
         });
   }
 }

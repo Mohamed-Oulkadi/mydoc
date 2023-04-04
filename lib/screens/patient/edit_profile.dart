@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/validators.dart';
 
+import '../../main.dart';
+import '../../providers/dio_provider.dart';
+import '../../utils/config.dart';
+
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
 
@@ -29,6 +33,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Config().init(context);
+    final patient = ModalRoute.of(context)!.settings.arguments as Map;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Profile'),
@@ -107,9 +113,19 @@ class EditProfileScreenState extends State<EditProfileScreen> {
               const SizedBox(height: 32),
               Center(
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      // TODO: Implement profile update
+                      final res = await DioProvider().updatePatient(
+                          _nameController.text,
+                          _phoneNumberController.text,
+                          _idCardNumberController.text,
+                          _birthdayController.text,
+                          patient['patientid']);
+
+                      // redirect to home page upon 200 status code
+                      if (res == 201) {
+                        MyApp.navigatorKey.currentState!.pushNamed('/patient_profile');
+                      }
                     }
                   },
                   child: const Text('Save Changes'),
