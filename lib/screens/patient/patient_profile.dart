@@ -145,9 +145,9 @@ class HeaderCurvedContainer extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()..color = Color(0xFF7165D6);
     Path path = Path()
-      ..relativeLineTo(0, 10)
-      ..quadraticBezierTo(size.width / 2, 190, size.width, 150)
-      ..relativeLineTo(0, 0)
+      ..relativeLineTo(0, 150)
+      ..quadraticBezierTo(size.width / 2, 225, size.width, 150)
+      ..relativeLineTo(0, -150)
       ..close();
     canvas.drawPath(path, paint);
   }
