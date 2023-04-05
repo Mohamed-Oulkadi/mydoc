@@ -1,9 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/dio_provider.dart';
+import 'package:mydoc/screens/doctor/doctor_profile.dart';
 
-class DrSettingScreen extends StatelessWidget {
-  const DrSettingScreen({super.key});
+import '../../utils/config.dart';
+
+var doctor;
+
+void fetchData(id) async {
+  doctor = await DioProvider().getDoctor(id['doctor_id']);
+}
+
+class SettingScreen extends StatelessWidget {
+  const SettingScreen({super.key});
 
   Future<void> logoutHandler(context) async {
     var res = await DioProvider().logout();
@@ -13,6 +24,9 @@ class DrSettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Config().init(context);
+    final doctorId = ModalRoute.of(context)!.settings.arguments as Map;
+    fetchData(doctorId);
     return SafeArea(
       minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
       child: SingleChildScrollView(
@@ -27,23 +41,16 @@ class DrSettingScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            const ListTile(
-              leading: CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage("images/doctor1.jpg"),
-              ),
-              title: Text(
-                "Dr. Doctor Name",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 25,
-                ),
-              ),
-              subtitle: Text("Profile"),
-            ),
+            const DoctorName(),
             const Divider(height: 50),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfileDetails(doctor: doctor),
+                    ));
+              },
               leading: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -165,5 +172,41 @@ class DrSettingScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class DoctorName extends StatelessWidget {
+  const DoctorName({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Config().init(context);
+    final doctor = ModalRoute.of(context)!.settings.arguments as Map;
+    return FutureBuilder(
+        future: DioProvider().getDoctor(doctor['doctor_id']),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text('Loading...');
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return ListTile(
+              leading: const CircleAvatar(
+                radius: 30,
+                backgroundImage: AssetImage("images/doctor1.jpg"),
+              ),
+              title: Text(
+                "${snapshot.data['full_name']}",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 25,
+                ),
+              ),
+              subtitle: const Text("Doctor"),
+            );
+          }
+        });
   }
 }
