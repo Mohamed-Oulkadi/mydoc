@@ -39,7 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void showLogin() {
-    Navigator.pushNamed(context, '/login');
+    Navigator.pushReplacementNamed(context, '/login');
   }
 
   Future<void> registerHandler() async {
@@ -52,7 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _passwordController.text,
         _password2Controller.text);
 
-    if (res['error'] == 'false') {
+    if (res['error'] == false) {
       showLogin();
     }
     // TODO: check TODO in login_screen.dart
@@ -192,7 +192,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       obscureText: _passToggle ? true : false,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
-                        label: const Text("Password"),
+                        label: const Text("Confirm Password"),
                         prefixIcon: const Icon(Icons.lock),
                         suffixIcon: InkWell(
                           onTap: () {
@@ -223,11 +223,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             if (_formKey.currentState!.validate()) {
                               registerHandler();
                             }
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const LoginScreen(),
-                                ));
                           },
                           child: const Padding(
                             padding: EdgeInsets.symmetric(

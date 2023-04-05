@@ -68,15 +68,14 @@ class _LoginScreenState extends State<LoginScreen> {
             key: _formKey,
             child: Column(
               children: [
-                const SizedBox(height: 10),
                 _buildImage(),
-                const SizedBox(height: 10),
+                const SizedBox(height: 40),
                 _buildEmailField(),
-                const SizedBox(height: 10),
+                const SizedBox(height: 5),
                 _buildPasswordField(),
                 const SizedBox(height: 20),
                 _buildLoginButton(),
-                const SizedBox(height: 20),
+                const SizedBox(height: 50),
                 _buildCreateAccountButton(context),
               ],
             ),
@@ -170,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildCreateAccountButton(BuildContext context) {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(

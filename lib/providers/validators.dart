@@ -11,11 +11,15 @@ String? validateFullName(String? value) {
   }
 
   if (value.length < 5) {
-    return 'full name length too short';
+    return 'Full name length is too short';
   }
 
-  if (value.allMatches(" ").length == 2) {
-    return 'Name too long';
+  if (value.allMatches(" ").length > 3) {
+    return 'Full name length is too long';
+  }
+
+  if (!value.contains(" ")) {
+    return 'Not a valid full name';
   }
 
   return null;
@@ -45,7 +49,7 @@ String? validatePhoneNumber(String? value) {
     return "Invalid phone number";
   }
 
-  if (!value.startsWith('06') || !value.startsWith('07')) {
+  if (!value.startsWith('06') && !value.startsWith('07')) {
     return 'Not a valid moroccan phone number';
   }
 

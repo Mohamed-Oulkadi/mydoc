@@ -27,7 +27,7 @@ class NavBarRootsState extends State<NavBarRoots> {
       backgroundColor: Colors.white,
       body: _screens[_selectedIndex],
       bottomNavigationBar: SizedBox(
-        height: 80,
+        height: MediaQuery.of(context).size.height * 0.09,
         child: BottomNavigationBar(
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
