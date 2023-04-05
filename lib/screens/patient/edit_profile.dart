@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mydoc/providers/validators.dart';
 
 import '../../main.dart';
@@ -20,6 +24,19 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController _idCardNumberController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final String _profileImageURL = 'images/doctor1.jpg';
+
+  File? image;
+  
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemp = File(image.path);
+      setState(() => this.image = imageTemp);
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
 
   @override
   void dispose() {
@@ -55,8 +72,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       Icons.camera_alt,
                       color: Colors.white,
                     ),
-                    onPressed: () {
-                      // TODO: Implement photo selection
+                    onPressed: () async {
+                      pickImage();
                     },
                   ),
                 ),
@@ -124,7 +141,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
 
                       // redirect to home page upon 200 status code
                       if (res == 201) {
-                        MyApp.navigatorKey.currentState!.pushNamed('/patient_profile');
+                        MyApp.navigatorKey.currentState!
+                            .pushNamed('/patient_profile');
                       }
                     }
                   },
