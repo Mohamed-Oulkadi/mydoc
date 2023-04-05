@@ -13,8 +13,8 @@ void fetchData(id) async {
   doctor = await DioProvider().getDoctor(id['doctor_id']);
 }
 
-class SettingScreen extends StatelessWidget {
-  const SettingScreen({super.key});
+class DrSettingScreen extends StatelessWidget {
+  const DrSettingScreen({super.key});
 
   Future<void> logoutHandler(context) async {
     var res = await DioProvider().logout();
