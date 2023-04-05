@@ -10,9 +10,8 @@ import '../../utils/config.dart';
 
 var patient;
 
-void fetchData() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  patient = await json.decode(prefs.get('patient') as String);
+void fetchData(id) async {
+  patient = await DioProvider().getPatient(id['patient_id']);
 }
 
 class SettingScreen extends StatelessWidget {
@@ -26,7 +25,9 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    fetchData();
+    Config().init(context);
+    final patientId = ModalRoute.of(context)!.settings.arguments as Map;
+    fetchData(patientId);
     return SafeArea(
       minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
       child: SingleChildScrollView(
@@ -48,7 +49,7 @@ class SettingScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfileDetails(),
+                      builder: (context) => ProfileDetails(patient: patient),
                     ));
               },
               leading: Container(

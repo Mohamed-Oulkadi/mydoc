@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
           '/successBooked': (context) => const AppointmentBooked(),
           '/edit_profile': (context) => const EditProfileScreen(),
           '/availability': (context) => const AvailabilityScreen(),
-          '/patient_profile': (context) => ProfileDetails(),
         });
   }
 }

@@ -4,6 +4,10 @@ import '../../providers/utils.dart';
 import 'edit_profile.dart';
 
 class ProfileDetails extends StatelessWidget {
+  const ProfileDetails({super.key, required this.patient});
+
+  final Map<dynamic, dynamic> patient;
+
   Widget textfield({@required hintText, @required prefixIcon}) {
     return Material(
       elevation: 4,
@@ -48,7 +52,8 @@ class ProfileDetails extends StatelessWidget {
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () => showScreen(context, '/edit_profile'),
+                onTap: () => Navigator.pushNamed(context, '/edit_profile',
+                  arguments: {"patient_id": patient['patient_id']}),
                 child: const Icon(Icons.edit),
               ))
         ],
@@ -67,23 +72,23 @@ class ProfileDetails extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     textfield(
-                      hintText: 'Username',
+                      hintText: "${patient['full_name']}",
                       prefixIcon: Icon(Icons.person),
                     ),
                     textfield(
-                      hintText: 'Email',
+                      hintText: "${patient['email']}",
                       prefixIcon: Icon(Icons.email),
                     ),
                     textfield(
-                      hintText: 'Phone Number',
+                      hintText: "${patient['phone_number']}",
                       prefixIcon: Icon(Icons.phone),
                     ),
                     textfield(
-                      hintText: 'ID Card',
+                      hintText: "${patient['id_card']}",
                       prefixIcon: Icon(Icons.badge),
                     ),
                     textfield(
-                      hintText: 'Birthday Date',
+                      hintText: "${patient['birthday']}",
                       prefixIcon: Icon(Icons.calendar_today),
                     ),
                   ],
@@ -140,9 +145,9 @@ class HeaderCurvedContainer extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()..color = Color(0xFF7165D6);
     Path path = Path()
-      ..relativeLineTo(0, 150)
-      ..quadraticBezierTo(size.width / 2, 225, size.width, 150)
-      ..relativeLineTo(0, -150)
+      ..relativeLineTo(0, 10)
+      ..quadraticBezierTo(size.width / 2, 190, size.width, 150)
+      ..relativeLineTo(0, 0)
       ..close();
     canvas.drawPath(path, paint);
   }
