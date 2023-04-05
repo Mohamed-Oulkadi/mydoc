@@ -72,7 +72,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             const Padding(
-              padding: EdgeInsets.only(left: 15),
+              padding: EdgeInsets.only(bottom: 10),
               child: Text(
                 "Popular Doctors",
                 style: TextStyle(
@@ -145,7 +145,7 @@ class DoctorsBuilder extends StatelessWidget {
                   return InkWell(
                     onTap: () => showScreen(context, '/appointments'),
                     child: Container(
-                      margin: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(5),
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -212,15 +212,12 @@ class SymptomsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(left: 15),
-      child: Text(
-        "What are your symptoms?",
-        style: TextStyle(
-          fontSize: 23,
-          fontWeight: FontWeight.w500,
-          color: Colors.black54,
-        ),
+    return const Text(
+      "What are your symptoms?",
+      style: TextStyle(
+        fontSize: 23,
+        fontWeight: FontWeight.w500,
+        color: Colors.black54,
       ),
     );
   }
