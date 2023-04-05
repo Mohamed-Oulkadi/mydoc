@@ -25,65 +25,66 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+        minimum: const EdgeInsets.all(12.0),
         child: SingleChildScrollView(
             child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Header(),
-        const SizedBox(height: 30),
-        const _TwoGiantButtons(),
-        const SizedBox(height: 25),
-        const SymptomsBar(),
-        SizedBox(
-          height: 70,
-          child: ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: __symptoms.length,
-            itemBuilder: (context, index) {
-              return Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                decoration: BoxDecoration(
-                    color: const Color(0xFFF4F6FA),
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 4,
-                        spreadRadius: 2,
-                      )
-                    ]),
-                child: Center(
-                  child: Text(
-                    __symptoms[index],
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black54,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Header(),
+            const SizedBox(height: 30),
+            const _TwoGiantButtons(),
+            const SizedBox(height: 25),
+            const SymptomsBar(),
+            SizedBox(
+              height: 70,
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: __symptoms.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    decoration: BoxDecoration(
+                        color: const Color(0xFFF4F6FA),
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 4,
+                            spreadRadius: 2,
+                          )
+                        ]),
+                    child: Center(
+                      child: Text(
+                        __symptoms[index],
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black54,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-        const SizedBox(height: 15),
-        const Padding(
-          padding: EdgeInsets.only(left: 15),
-          child: Text(
-            "Popular Doctors",
-            style: TextStyle(
-              fontSize: 23,
-              fontWeight: FontWeight.w500,
-              color: Colors.black54,
+                  );
+                },
+              ),
             ),
-          ),
-        ),
-        DoctorsBuilder(imgs: _imgs),
-      ],
-    )));
+            const SizedBox(height: 15),
+            const Padding(
+              padding: EdgeInsets.only(left: 15),
+              child: Text(
+                "Popular Doctors",
+                style: TextStyle(
+                  fontSize: 23,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black54,
+                ),
+              ),
+            ),
+            DoctorsBuilder(imgs: _imgs),
+          ],
+        )));
   }
 }
 
@@ -106,7 +107,7 @@ class Header extends StatelessWidget {
             return Text(
               "Hello $fullName",
               style: const TextStyle(
-                fontSize: 35,
+                fontSize: 30,
                 fontWeight: FontWeight.w500,
               ),
             );
