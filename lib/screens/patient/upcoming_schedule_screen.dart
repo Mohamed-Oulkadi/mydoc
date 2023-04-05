@@ -10,13 +10,6 @@ class UpcomingSchedule extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "About Appointment",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
           const SizedBox(height: 30),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 5),
@@ -38,7 +31,7 @@ class UpcomingSchedule extends StatelessWidget {
                   const ListTile(
                     title: Text(
                       "Dr. ahmed karim",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                     trailing: CircleAvatar(
                       radius: 25,
@@ -110,6 +103,7 @@ class UpcomingSchedule extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       InkWell(
+                        // TODO call delete Schedule from api
                         onTap: () {},
                         child: Container(
                           width: 130,
@@ -130,6 +124,7 @@ class UpcomingSchedule extends StatelessWidget {
                         ),
                       ),
                       InkWell(
+                        // TODO reschedule from api
                         onTap: () {},
                         child: Container(
                           width: 130,
@@ -144,7 +139,7 @@ class UpcomingSchedule extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.black),
+                                  color: Colors.white),
                             ),
                           ),
                         ),

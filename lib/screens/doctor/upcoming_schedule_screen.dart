@@ -38,7 +38,7 @@ class UpcomingSchedule extends StatelessWidget {
                   const ListTile(
                     title: Text(
                       "Ali Zoubair",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                     trailing: CircleAvatar(
                       radius: 25,

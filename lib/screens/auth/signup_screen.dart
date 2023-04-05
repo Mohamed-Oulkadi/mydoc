@@ -56,44 +56,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
       showLogin();
     }
     // TODO: check TODO in login_screen.dart
-    /*if (res['error'].isNotEmpty) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        Future.delayed(const Duration(seconds: 5), () {
-          Navigator.of(context).pop(true);
-        });
-        return Theme(
-          data: Theme.of(context).copyWith(dialogBackgroundColor: Colors.red),
-          child: AlertDialog(
-            title: Text(res['error']),
-          ),
-        );
-      },
-    );
-  } else {
-    showDialog(
-      context: context,
-      builder: (context) {
-        Future.delayed(const Duration(seconds: 5), () {
-          Navigator.of(context).pop(true);
-        });
-        return Theme(
-          data: Theme.of(context).copyWith(dialogBackgroundColor: Colors.green),
-          child: AlertDialog(
-            title: Text(res['message']),
-          ),
-        );
-      },
-    );*/
   }
 
   @override
   Widget build(BuildContext context) {
     return Material(
         color: Colors.white,
-        child: SingleChildScrollView(
-          child: SafeArea(
+        child: SafeArea(
+          child: SingleChildScrollView(
             child: Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
               key: _formKey,
@@ -268,7 +238,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 25,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
@@ -301,11 +271,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           "Login",
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
                             color: Color(0xFF7165D6),
                           ),
                         ),
                       ),
+                      const SizedBox(height: 20),
                     ],
                   )
                 ],

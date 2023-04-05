@@ -19,7 +19,7 @@ class ProfileDetails extends StatelessWidget {
             hintStyle: const TextStyle(
               letterSpacing: 2,
               color: Colors.black54,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
             ),
             fillColor: Colors.white30,
             filled: true,
@@ -94,11 +94,11 @@ class ProfileDetails extends StatelessWidget {
             ],
           ),
           CustomPaint(
-            child: Container(
+            painter: HeaderCurvedContainer(),
+            child: SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
             ),
-            painter: HeaderCurvedContainer(),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,

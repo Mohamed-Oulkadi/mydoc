@@ -34,7 +34,7 @@ class DrSettingScreen extends StatelessWidget {
             const Text(
               "Settings",
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 28,
                 fontWeight: FontWeight.w500,
               ),
             ),

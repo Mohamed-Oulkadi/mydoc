@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        minimum: const EdgeInsets.all(12.0),
+        minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
         child: SingleChildScrollView(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -235,6 +235,7 @@ class _TwoGiantButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         InkWell(
+          // TODO send to appointment page
           onTap: () {},
           child: Container(
             padding: const EdgeInsets.all(20),

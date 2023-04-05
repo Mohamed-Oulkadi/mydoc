@@ -34,7 +34,7 @@ class NavBarRootsState extends State<NavBarRoots> {
           selectedItemColor: const Color(0xFF7165D6),
           unselectedItemColor: Colors.black26,
           selectedLabelStyle:
-              const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              const TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
           currentIndex: _selectedIndex,
           onTap: (index) {
             setState(() {

@@ -62,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: SafeArea(
+          minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
           child: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _formKey,
@@ -157,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 25,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -186,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
             "Create Account",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
               color: Color(0xFF7165D6),
             ),
           ),

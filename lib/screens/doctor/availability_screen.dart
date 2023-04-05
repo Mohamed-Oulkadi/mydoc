@@ -46,7 +46,7 @@ class _AvailabilityScreen extends State<AvailabilityScreen> {
                     child: Text(
                       'Select Unavailability Time',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                         fontSize: 20,
                       ),
                     ),
@@ -65,7 +65,7 @@ class _AvailabilityScreen extends State<AvailabilityScreen> {
                       'Weekend is already unavailable, please select another date',
                       style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                         color: Colors.grey,
                       ),
                     ),
@@ -99,7 +99,7 @@ class _AvailabilityScreen extends State<AvailabilityScreen> {
                           child: Text(
                             '${index + 9}:00 ${index + 9 > 11 ? "PM" : "AM"}',
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w500,
                               color:
                                   _currentIndex == index ? Colors.white : null,
                             ),

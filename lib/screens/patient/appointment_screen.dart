@@ -76,7 +76,7 @@ class AppointmentScreen extends StatelessWidget {
                                 "Gynécologue",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                               const SizedBox(height: 15),
@@ -224,7 +224,7 @@ class AppointmentScreen extends StatelessWidget {
                                   title: const Text(
                                     "Patient",
                                     style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                   subtitle: const Text("1 day ago"),
@@ -289,7 +289,7 @@ class AppointmentScreen extends StatelessWidget {
                     title: const Text(
                       "Agadir, Medical center",
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   )
@@ -328,7 +328,7 @@ class AppointmentScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.black54,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                   ),
                 )
               ],

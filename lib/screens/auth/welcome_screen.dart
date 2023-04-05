@@ -7,6 +7,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: SafeArea(
+        minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -21,7 +22,7 @@ class WelcomeScreen extends StatelessWidget {
               style: TextStyle(
                 color: Color(0xFF7165D6),
                 fontSize: 30,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w500,
                 letterSpacing: 1,
                 wordSpacing: 2,
               ),
@@ -54,7 +55,7 @@ class WelcomeScreen extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),

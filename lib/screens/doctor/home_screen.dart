@@ -9,35 +9,36 @@ class DrHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+        minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
         child: SingleChildScrollView(
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Header(),
-              CircleAvatar(
-                radius: 25,
-                backgroundImage: AssetImage("images/doctor1.jpg"),
-              )
-            ]),
-      ),
-      const SizedBox(height: 15),
-      const Padding(
-        padding: EdgeInsets.only(left: 15),
-        child: Text(
-          "List of patients",
-          style: TextStyle(
-            fontSize: 23,
-            fontWeight: FontWeight.w500,
-            color: Colors.black54,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Header(),
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundImage: AssetImage("images/doctor1.jpg"),
+                  )
+                ]),
           ),
-        ),
-      ),
-      const PatientsBuilder()
-    ])));
+          const SizedBox(height: 15),
+          const Padding(
+            padding: EdgeInsets.only(left: 15),
+            child: Text(
+              "List of patients",
+              style: TextStyle(
+                fontSize: 23,
+                fontWeight: FontWeight.w500,
+                color: Colors.black54,
+              ),
+            ),
+          ),
+          const PatientsBuilder()
+        ])));
   }
 }
 

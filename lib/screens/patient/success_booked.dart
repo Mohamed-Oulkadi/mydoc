@@ -24,7 +24,7 @@ class AppointmentBooked extends StatelessWidget {
                 'Successfully Booked',
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),

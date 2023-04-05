@@ -65,7 +65,7 @@ class _BookingPageState extends State<BookingPage> {
                     child: Text(
                       'Select Consultation Time',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                         fontSize: 20,
                       ),
                     ),
@@ -84,7 +84,7 @@ class _BookingPageState extends State<BookingPage> {
                       'Weekend is not available, please select another date',
                       style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                         color: Colors.grey,
                       ),
                     ),
@@ -118,7 +118,7 @@ class _BookingPageState extends State<BookingPage> {
                           child: Text(
                             '${index + 9}:00 ${index + 9 > 11 ? "PM" : "AM"}',
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w500,
                               color:
                                   _currentIndex == index ? Colors.white : null,
                             ),

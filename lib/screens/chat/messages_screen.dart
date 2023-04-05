@@ -17,72 +17,70 @@ class MessagesScreen extends StatelessWidget {
       "doctor3.jpg",
       "doctor4.jpg",
     ];
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 40),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
+    return SafeArea(
+      minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
               "Messages",
               style: TextStyle(
                 fontSize: 28,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w500,
               ),
             ),
-          ),
-          const SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 10,
-                    spreadRadius: 2,
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 300,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: "Search",
-                          border: InputBorder.none,
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 300,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            hintText: "Search",
+                            border: InputBorder.none,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const Icon(
-                    Icons.search,
-                    color: Color(0xFF7165D6),
-                  ),
-                ],
+                    const Icon(
+                      Icons.search,
+                      color: Color(0xFF7165D6),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              "Recent Chat",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                "Recent Chat",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
-          ),
-          /* SizedBox(
+            /* SizedBox(
             height: 90,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -141,53 +139,54 @@ class MessagesScreen extends StatelessWidget {
               },
             ),
           ), */
-          ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 6,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return ListTile(
-                minVerticalPadding: 15,
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ChatScreen(),
-                      ));
-                },
-                leading: CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage(
-                    "images/${imgs[index]}",
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 6,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  minVerticalPadding: 15,
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ChatScreen(),
+                        ));
+                  },
+                  leading: CircleAvatar(
+                    radius: 30,
+                    backgroundImage: AssetImage(
+                      "images/${imgs[index]}",
+                    ),
                   ),
-                ),
-                title: const Text(
-                  "Dr . Doctor Name",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                  title: const Text(
+                    "Dr . Doctor Name",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                subtitle: const Text(
-                  "Hello, Doctor....",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black54,
+                  subtitle: const Text(
+                    "Hello, Doctor....",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black54,
+                    ),
                   ),
-                ),
-                trailing: const Text(
-                  "12:30",
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.black54,
+                  trailing: const Text(
+                    "12:30",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black54,
+                    ),
                   ),
-                ),
-              );
-            },
-          )
-        ],
+                );
+              },
+            )
+          ],
+        ),
       ),
     );
   }

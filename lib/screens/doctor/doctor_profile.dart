@@ -19,7 +19,7 @@ class ProfileDetails extends StatelessWidget {
             hintStyle: const TextStyle(
               letterSpacing: 2,
               color: Colors.black54,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
             ),
             fillColor: Colors.white30,
             filled: true,

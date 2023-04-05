@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ComfirmedSchedule extends StatelessWidget {
-  const ComfirmedSchedule({super.key});
+class ConfirmedSchedule extends StatelessWidget {
+  const ConfirmedSchedule({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,13 +10,6 @@ class ComfirmedSchedule extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "About Appointment",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
           const SizedBox(height: 30),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 5),
@@ -38,7 +31,7 @@ class ComfirmedSchedule extends StatelessWidget {
                   const ListTile(
                     title: Text(
                       "Dr. ahmed karim",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                     trailing: CircleAvatar(
                       radius: 25,
@@ -96,7 +89,7 @@ class ComfirmedSchedule extends StatelessWidget {
                           ),
                           const SizedBox(width: 5),
                           const Text(
-                            "Comfirmed",
+                            "Confirmed",
                             style: TextStyle(
                               color: Colors.black54,
                             ),
@@ -110,6 +103,7 @@ class ComfirmedSchedule extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       InkWell(
+                        // TODO call delete Schedule from api
                         onTap: () {},
                         child: Container(
                           width: 130,
@@ -130,6 +124,7 @@ class ComfirmedSchedule extends StatelessWidget {
                         ),
                       ),
                       InkWell(
+                        // TODO reschedule from api
                         onTap: () {},
                         child: Container(
                           width: 130,
@@ -140,11 +135,11 @@ class ComfirmedSchedule extends StatelessWidget {
                           ),
                           child: const Center(
                             child: Text(
-                              "Comfirm",
+                              "Reschedule",
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.black),
+                                  color: Colors.white),
                             ),
                           ),
                         ),
