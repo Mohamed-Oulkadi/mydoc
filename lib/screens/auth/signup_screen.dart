@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:mydoc/screens/auth/login_screen.dart';
 import 'package:mydoc/providers/validators.dart';
 import 'package:mydoc/providers/dio_provider.dart';
-import 'package:date_format/date_format.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -82,7 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         return Theme(
           data: Theme.of(context).copyWith(dialogBackgroundColor: Colors.green),
           child: AlertDialog(
-            title: Text(res['message']),  
+            title: Text(res['message']),
           ),
         );
       },
@@ -255,10 +254,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               registerHandler();
                             }
                             Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
-                              ));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
+                                ));
                           },
                           child: const Padding(
                             padding: EdgeInsets.symmetric(

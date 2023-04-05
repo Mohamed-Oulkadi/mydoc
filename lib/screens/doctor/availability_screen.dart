@@ -3,11 +3,9 @@ import 'package:mydoc/components/custom_appbar.dart';
 import 'package:mydoc/main.dart';
 import 'package:mydoc/models/booking_datetime_converted.dart';
 import 'package:mydoc/providers/dio_provider.dart';
-import 'package:mydoc/providers/utils.dart';
 import 'package:mydoc/utils/config.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class AvailabilityScreen extends StatefulWidget {
@@ -125,8 +123,8 @@ class _AvailabilityScreen extends State<AvailabilityScreen> {
                   final getDate = DateConverted.getDate(_currentDay);
                   final getDay = DateConverted.getDay(_currentDay.weekday);
                   final getTime = DateConverted.getTime(_currentIndex!);
-                  final res = await DioProvider()
-                      .storeAvailability(getDate, getDay, getTime, 1); // TODO Fix doctor id
+                  final res = await DioProvider().storeAvailability(
+                      getDate, getDay, getTime, 1); // TODO Fix doctor id
                   // redirect to doctor home page upon 200 status code
                   if (res == 200) {
                     MyApp.navigatorKey.currentState!.pushNamed('/drhome');

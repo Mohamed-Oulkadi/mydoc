@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mydoc/screens/admin/AdminHome_screen.dart';
+import 'package:mydoc/screens/admin/adminhome_screen.dart';
 import 'add_doctor.dart';
 
 class AdminNavBar extends StatefulWidget {

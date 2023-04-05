@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 import 'package:mydoc/screens/patient/patient_profile.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/config.dart';
 

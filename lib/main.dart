@@ -11,8 +11,6 @@ import 'package:mydoc/screens/patient/success_booked.dart';
 import 'package:mydoc/widgets/dr_navbar_roots.dart';
 import 'package:mydoc/widgets/patient_navbar_roots.dart';
 
-import 'screens/patient/patient_profile.dart';
-
 void main() {
   runApp(const MyApp());
 }

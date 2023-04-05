@@ -6,8 +6,6 @@ import 'package:mydoc/providers/dio_provider.dart';
 import 'package:mydoc/providers/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'booking_screen.dart';
-
 var doctors;
 
 void fetchData() async {
@@ -87,13 +85,13 @@ class AppointmentScreen extends StatelessWidget {
                                 children: [
                                   InkWell(
                                     borderRadius: BorderRadius.circular(30),
-                                    onTap: () async{
+                                    onTap: () async {
                                       Uri phoneno = Uri.parse('tel:066666666');
-                                          if (await canLaunchUrl(phoneno)) {
-                                              await launchUrl(phoneno);
-                                          }else{
-                                              throw 'Could not launch ';
-                                          }
+                                      if (await canLaunchUrl(phoneno)) {
+                                        await launchUrl(phoneno);
+                                      } else {
+                                        throw 'Could not launch ';
+                                      }
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.all(10),
@@ -111,9 +109,7 @@ class AppointmentScreen extends StatelessWidget {
                                   const SizedBox(width: 20),
                                   InkWell(
                                     borderRadius: BorderRadius.circular(30),
-                                    onTap: () {
-                                      
-                                    },
+                                    onTap: () {},
                                     child: Container(
                                       padding: const EdgeInsets.all(10),
                                       decoration: const BoxDecoration(
@@ -167,25 +163,25 @@ class AppointmentScreen extends StatelessWidget {
                   const AboutPage(),
                   const SizedBox(height: 10),
                   Row(
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         "Reviews",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      const Icon(Icons.star, color: Colors.amber),
-                      const Text(
+                      SizedBox(width: 10),
+                      Icon(Icons.star, color: Colors.amber),
+                      Text(
                         "4.8",
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      const Text(
+                      SizedBox(width: 10),
+                      Text(
                         "(124)",
                         style: TextStyle(
                           fontWeight: FontWeight.w500,

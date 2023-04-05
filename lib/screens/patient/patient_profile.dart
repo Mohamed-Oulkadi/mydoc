@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../providers/utils.dart';
-import 'edit_profile.dart';
-
 class ProfileDetails extends StatelessWidget {
   const ProfileDetails({super.key, required this.patient});
 
@@ -19,7 +16,7 @@ class ProfileDetails extends StatelessWidget {
         decoration: InputDecoration(
             prefixIcon: prefixIcon,
             hintText: hintText,
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               letterSpacing: 2,
               color: Colors.black54,
               fontWeight: FontWeight.bold,
@@ -38,9 +35,9 @@ class ProfileDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Color(0xFF7165D6),
+        backgroundColor: const Color(0xFF7165D6),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_outlined,
             color: Colors.white,
           ),
@@ -50,10 +47,10 @@ class ProfileDetails extends StatelessWidget {
         ),
         actions: [
           Padding(
-              padding: EdgeInsets.only(right: 20.0),
+              padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () => Navigator.pushNamed(context, '/edit_profile',
-                  arguments: {"patient_id": patient['patient_id']}),
+                    arguments: {"patient_id": patient['patient_id']}),
                 child: const Icon(Icons.edit),
               ))
         ],
@@ -67,29 +64,29 @@ class ProfileDetails extends StatelessWidget {
               Container(
                 height: 450,
                 width: double.infinity,
-                margin: EdgeInsets.symmetric(horizontal: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     textfield(
                       hintText: "${patient['full_name']}",
-                      prefixIcon: Icon(Icons.person),
+                      prefixIcon: const Icon(Icons.person),
                     ),
                     textfield(
                       hintText: "${patient['email']}",
-                      prefixIcon: Icon(Icons.email),
+                      prefixIcon: const Icon(Icons.email),
                     ),
                     textfield(
                       hintText: "${patient['phone_number']}",
-                      prefixIcon: Icon(Icons.phone),
+                      prefixIcon: const Icon(Icons.phone),
                     ),
                     textfield(
                       hintText: "${patient['id_card']}",
-                      prefixIcon: Icon(Icons.badge),
+                      prefixIcon: const Icon(Icons.badge),
                     ),
                     textfield(
                       hintText: "${patient['birthday']}",
-                      prefixIcon: Icon(Icons.calendar_today),
+                      prefixIcon: const Icon(Icons.calendar_today),
                     ),
                   ],
                 ),
@@ -106,7 +103,7 @@ class ProfileDetails extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.all(20),
                 child: Text(
                   "Profile",
@@ -119,14 +116,14 @@ class ProfileDetails extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 width: MediaQuery.of(context).size.width / 3.5,
                 height: MediaQuery.of(context).size.width / 3.5,
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.white, width: 5),
                   shape: BoxShape.circle,
                   color: Colors.white,
-                  image: DecorationImage(
+                  image: const DecorationImage(
                     fit: BoxFit.cover,
                     image: AssetImage('images/doctor1.jpg'),
                   ),
@@ -143,7 +140,7 @@ class ProfileDetails extends StatelessWidget {
 class HeaderCurvedContainer extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()..color = Color(0xFF7165D6);
+    Paint paint = Paint()..color = const Color(0xFF7165D6);
     Path path = Path()
       ..relativeLineTo(0, 150)
       ..quadraticBezierTo(size.width / 2, 225, size.width, 150)

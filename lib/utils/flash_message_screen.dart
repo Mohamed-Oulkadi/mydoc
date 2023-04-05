@@ -12,7 +12,8 @@ class FlashMessageScreen extends StatelessWidget {
         onPressed: () {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: CustomSnackBar(errorText: "Your Email or password is incorrect"),
+              content: CustomSnackBar(
+                  errorText: "Your Email or password is incorrect"),
               behavior: SnackBarBehavior.floating,
               backgroundColor: Colors.transparent,
               elevation: 0,
@@ -27,7 +28,8 @@ class FlashMessageScreen extends StatelessWidget {
 
 class CustomSnackBar extends StatelessWidget {
   const CustomSnackBar({
-    super.key, required this.errorText,
+    super.key,
+    required this.errorText,
   });
 
   final String errorText;
@@ -37,7 +39,7 @@ class CustomSnackBar extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             height: 90,
             decoration: const BoxDecoration(
               color: Color(0xFFC72C41),
@@ -55,7 +57,8 @@ class CustomSnackBar extends StatelessWidget {
                       const Spacer(),
                       Text(
                         errorText,
-                        style: const TextStyle(fontSize: 12, color: Colors.white),
+                        style:
+                            const TextStyle(fontSize: 12, color: Colors.white),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
