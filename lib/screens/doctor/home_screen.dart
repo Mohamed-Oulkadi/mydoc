@@ -27,7 +27,7 @@ class DrHomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: 15),
           const Padding(
-            padding: EdgeInsets.only(left: 15),
+            padding: EdgeInsets.only(left: 15, bottom: 15),
             child: Text(
               "List of patients",
               style: TextStyle(
@@ -48,20 +48,17 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Config().init(context);
-    final doctor = ModalRoute.of(context)!.settings.arguments as Map;
     return FutureBuilder(
-        future: DioProvider().getDoctor(doctor['doctor_id']),
+        future: DioProvider().fetchCurrentDoctorData(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Loading...');
-          } else if (snapshot.hasError) {
+          if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
             return Text(
               "Hello Dr. ${snapshot.data['full_name']}",
               style: const TextStyle(
-                fontSize: 35,
-                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
             );
           }
@@ -114,7 +111,7 @@ class PatientsBuilder extends StatelessWidget {
                       children: [
                         const CircleAvatar(
                           radius: 35,
-                          backgroundImage: AssetImage("images/doctor1.png"),
+                          backgroundImage: AssetImage("images/doctor1.jpg"),
                         ),
                         Text(
                           "${snapshot.data[index]['full_name']}",

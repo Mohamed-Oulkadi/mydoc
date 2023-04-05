@@ -26,7 +26,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   final String _profileImageURL = 'images/doctor1.jpg';
 
   File? image;
-  
+
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -59,6 +59,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,12 +121,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                   labelText: 'Phone Number',
                   prefixIcon: Icon(Icons.phone),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your phone number';
-                  }
-                  return null;
-                },
+                validator: (value) => validatePhoneNumber(value),
               ),
               const SizedBox(height: 32),
               Center(

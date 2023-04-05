@@ -2,7 +2,6 @@ import 'package:mydoc/components/button.dart';
 import 'package:mydoc/components/custom_appbar.dart';
 import 'package:mydoc/models/booking_datetime_converted.dart';
 import 'package:mydoc/providers/dio_provider.dart';
-import 'package:mydoc/providers/utils.dart';
 import 'package:mydoc/utils/config.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,11 +35,10 @@ class _BookingPageState extends State<BookingPage> {
     final res = await DioProvider()
         .bookAppointment(getDate, getTime, doctor['doctor_id']);
 
-    // TODO redirection or prompt booking successful
     if (res['error'] == 'false') {
-      showScreen(context, '/home');
+      Navigator.pushReplacementNamed(context, '/home');
     } else {
-      showScreen(context, '/successBooked');
+      Navigator.pushReplacementNamed(context, '/successBooked');
     }
   }
 

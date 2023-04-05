@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mydoc/providers/utils.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 
 import '../../utils/config.dart';
@@ -94,9 +93,8 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Config().init(context);
-    final patient = ModalRoute.of(context)!.settings.arguments as Map;
     return FutureBuilder(
-        future: DioProvider().getPatient(patient['patient_id']),
+        future: DioProvider().fetchCurrentPatientData(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text('Loading...');
@@ -144,7 +142,7 @@ class DoctorsBuilder extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () => showScreen(context, '/appointments'),
+                    onTap: () => Navigator.pushNamed(context, '/appointments'),
                     child: Container(
                       margin: const EdgeInsets.all(5),
                       padding: const EdgeInsets.symmetric(vertical: 10),

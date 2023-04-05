@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 import 'package:mydoc/screens/doctor/doctor_profile.dart';
 
-import '../../utils/config.dart';
+Map<String, dynamic> doctor = {};
 
-var doctor;
-
-void fetchData(id) async {
-  doctor = await DioProvider().getDoctor(id['doctor_id']);
+void fetchData() async {
+  doctor = await DioProvider().fetchCurrentDoctorData();
 }
 
 class DrSettingScreen extends StatelessWidget {
@@ -22,9 +20,7 @@ class DrSettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Config().init(context);
-    final doctorId = ModalRoute.of(context)!.settings.arguments as Map;
-    fetchData(doctorId);
+    fetchData();
     return SafeArea(
       minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
       child: SingleChildScrollView(
@@ -34,7 +30,7 @@ class DrSettingScreen extends StatelessWidget {
             const Text(
               "Settings",
               style: TextStyle(
-                fontSize: 28,
+                fontSize: 30,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -46,7 +42,7 @@ class DrSettingScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfileDetails(doctor: doctor),
+                      builder: (context) => DrProfileDetails(doctor: doctor),
                     ));
               },
               leading: Container(
@@ -180,14 +176,10 @@ class DoctorName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Config().init(context);
-    final doctor = ModalRoute.of(context)!.settings.arguments as Map;
     return FutureBuilder(
-        future: DioProvider().getDoctor(doctor['doctor_id']),
+        future: DioProvider().fetchCurrentDoctorData(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Loading...');
-          } else if (snapshot.hasError) {
+          if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
             return ListTile(

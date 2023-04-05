@@ -10,13 +10,6 @@ class UpcomingSchedule extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "About patient",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
           const SizedBox(height: 15),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 5),

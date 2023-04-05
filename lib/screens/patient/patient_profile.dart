@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ProfileDetails extends StatelessWidget {
-  const ProfileDetails({super.key, required this.patient});
+class PatientProfileDetails extends StatelessWidget {
+  const PatientProfileDetails({super.key, required this.patient});
 
   final Map<dynamic, dynamic> patient;
 

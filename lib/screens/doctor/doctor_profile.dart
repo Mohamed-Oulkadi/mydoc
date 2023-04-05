@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ProfileDetails extends StatelessWidget {
-  const ProfileDetails({super.key, required this.doctor});
+class DrProfileDetails extends StatelessWidget {
+  const DrProfileDetails({super.key, required this.doctor});
 
   final Map<dynamic, dynamic> doctor;
 
@@ -90,11 +90,11 @@ class ProfileDetails extends StatelessWidget {
             ],
           ),
           CustomPaint(
-            child: Container(
+            painter: HeaderCurvedContainer(),
+            child: SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
             ),
-            painter: HeaderCurvedContainer(),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,

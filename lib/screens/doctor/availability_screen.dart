@@ -28,7 +28,6 @@ class _AvailabilityScreen extends State<AvailabilityScreen> {
   @override
   Widget build(BuildContext context) {
     Config().init(context);
-    final doctor = ModalRoute.of(context)!.settings.arguments as Map;
     return Scaffold(
       appBar: const CustomAppBar(
         appTitle: 'Availability',
@@ -127,7 +126,7 @@ class _AvailabilityScreen extends State<AvailabilityScreen> {
                       getDate, getDay, getTime, 1); // TODO Fix doctor id
                   // redirect to doctor home page upon 200 status code
                   if (res == 200) {
-                    MyApp.navigatorKey.currentState!.pushNamed('/drhome');
+                    MyApp.navigatorKey.currentState!.pushNamed('/dr_home');
                   }
                 },
                 disable: _timeSelected && _dateSelected ? false : true,

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/validators.dart';
-import 'package:mydoc/providers/utils.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 
 import '../../utils/flash_message_screen.dart';
@@ -27,13 +26,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (res['error'] == false) {
         if (res['user']['role'] == 'patient') {
-          Navigator.pushNamed(context, '/home',
-              arguments: {"patient_id": res['user']['id']});
+          Navigator.pushNamed(context, '/home');
         } else if (res['user']['role'] == 'doctor') {
-          Navigator.pushNamed(context, '/drhome',
-              arguments: {"doctor_id": res['user']['id']});
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/dr_home', (route) => false);
         } else if (res['user']['role'] == 'admin') {
-          showScreen(context, '/Admhome');
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/admin', (route) => false);
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

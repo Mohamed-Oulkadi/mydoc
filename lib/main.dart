@@ -4,6 +4,8 @@ import 'package:mydoc/screens/auth/login_screen.dart';
 import 'package:mydoc/screens/auth/signup_screen.dart';
 import 'package:mydoc/screens/auth/welcome_screen.dart';
 import 'package:mydoc/screens/doctor/availability_screen.dart';
+import 'package:mydoc/screens/doctor/doctor_profile.dart';
+import 'package:mydoc/screens/doctor/settings_screen.dart';
 import 'package:mydoc/screens/patient/appointment_screen.dart';
 import 'package:mydoc/screens/patient/booking_screen.dart';
 import 'package:mydoc/screens/patient/edit_profile.dart';
@@ -30,8 +32,9 @@ class MyApp extends StatelessWidget {
           '/login': (context) => const LoginScreen(),
           '/register': (context) => const SignUpScreen(),
           '/home': (context) => const NavBarRoots(),
-          '/drhome': (context) => const DrNavBarRoots(),
-          '/Admhome': (context) => const AdminNavBar(),
+          '/dr_home': (context) => const DrNavBarRoots(),
+          '/dr_settings': (context) => const DrSettingScreen(),
+          '/admin_home': (context) => const AdminNavBar(),
           '/appointments': (context) => AppointmentScreen(),
           '/booking': (context) => const BookingPage(),
           '/successBooked': (context) => const AppointmentBooked(),

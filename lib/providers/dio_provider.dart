@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,8 +11,8 @@ class DioProvider {
     validateStatus: (_) => true,
     contentType: Headers.jsonContentType,
     receiveDataWhenStatusError: true,
-    connectTimeout: const Duration(seconds: 15),
-    receiveTimeout: const Duration(seconds: 15),
+    connectTimeout: const Duration(seconds: 10),
+    receiveTimeout: const Duration(seconds: 10),
   ));
 
   // login
@@ -23,7 +24,10 @@ class DioProvider {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString(
           'token', response.data['Authorization'].toString().split(' ')[1]);
+
       await prefs.setString('user', json.encode(response.data['user']));
+      String roleString = response.data['user']['role'];
+      await prefs.setString(roleString, json.encode(response.data[roleString]));
     }
     return response.data;
   }
@@ -98,11 +102,19 @@ class DioProvider {
   }
 
   // update specific doctor data
-  Future updateDoctor(String full_name, String phone_number, String city, String description, String qualifications, int id) async {
+  Future updateDoctor(String full_name, String phone_number, String city,
+      String description, String qualifications, int id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     var response = await _dio.patch("/api/doctors/$id",
-        data: {'doctor_id': id,'full_name': full_name, 'phone_number': phone_number, 'city': city, 'description': description, 'qualifications': qualifications},
+        data: {
+          'doctor_id': id,
+          'full_name': full_name,
+          'phone_number': phone_number,
+          'city': city,
+          'description': description,
+          'qualifications': qualifications
+        },
         options: Options(
             headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
 
@@ -157,10 +169,17 @@ class DioProvider {
   }
 
 // update specific patient data
-  Future updatePatient(String full_name, String phone_number, String id_card, String birthday, int id) async {
+  Future updatePatient(String full_name, String phone_number, String id_card,
+      String birthday, int id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var response = await _dio.patch("/api/patients/$id",
-        data: {'patient_id': id,'full_name': full_name, 'phone_number': phone_number, 'id_card': id_card, 'birthday': birthday},
+        data: {
+          'patient_id': id,
+          'full_name': full_name,
+          'phone_number': phone_number,
+          'id_card': id_card,
+          'birthday': birthday
+        },
         options: Options(
             headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
 
@@ -174,31 +193,6 @@ class DioProvider {
         options: Options(
             headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
 
-    return response.data;
-  }
-
-// get current patient data
-  Future getCurrentPatient() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    var response = await _dio.get("/api/patients",
-        options: Options(
-            headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
-
-    await prefs.setString('patient', json.encode(response.data));
-
-    return response.data;
-  }
-
-  // get current patient data
-  Future getCurrentDoctor() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    var response = await _dio.get("/api/doctors",
-        options: Options(
-            headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
-
-    await prefs.setString('doctor', json.encode(response.data));
     return response.data;
   }
 
@@ -319,7 +313,12 @@ class DioProvider {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
     var response = await _dio.post('/api/availability',
-        data: {'doctor_id': doctor, 'available_date': date, 'start_time': day, 'end_time': time},
+        data: {
+          'doctor_id': doctor,
+          'available_date': date,
+          'start_time': day,
+          'end_time': time
+        },
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     if (response.statusCode == 200 && response.data != '') {
@@ -361,5 +360,20 @@ class DioProvider {
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     return response.data;
+  }
+
+  Future fetchCurrentUserData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await json.decode(prefs.getString('user') as String);
+  }
+
+  Future fetchCurrentDoctorData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await json.decode(prefs.getString('doctor') as String);
+  }
+
+  Future fetchCurrentPatientData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await json.decode(prefs.getString('patient') as String);
   }
 }

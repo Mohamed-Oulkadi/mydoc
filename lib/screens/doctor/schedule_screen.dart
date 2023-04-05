@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mydoc/screens/doctor/upcoming_schedule_screen.dart';
 
 // import 'package:mydoc/screens/schedule/upcoming_schedule_screen.dart';
 
@@ -13,14 +14,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   int _buttonIndex = 0;
 
   final _scheduleWidgets = [
-    // TODO fix this
-    // UpcomingSchedule(),
-    const Center(
-      child: Text("Completed"),
-    ),
-    Container(
-      child: const Text("Canceled"),
-    ),
+    const UpcomingSchedule(),
+    // TODO add screens for completed and canceled
   ];
 
   @override
@@ -90,6 +85,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(10),
                         ),
+                        // TODO fix overflow
                         child: Text(
                           "Completed",
                           style: TextStyle(

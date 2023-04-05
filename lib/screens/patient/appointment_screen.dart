@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/dio_provider.dart';
-import 'package:mydoc/providers/utils.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 var doctors;
@@ -14,7 +14,7 @@ void fetchData() async {
 }
 
 Future<void> bookingHandler(context) async {
-  showScreen(context, '/booking');
+  Navigator.pushNamed(context, '/booking');
 }
 
 class AppointmentScreen extends StatelessWidget {
