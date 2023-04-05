@@ -282,55 +282,6 @@ class _TwoGiantButtons extends StatelessWidget {
             ),
           ),
         ),
-        InkWell(
-          onTap: () {},
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 6,
-                    spreadRadius: 4,
-                  )
-                ]),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.home,
-                    color: Color(0xFF7165D6),
-                    size: 35,
-                  ),
-                ),
-                const SizedBox(height: 30),
-                const Text(
-                  "Home Visit",
-                  style: TextStyle(
-                    fontSize: 18,
-                    //color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                const Text(
-                  "Call the doctor home",
-                  style: TextStyle(
-                    color: Colors.black54,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
       ],
     );
   }
