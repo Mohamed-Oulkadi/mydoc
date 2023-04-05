@@ -120,7 +120,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                           _phoneNumberController.text,
                           _idCardNumberController.text,
                           _birthdayController.text,
-                          patient['patientid']);
+                          patient['patient_id']);
 
                       // redirect to home page upon 200 status code
                       if (res == 201) {
