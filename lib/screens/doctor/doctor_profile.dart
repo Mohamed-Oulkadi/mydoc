@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../providers/utils.dart';
-import 'edit_profile.dart';
 
 class ProfileDetails extends StatelessWidget {
   const ProfileDetails({super.key, required this.doctor});
@@ -76,20 +75,16 @@ class ProfileDetails extends StatelessWidget {
                       prefixIcon: Icon(Icons.person),
                     ),
                     textfield(
-                      hintText: "${doctor['email']}",
-                      prefixIcon: Icon(Icons.email),
-                    ),
-                    textfield(
                       hintText: "${doctor['phone_number']}",
                       prefixIcon: Icon(Icons.phone),
                     ),
                     textfield(
-                      hintText: "${doctor['id_card']}",
-                      prefixIcon: Icon(Icons.badge),
+                      hintText: "${doctor['city']}",
+                      prefixIcon: Icon(Icons.location_city),
                     ),
                     textfield(
-                      hintText: "${doctor['birthday']}",
-                      prefixIcon: Icon(Icons.calendar_today),
+                      hintText: "${doctor['qualifications']}",
+                      prefixIcon: Icon(Icons.medical_services_outlined),
                     ),
                   ],
                 ),
