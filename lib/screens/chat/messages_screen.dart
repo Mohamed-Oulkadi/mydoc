@@ -49,8 +49,9 @@ class MessagesScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    // TODO make search work based on doctor name or remove it
                     SizedBox(
-                      width: 300,
+                      width: 82,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
