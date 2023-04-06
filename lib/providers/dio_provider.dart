@@ -127,7 +127,7 @@ class DioProvider {
 
   // update specific doctor data
   Future updateDoctor(id,
-      [fullName, phoneNumber, city, description, qualifications]) async {
+      [fullName, phoneNumber, description, qualifications]) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     Map data = {};
 
@@ -136,9 +136,6 @@ class DioProvider {
     }
     if (!phoneNumber) {
       data.addAll({'phone_number': phoneNumber});
-    }
-    if (!city) {
-      data.addAll({'city': city});
     }
     if (!description) {
       data.addAll({'description': description});
