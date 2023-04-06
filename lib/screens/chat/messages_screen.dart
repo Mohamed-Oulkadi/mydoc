@@ -81,72 +81,13 @@ class MessagesScreen extends StatelessWidget {
                 ),
               ),
             ),
-            /* SizedBox(
-            height: 90,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 6,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.symmetric(horizontal: 12),
-                  width: 65,
-                  height: 65,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          spreadRadius: 2,
-                          blurRadius: 10,
-                        )
-                      ]),
-                  child: Stack(
-                    textDirection: TextDirection.rtl,
-                    children: [
-                      Center(
-                        child: Container(
-                          height: 65,
-                          width: 65,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(30),
-                            child: Image.asset(
-                              "images/${imgs[index]}",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                      /* Container(
-                        margin: EdgeInsets.all(2),
-                        padding: EdgeInsets.all(3),
-                        height: 20,
-                        width: 20,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ) */
-                    ],
-                  ),
-                );
-              },
-            ),
-          ), */
             ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               itemCount: 6,
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return ListTile(
-                  minVerticalPadding: 15,
+                  minVerticalPadding: 30,
                   onTap: () {
                     Navigator.push(
                         context,
@@ -161,26 +102,10 @@ class MessagesScreen extends StatelessWidget {
                     ),
                   ),
                   title: const Text(
-                    "Dr . Doctor Name",
+                    "Dr. Doctor Name",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  subtitle: const Text(
-                    "Hello, Doctor....",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black54,
-                    ),
-                  ),
-                  trailing: const Text(
-                    "12:30",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.black54,
                     ),
                   ),
                 );

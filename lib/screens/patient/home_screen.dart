@@ -4,14 +4,6 @@ import 'package:mydoc/providers/dio_provider.dart';
 import '../../utils/config.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List __symptoms = [
-    "Temperature",
-    "Snuffle",
-    "Fever",
-    "Caugh",
-    "Cold",
-  ];
-
   final List _imgs = [
     "doctor1.jpg",
     "doctor2.jpg",
@@ -33,43 +25,6 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 30),
             const _TwoGiantButtons(),
             const SizedBox(height: 25),
-            const SymptomsBar(),
-            SizedBox(
-              height: 70,
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: __symptoms.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 15),
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    decoration: BoxDecoration(
-                        color: const Color(0xFFF4F6FA),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 4,
-                            spreadRadius: 2,
-                          )
-                        ]),
-                    child: Center(
-                      child: Text(
-                        __symptoms[index],
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black54,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 15),
             const Padding(
               padding: EdgeInsets.only(bottom: 10),
               child: Text(
@@ -201,24 +156,6 @@ class DoctorsBuilder extends StatelessWidget {
                 });
           }
         });
-  }
-}
-
-class SymptomsBar extends StatelessWidget {
-  const SymptomsBar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text(
-      "What are your symptoms?",
-      style: TextStyle(
-        fontSize: 23,
-        fontWeight: FontWeight.w500,
-        color: Colors.black54,
-      ),
-    );
   }
 }
 
