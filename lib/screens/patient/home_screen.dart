@@ -133,22 +133,6 @@ class DoctorsBuilder extends StatelessWidget {
                               color: Colors.black45,
                             ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              Text(
-                                "${snapshot.data[index]['rating']}",
-                                style: const TextStyle(
-                                  color: Colors.black45,
-                                ),
-                              )
-                            ],
-                          )
                         ],
                       ),
                     ),

@@ -18,14 +18,7 @@ Future<void> bookingHandler(context) async {
 }
 
 class AppointmentScreen extends StatelessWidget {
-  final List imgs = [
-    "doctor1.jpg",
-    "doctor2.jpg",
-    "doctor3.jpg",
-    "doctor4.jpg",
-  ];
-
-  AppointmentScreen({super.key});
+  const AppointmentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -161,111 +154,7 @@ class AppointmentScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   const AboutPage(),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: const [
-                      Text(
-                        "Reviews",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Icon(Icons.star, color: Colors.amber),
-                      Text(
-                        "4.8",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        "(124)",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: Color(0xFF7165D6),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 160,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.all(10),
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 4,
-                                spreadRadius: 2,
-                              ),
-                            ],
-                          ),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.4,
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  leading: CircleAvatar(
-                                    radius: 25,
-                                    backgroundImage:
-                                        AssetImage("images/${imgs[index]}"),
-                                  ),
-                                  title: const Text(
-                                    "Patient",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  subtitle: const Text("1 day ago"),
-                                  trailing: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: const [
-                                      Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                      ),
-                                      Text(
-                                        "4.8",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  child: Text(
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    "Many thanks to Dr . He is a great doctor",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 30),
                   const Text(
                     "Location",
                     style: TextStyle(
@@ -273,6 +162,7 @@ class AppointmentScreen extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
+                  const SizedBox(height: 10),
                   ListTile(
                     leading: Container(
                       padding: const EdgeInsets.all(10),
@@ -286,6 +176,8 @@ class AppointmentScreen extends StatelessWidget {
                         size: 30,
                       ),
                     ),
+                    // TODO set a general location from the backend
+                    // configurable by the admin
                     title: const Text(
                       "Agadir, Medical center",
                       style: TextStyle(
@@ -323,6 +215,8 @@ class AppointmentScreen extends StatelessWidget {
                     color: Colors.black54,
                   ),
                 ),
+                // TODO set a general consultation price from the backend
+                // configurable by the admin
                 Text(
                   "400DH",
                   style: TextStyle(
