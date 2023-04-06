@@ -79,12 +79,11 @@ class AppointmentScreen extends StatelessWidget {
                                   InkWell(
                                     borderRadius: BorderRadius.circular(30),
                                     onTap: () async {
-                                      Uri phoneno = Uri.parse('tel:066666666');
-                                      if (await canLaunchUrl(phoneno)) {
-                                        await launchUrl(phoneno);
-                                      } else {
-                                        throw 'Could not launch ';
-                                      }
+                                      final Uri launchUri = Uri(
+                                        scheme: 'tel',
+                                        path: '066666666',
+                                      );
+                                      await launchUrl(launchUri);
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.all(10),

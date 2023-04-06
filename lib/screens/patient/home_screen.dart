@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/dio_provider.dart';
+import 'package:mydoc/providers/common.dart';
 
 import '../../utils/config.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List _imgs = [
-    "doctor1.jpg",
-    "doctor2.jpg",
-    "doctor3.jpg",
-    "doctor4.jpg",
-  ];
-
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +14,15 @@ class HomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Header(),
-            const SizedBox(height: 30),
-            const _TwoGiantButtons(),
-            const SizedBox(height: 25),
-            const Padding(
+          children: const [
+            Header(),
+            SizedBox(height: 30),
+            _TwoGiantButtons(),
+            SizedBox(height: 25),
+            Padding(
               padding: EdgeInsets.only(bottom: 10),
               child: Text(
-                "Popular Doctors",
+                "Available Doctors",
                 style: TextStyle(
                   fontSize: 23,
                   fontWeight: FontWeight.w500,
@@ -36,7 +30,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            DoctorsBuilder(imgs: _imgs),
+            DoctorsBuilder(),
           ],
         )));
   }
@@ -70,12 +64,7 @@ class Header extends StatelessWidget {
 }
 
 class DoctorsBuilder extends StatelessWidget {
-  const DoctorsBuilder({
-    super.key,
-    required List imgs,
-  }) : _imgs = imgs;
-
-  final List _imgs;
+  const DoctorsBuilder({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +106,7 @@ class DoctorsBuilder extends StatelessWidget {
                           CircleAvatar(
                             radius: 35,
                             backgroundImage:
-                                AssetImage("images/${_imgs[index]}"),
+                                fetchImage(snapshot.data[index]['image']),
                           ),
                           Text(
                             "Dr. ${snapshot.data[index]['full_name']}",
