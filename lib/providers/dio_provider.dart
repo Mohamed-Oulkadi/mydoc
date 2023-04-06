@@ -347,21 +347,21 @@ class DioProvider {
     return response.data;
   }
 
-  // store availability date
+ // store availability date
   Future storeAvailability(
-      String date, String day, String time, int doctor) async {
+      String date, String start_time, String end_time, int doctor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
     var response = await _dio.post('/api/availability',
         data: {
           'doctor_id': doctor,
-          'available_date': date,
-          'start_time': day,
-          'end_time': time
+          'unavailable_date': date,
+          'start_time': start_time,
+          'end_time': end_time
         },
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
-    if (response.statusCode == 200 && response.data != '') {
+    if (response.statusCode == 201 && response.data != '') {
       return response.statusCode;
     } else {
       return 'Error';
