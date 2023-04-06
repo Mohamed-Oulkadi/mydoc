@@ -1,8 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DioProvider {
@@ -30,6 +29,21 @@ class DioProvider {
       String roleString = response.data['user']['role'];
       await prefs.setString(roleString, json.encode(response.data[roleString]));
     }
+    return response.data;
+  }
+
+  // upload image
+  Future uploadImage(image, userId) async {
+    Uint8List imageBytes = await image.readAsBytes();
+    String base64Image = base64Encode(imageBytes);
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var response = await _dio.patch('/api/user/$userId',
+        data: {'image': base64Image},
+        options: Options(
+            headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
+
     return response.data;
   }
 
