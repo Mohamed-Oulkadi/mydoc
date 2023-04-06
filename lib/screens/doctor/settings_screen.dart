@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/dio_provider.dart';
+import 'package:mydoc/providers/common.dart';
 import 'package:mydoc/screens/doctor/doctor_profile.dart';
 
 Map<String, dynamic> doctor = {};
@@ -11,12 +12,6 @@ void fetchData() async {
 
 class DrSettingScreen extends StatelessWidget {
   const DrSettingScreen({super.key});
-
-  Future<void> logoutHandler(context) async {
-    var res = await DioProvider().logout();
-    // TODO prompt "logout successful"
-    Navigator.pushNamed(context, '/login');
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,30 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mydoc/providers/common.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 import 'package:mydoc/screens/patient/patient_profile.dart';
 
 import '../../utils/config.dart';
 
-var patient;
+Map<String, dynamic> patient = {};
 
-void fetchData(id) async {
-  patient = await DioProvider().getPatient(id['patient_id']);
+void fetchData() async {
+  patient = await DioProvider().fetchCurrentPatientData();
 }
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
-  Future<void> logoutHandler(context) async {
-    var res = await DioProvider().logout();
-    // TODO prompt "logout successful"
-    Navigator.pushNamed(context, '/login');
-  }
-
   @override
   Widget build(BuildContext context) {
-    Config().init(context);
-    final patientId = ModalRoute.of(context)!.settings.arguments as Map;
-    fetchData(patientId);
     return SafeArea(
       minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
       child: SingleChildScrollView(
