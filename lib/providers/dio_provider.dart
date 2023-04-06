@@ -352,7 +352,7 @@ class DioProvider {
       String date, String start_time, String end_time, int doctor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await _dio.post('/api/availability',
+    var response = await _dio.post('/api/availabilities',
         data: {
           'doctor_id': doctor,
           'unavailable_date': date,
