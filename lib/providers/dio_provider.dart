@@ -347,12 +347,12 @@ class DioProvider {
     return response.data;
   }
 
- // store availability date
+  // store availability date
   Future storeAvailability(
       String date, String start_time, String end_time, int doctor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await _dio.post('/api/availabilities',
+    var response = await _dio.post('/api/availability',
         data: {
           'doctor_id': doctor,
           'unavailable_date': date,
@@ -372,7 +372,7 @@ class DioProvider {
   Future getAvailability(id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await _dio.get('/api/availabilities/$id',
+    var response = await _dio.get('/api/availability/$id',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     return response.data;
