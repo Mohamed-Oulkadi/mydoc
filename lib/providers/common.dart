@@ -7,5 +7,3 @@ Future<void> logoutHandler(context) async {
   Navigator.of(context)
       .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
 }
-
-ImageProvider<Object> fetchImage(image) {}
