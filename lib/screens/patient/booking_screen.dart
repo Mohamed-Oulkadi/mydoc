@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:mydoc/components/button.dart';
 import 'package:mydoc/components/custom_appbar.dart';
 import 'package:mydoc/models/booking_datetime_converted.dart';
@@ -7,6 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+var unavailableDate;
+
+void fetchAvailability(id) async {
+  var unavailableDate = await DioProvider().getAvailability(id);
+}
 
 class BookingPage extends StatefulWidget {
   const BookingPage({Key? key}) : super(key: key);
@@ -22,8 +30,11 @@ class _BookingPageState extends State<BookingPage> {
   DateTime _currentDay = DateTime.now();
   int? _currentIndex;
   bool _isWeekend = false;
+  bool _isUnavailableDate = false;
   bool _dateSelected = false;
   bool _timeSelected = false;
+  String? _startTime;
+  String? endTime;
 
   Future<void> appointmentHandler(context, doctor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -46,6 +57,7 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     Config().init(context);
     final doctor = ModalRoute.of(context)!.settings.arguments as Map;
+    fetchAvailability(doctor['doctor_id']);
     return Scaffold(
       appBar: const CustomAppBar(
         appTitle: 'Appointment',
@@ -72,14 +84,14 @@ class _BookingPageState extends State<BookingPage> {
               ],
             ),
           ),
-          _isWeekend
+          (_isWeekend || _isUnavailableDate)
               ? SliverToBoxAdapter(
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10, vertical: 30),
                     alignment: Alignment.center,
                     child: const Text(
-                      'Weekend is not available, please select another date',
+                      'This date is not available, please select another one',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -181,7 +193,14 @@ class _BookingPageState extends State<BookingPage> {
             _isWeekend = false;
           }
 
-          // TODO check if unavailable date is selected
+          // check if unavailable date is selected
+          if (DateTime.parse(unavailableDate['unavailable_date']) == selectedDay) {
+            _isUnavailableDate = true;
+            _timeSelected = false;
+            _currentIndex = null;
+          } else {
+            _isUnavailableDate = false;
+          }
         });
       }),
     );
