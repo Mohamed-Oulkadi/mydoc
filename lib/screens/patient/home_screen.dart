@@ -105,8 +105,7 @@ class DoctorsBuilder extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 35,
-                            backgroundImage:
-                                fetchImage(snapshot.data[index]['image']),
+                            backgroundImage: snapshot.data[index]['image'],
                           ),
                           Text(
                             "Dr. ${snapshot.data[index]['full_name']}",
