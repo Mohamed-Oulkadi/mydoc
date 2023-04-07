@@ -1,18 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/dio_provider.dart';
+import 'package:mydoc/providers/common.dart';
+import 'package:mydoc/screens/doctor/doctor_profile.dart';
+
+Map<String, dynamic> doctor = {};
+
+void fetchData() async {
+  doctor = await DioProvider().fetchCurrentDoctorData();
+}
 
 class DrSettingScreen extends StatelessWidget {
   const DrSettingScreen({super.key});
 
-  Future<void> logoutHandler(context) async {
-    var res = await DioProvider().logout();
-    // TODO prompt "logout successful"
-    Navigator.pushNamed(context, '/login');
-  }
-
   @override
   Widget build(BuildContext context) {
+    fetchData();
     return SafeArea(
       minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
       child: SingleChildScrollView(
@@ -27,23 +30,16 @@ class DrSettingScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            const ListTile(
-              leading: CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage("images/doctor1.jpg"),
-              ),
-              title: Text(
-                "Dr. Doctor Name",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 25,
-                ),
-              ),
-              subtitle: Text("Profile"),
-            ),
+            const DoctorName(),
             const Divider(height: 50),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DrProfileDetails(doctor: doctor),
+                    ));
+              },
               leading: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -165,5 +161,37 @@ class DrSettingScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class DoctorName extends StatelessWidget {
+  const DoctorName({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: DioProvider().fetchCurrentDoctorData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return ListTile(
+              leading: const CircleAvatar(
+                radius: 30,
+                backgroundImage: AssetImage("images/doctor1.jpg"),
+              ),
+              title: Text(
+                "${snapshot.data['full_name']}",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 25,
+                ),
+              ),
+              subtitle: const Text("Doctor"),
+            );
+          }
+        });
   }
 }

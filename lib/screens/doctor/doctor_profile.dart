@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class PatientProfileDetails extends StatelessWidget {
-  const PatientProfileDetails({super.key, required this.patient});
+class DrProfileDetails extends StatelessWidget {
+  const DrProfileDetails({super.key, required this.doctor});
 
-  final Map<dynamic, dynamic> patient;
+  final Map<dynamic, dynamic> doctor;
 
   Widget textfield({@required hintText, @required prefixIcon}) {
     return Material(
@@ -50,7 +50,7 @@ class PatientProfileDetails extends StatelessWidget {
               padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () => Navigator.pushNamed(context, '/edit_profile',
-                    arguments: {"patient_id": patient['patient_id']}),
+                    arguments: {"doctor_id": doctor['doctor_id']}),
                 child: const Icon(Icons.edit),
               ))
         ],
@@ -69,24 +69,20 @@ class PatientProfileDetails extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     textfield(
-                      hintText: "${patient['full_name']}",
+                      hintText: "${doctor['full_name']}",
                       prefixIcon: const Icon(Icons.person),
                     ),
                     textfield(
-                      hintText: "${patient['email']}",
-                      prefixIcon: const Icon(Icons.email),
-                    ),
-                    textfield(
-                      hintText: "${patient['phone_number']}",
+                      hintText: "${doctor['phone_number']}",
                       prefixIcon: const Icon(Icons.phone),
                     ),
                     textfield(
-                      hintText: "${patient['id_card']}",
-                      prefixIcon: const Icon(Icons.badge),
+                      hintText: "${doctor['city']}",
+                      prefixIcon: const Icon(Icons.location_city),
                     ),
                     textfield(
-                      hintText: "${patient['birthday']}",
-                      prefixIcon: const Icon(Icons.calendar_today),
+                      hintText: "${doctor['qualifications']}",
+                      prefixIcon: const Icon(Icons.medical_services_outlined),
                     ),
                   ],
                 ),

@@ -27,14 +27,14 @@ class NavBarRootsState extends State<NavBarRoots> {
       backgroundColor: Colors.white,
       body: _screens[_selectedIndex],
       bottomNavigationBar: SizedBox(
-        height: 80,
+        height: MediaQuery.of(context).size.height * 0.09,
         child: BottomNavigationBar(
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           selectedItemColor: const Color(0xFF7165D6),
           unselectedItemColor: Colors.black26,
           selectedLabelStyle:
-              const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              const TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
           currentIndex: _selectedIndex,
           onTap: (index) {
             setState(() {

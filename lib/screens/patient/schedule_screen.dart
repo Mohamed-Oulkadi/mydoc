@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mydoc/screens/patient/upcoming_schedule_screen.dart';
 
-import 'omfirmed_schedule.dart';
+import 'confirmed_schedule.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   final _scheduleWidgets = [
     const UpcomingSchedule(),
-    const ComfirmedSchedule(),
+    const ConfirmedSchedule(),
   ];
 
   @override
@@ -26,14 +26,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Text(
-                "Schedule",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w500,
-                ),
+            const Text(
+              "Schedule",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w500,
               ),
             ),
             const SizedBox(height: 20),
@@ -86,7 +83,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
-                            "Comfirmed",
+                            "Confirmed",
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -98,6 +95,13 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   ],
                 )),
             const SizedBox(height: 30),
+            const Text(
+              "Appointments:",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
             _scheduleWidgets[_buttonIndex],
           ],
         ),

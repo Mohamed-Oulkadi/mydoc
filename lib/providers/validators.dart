@@ -11,11 +11,15 @@ String? validateFullName(String? value) {
   }
 
   if (value.length < 5) {
-    return 'full name length too short';
+    return 'Full name length is too short';
   }
 
-  if (value.allMatches(" ").length == 2) {
-    return 'Name too long';
+  if (value.allMatches(" ").length > 3) {
+    return 'Full name length is too long';
+  }
+
+  if (!value.contains(" ")) {
+    return 'Not a valid full name';
   }
 
   return null;
@@ -45,7 +49,7 @@ String? validatePhoneNumber(String? value) {
     return "Invalid phone number";
   }
 
-  if (!value.startsWith('06')) {
+  if (!value.startsWith('06') && !value.startsWith('07')) {
     return 'Not a valid moroccan phone number';
   }
 
@@ -72,7 +76,7 @@ String? validateBirthdayDate(String? value) {
   if (value == null || value.isEmpty) {
     return 'This field is required';
   }
-  
+
   DateTime? date;
   try {
     date = DateTime.parse(value);
@@ -83,7 +87,7 @@ String? validateBirthdayDate(String? value) {
   if (date.isAfter(DateTime.now())) {
     return 'Please enter a date that is not in the future';
   }
-  
+
   if (DateTime.now().difference(date).inDays ~/ 365.25 < 18) {
     return 'You must be at least 18 years old';
   }

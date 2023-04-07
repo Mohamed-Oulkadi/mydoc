@@ -1,16 +1,20 @@
-import 'package:dio/dio.dart';
-import 'package:intl/intl.dart';
+import 'dart:convert';
+
 import 'package:mydoc/components/button.dart';
 import 'package:mydoc/components/custom_appbar.dart';
 import 'package:mydoc/models/booking_datetime_converted.dart';
 import 'package:mydoc/providers/dio_provider.dart';
-import 'package:mydoc/providers/utils.dart';
-import 'package:mydoc/screens/doctor/availability_screen.dart';
 import 'package:mydoc/utils/config.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+var unavailableDate;
+
+void fetchAvailability(id) async {
+  var unavailableDate = await DioProvider().getAvailability(id);
+}
 
 class BookingPage extends StatefulWidget {
   const BookingPage({Key? key}) : super(key: key);
@@ -26,8 +30,11 @@ class _BookingPageState extends State<BookingPage> {
   DateTime _currentDay = DateTime.now();
   int? _currentIndex;
   bool _isWeekend = false;
+  bool _isUnavailableDate = false;
   bool _dateSelected = false;
   bool _timeSelected = false;
+  String? _startTime;
+  String? endTime;
 
   Future<void> appointmentHandler(context, doctor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -36,13 +43,13 @@ class _BookingPageState extends State<BookingPage> {
     final getDate = DateConverted.getDate(_currentDay);
     final getTime = DateConverted.getTime(_currentIndex!);
 
-    final res = await DioProvider().bookAppointment(getDate, getTime, doctor['doctor_id']);
+    final res = await DioProvider()
+        .bookAppointment(getDate, getTime, doctor['doctor_id']);
 
-    // TODO redirection or prompt booking successful
     if (res['error'] == 'false') {
-      showScreen(context, '/home');
+      Navigator.pushReplacementNamed(context, '/home');
     } else {
-      showScreen(context, '/successBooked');
+      Navigator.pushReplacementNamed(context, '/successBooked');
     }
   }
 
@@ -50,6 +57,7 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     Config().init(context);
     final doctor = ModalRoute.of(context)!.settings.arguments as Map;
+    fetchAvailability(doctor['doctor_id']);
     return Scaffold(
       appBar: const CustomAppBar(
         appTitle: 'Appointment',
@@ -67,7 +75,7 @@ class _BookingPageState extends State<BookingPage> {
                     child: Text(
                       'Select Consultation Time',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                         fontSize: 20,
                       ),
                     ),
@@ -76,17 +84,17 @@ class _BookingPageState extends State<BookingPage> {
               ],
             ),
           ),
-          _isWeekend
+          (_isWeekend || _isUnavailableDate)
               ? SliverToBoxAdapter(
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10, vertical: 30),
                     alignment: Alignment.center,
                     child: const Text(
-                      'Weekend is not available, please select another date',
+                      'This date is not available, please select another one',
                       style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                         color: Colors.grey,
                       ),
                     ),
@@ -113,14 +121,14 @@ class _BookingPageState extends State<BookingPage> {
                             ),
                             borderRadius: BorderRadius.circular(15),
                             color: _currentIndex == index
-                                ? Color(0xFF7165D6)
+                                ? const Color(0xFF7165D6)
                                 : null,
                           ),
                           alignment: Alignment.center,
                           child: Text(
                             '${index + 9}:00 ${index + 9 > 11 ? "PM" : "AM"}',
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w500,
                               color:
                                   _currentIndex == index ? Colors.white : null,
                             ),
@@ -185,7 +193,14 @@ class _BookingPageState extends State<BookingPage> {
             _isWeekend = false;
           }
 
-          // TODO check if unavailable date is selected
+          // check if unavailable date is selected
+          if (DateTime.parse(unavailableDate['unavailable_date']) == selectedDay) {
+            _isUnavailableDate = true;
+            _timeSelected = false;
+            _currentIndex = null;
+          } else {
+            _isUnavailableDate = false;
+          }
         });
       }),
     );

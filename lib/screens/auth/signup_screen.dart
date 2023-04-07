@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:mydoc/screens/auth/login_screen.dart';
 import 'package:mydoc/providers/validators.dart';
 import 'package:mydoc/providers/dio_provider.dart';
-import 'package:date_format/date_format.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -40,7 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void showLogin() {
-    Navigator.pushNamed(context, '/login');
+    Navigator.pushReplacementNamed(context, '/login');
   }
 
   Future<void> registerHandler() async {
@@ -53,48 +52,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _passwordController.text,
         _password2Controller.text);
 
-    if (res['error'] == 'false') {
+    if (res['error'] == false) {
       showLogin();
     }
     // TODO: check TODO in login_screen.dart
-    /*if (res['error'].isNotEmpty) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        Future.delayed(const Duration(seconds: 5), () {
-          Navigator.of(context).pop(true);
-        });
-        return Theme(
-          data: Theme.of(context).copyWith(dialogBackgroundColor: Colors.red),
-          child: AlertDialog(
-            title: Text(res['error']),
-          ),
-        );
-      },
-    );
-  } else {
-    showDialog(
-      context: context,
-      builder: (context) {
-        Future.delayed(const Duration(seconds: 5), () {
-          Navigator.of(context).pop(true);
-        });
-        return Theme(
-          data: Theme.of(context).copyWith(dialogBackgroundColor: Colors.green),
-          child: AlertDialog(
-            title: Text(res['message']),  
-          ),
-        );
-      },
-    );*/
   }
 
   @override
   Widget build(BuildContext context) {
     return Material(
         color: Colors.white,
-        child: SingleChildScrollView(
-          child: SafeArea(
+        child: SafeArea(
+          child: SingleChildScrollView(
             child: Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
               key: _formKey,
@@ -223,7 +192,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       obscureText: _passToggle ? true : false,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
-                        label: const Text("Password"),
+                        label: const Text("Confirm Password"),
                         prefixIcon: const Icon(Icons.lock),
                         suffixIcon: InkWell(
                           onTap: () {
@@ -254,11 +223,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             if (_formKey.currentState!.validate()) {
                               registerHandler();
                             }
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
-                              ));
                           },
                           child: const Padding(
                             padding: EdgeInsets.symmetric(
@@ -269,7 +233,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 25,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
@@ -302,11 +266,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           "Login",
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
                             color: Color(0xFF7165D6),
                           ),
                         ),
                       ),
+                      const SizedBox(height: 20),
                     ],
                   )
                 ],

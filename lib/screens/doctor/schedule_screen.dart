@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mydoc/screens/doctor/upcoming_schedule_screen.dart';
 
-import '../../components/button.dart';
-import '../../main.dart';
-import '../../providers/utils.dart';
 // import 'package:mydoc/screens/schedule/upcoming_schedule_screen.dart';
 
 class ScheduleScreen extends StatefulWidget {
@@ -16,14 +14,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   int _buttonIndex = 0;
 
   final _scheduleWidgets = [
-    // TODO fix this
-    // UpcomingSchedule(),
-    const Center(
-      child: Text("Completed"),
-    ),
-    Container(
-      child: const Text("Canceled"),
-    ),
+    const UpcomingSchedule(),
+    // TODO add screens for completed and canceled
   ];
 
   @override
@@ -39,7 +31,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             child: Text(
               "Schedule",
               style: TextStyle(
-                fontSize: 32,
+                fontSize: 28,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -93,6 +85,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(10),
                         ),
+                        // TODO fix overflow
                         child: Text(
                           "Completed",
                           style: TextStyle(
@@ -132,33 +125,32 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               )),
           const SizedBox(height: 30),
           _scheduleWidgets[_buttonIndex],
-
           const SizedBox(height: 30),
           InkWell(
-              onTap: () async {
-                Navigator.pushNamed(context, '/availability',
+            onTap: () async {
+              Navigator.pushNamed(context, '/availability',
                   //TODO Fix get doctor id
                   arguments: {"doctor_id": 1});
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(vertical: 18),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF7165D6),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Center(
-                  child: Text(
-                    "Change availability date",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.symmetric(vertical: 18),
+              decoration: BoxDecoration(
+                color: const Color(0xFF7165D6),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Center(
+                child: Text(
+                  "Change availability date",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
-            )
+            ),
+          )
         ],
       )),
     );

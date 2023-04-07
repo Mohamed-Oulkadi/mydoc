@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/validators.dart';
-import 'package:mydoc/providers/utils.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 
 import '../../utils/flash_message_screen.dart';
@@ -27,12 +26,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (res['error'] == false) {
         if (res['user']['role'] == 'patient') {
-          Navigator.pushNamed(context, '/home',
-              arguments: {"patient_id": res['user']['id']});
+          Navigator.pushNamed(context, '/home');
         } else if (res['user']['role'] == 'doctor') {
-          showScreen(context, '/drhome');
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/dr_home', (route) => false);
         } else if (res['user']['role'] == 'admin') {
-          showScreen(context, '/Admhome');
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/admin', (route) => false);
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -61,20 +61,20 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: SafeArea(
+          minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
           child: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _formKey,
             child: Column(
               children: [
-                const SizedBox(height: 10),
                 _buildImage(),
-                const SizedBox(height: 10),
+                const SizedBox(height: 40),
                 _buildEmailField(),
-                const SizedBox(height: 10),
+                const SizedBox(height: 5),
                 _buildPasswordField(),
                 const SizedBox(height: 20),
                 _buildLoginButton(),
-                const SizedBox(height: 20),
+                const SizedBox(height: 50),
                 _buildCreateAccountButton(context),
               ],
             ),
@@ -156,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 25,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -168,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildCreateAccountButton(BuildContext context) {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
@@ -185,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
             "Create Account",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
               color: Color(0xFF7165D6),
             ),
           ),

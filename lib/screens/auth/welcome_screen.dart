@@ -7,10 +7,11 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: SafeArea(
+        minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 100),
+            const SizedBox(height: 50),
             Padding(
               padding: const EdgeInsets.all(20),
               child: Image.asset("images/doctors.png"),
@@ -20,13 +21,13 @@ class WelcomeScreen extends StatelessWidget {
               "Doctors Appointment",
               style: TextStyle(
                 color: Color(0xFF7165D6),
-                fontSize: 30,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1,
                 wordSpacing: 2,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 30),
             const Text(
               "Appoint Your Doctor",
               style: TextStyle(
@@ -44,7 +45,7 @@ class WelcomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.pushReplacementNamed(context, '/login');
                     },
                     child: const Padding(
                       padding:
@@ -54,7 +55,7 @@ class WelcomeScreen extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),

@@ -1,93 +1,38 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:mydoc/providers/utils.dart';
-import 'package:mydoc/screens/patient/appointment_screen.dart';
 import 'package:mydoc/providers/dio_provider.dart';
-import 'dart:developer';
+import 'package:mydoc/providers/common.dart';
 
 import '../../utils/config.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List __symptoms = [
-    "Temperature",
-    "Snuffle",
-    "Fever",
-    "Caugh",
-    "Cold",
-  ];
-
-  final List _imgs = [
-    "doctor1.jpg",
-    "doctor2.jpg",
-    "doctor3.jpg",
-    "doctor4.jpg",
-  ];
-
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+        minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
         child: SingleChildScrollView(
             child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Header(),
-        const SizedBox(height: 30),
-        const _TwoGiantButtons(),
-        const SizedBox(height: 25),
-        const SymptomsBar(),
-        SizedBox(
-          height: 70,
-          child: ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: __symptoms.length,
-            itemBuilder: (context, index) {
-              return Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                decoration: BoxDecoration(
-                    color: const Color(0xFFF4F6FA),
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 4,
-                        spreadRadius: 2,
-                      )
-                    ]),
-                child: Center(
-                  child: Text(
-                    __symptoms[index],
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black54,
-                    ),
-                  ),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Header(),
+            SizedBox(height: 30),
+            _TwoGiantButtons(),
+            SizedBox(height: 25),
+            Padding(
+              padding: EdgeInsets.only(bottom: 10),
+              child: Text(
+                "Available Doctors",
+                style: TextStyle(
+                  fontSize: 23,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black54,
                 ),
-              );
-            },
-          ),
-        ),
-        const SizedBox(height: 15),
-        const Padding(
-          padding: EdgeInsets.only(left: 15),
-          child: Text(
-            "Popular Doctors",
-            style: TextStyle(
-              fontSize: 23,
-              fontWeight: FontWeight.w500,
-              color: Colors.black54,
+              ),
             ),
-          ),
-        ),
-        DoctorsBuilder(imgs: _imgs),
-      ],
-    )));
+            DoctorsBuilder(),
+          ],
+        )));
   }
 }
 
@@ -97,9 +42,8 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Config().init(context);
-    final patient = ModalRoute.of(context)!.settings.arguments as Map;
     return FutureBuilder(
-        future: DioProvider().getPatient(patient['patient_id']),
+        future: DioProvider().fetchCurrentPatientData(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text('Loading...');
@@ -108,9 +52,9 @@ class Header extends StatelessWidget {
           } else {
             var fullName = snapshot.data['full_name'];
             return Text(
-              "Hello ${fullName}",
+              "Hello $fullName",
               style: const TextStyle(
-                fontSize: 35,
+                fontSize: 30,
                 fontWeight: FontWeight.w500,
               ),
             );
@@ -120,12 +64,7 @@ class Header extends StatelessWidget {
 }
 
 class DoctorsBuilder extends StatelessWidget {
-  const DoctorsBuilder({
-    super.key,
-    required List imgs,
-  }) : _imgs = imgs;
-
-  final List _imgs;
+  const DoctorsBuilder({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -141,14 +80,15 @@ class DoctorsBuilder extends StatelessWidget {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                 ),
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
                 itemCount: snapshot.data.length,
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () => showScreen(context, '/appointments'),
+                    onTap: () => Navigator.pushNamed(context, '/appointments'),
                     child: Container(
-                      margin: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(5),
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -166,7 +106,7 @@ class DoctorsBuilder extends StatelessWidget {
                           CircleAvatar(
                             radius: 35,
                             backgroundImage:
-                                AssetImage("images/${_imgs[index]}"),
+                                fetchImage(snapshot.data[index]['image']),
                           ),
                           Text(
                             "Dr. ${snapshot.data[index]['full_name']}",
@@ -182,22 +122,6 @@ class DoctorsBuilder extends StatelessWidget {
                               color: Colors.black45,
                             ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              Text(
-                                "${snapshot.data[index]['rating']}",
-                                style: const TextStyle(
-                                  color: Colors.black45,
-                                ),
-                              )
-                            ],
-                          )
                         ],
                       ),
                     ),
@@ -208,31 +132,8 @@ class DoctorsBuilder extends StatelessWidget {
   }
 }
 
-class SymptomsBar extends StatelessWidget {
-  const SymptomsBar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(left: 15),
-      child: Text(
-        "What are your symptoms?",
-        style: TextStyle(
-          fontSize: 23,
-          fontWeight: FontWeight.w500,
-          color: Colors.black54,
-        ),
-      ),
-    );
-  }
-}
-
 class _TwoGiantButtons extends StatelessWidget {
-  const _TwoGiantButtons({
-    super.key,
-  });
+  const _TwoGiantButtons();
 
   @override
   Widget build(BuildContext context) {
@@ -240,6 +141,7 @@ class _TwoGiantButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         InkWell(
+          // TODO send to appointment page
           onTap: () {},
           child: Container(
             padding: const EdgeInsets.all(20),
@@ -282,55 +184,6 @@ class _TwoGiantButtons extends StatelessWidget {
                   "Make an appointment",
                   style: TextStyle(
                     color: Colors.white54,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-        InkWell(
-          onTap: () {},
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 6,
-                    spreadRadius: 4,
-                  )
-                ]),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.home,
-                    color: Color(0xFF7165D6),
-                    size: 35,
-                  ),
-                ),
-                const SizedBox(height: 30),
-                const Text(
-                  "Home Visit",
-                  style: TextStyle(
-                    fontSize: 18,
-                    //color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                const Text(
-                  "Call the doctor home",
-                  style: TextStyle(
-                    color: Colors.black54,
                   ),
                 )
               ],

@@ -1,32 +1,22 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mydoc/providers/common.dart';
 import 'package:mydoc/providers/dio_provider.dart';
 import 'package:mydoc/screens/patient/patient_profile.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/config.dart';
 
-var patient;
+Map<String, dynamic> patient = {};
 
 void fetchData() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  patient = await json.decode(prefs.get('patient') as String);
+  patient = await DioProvider().fetchCurrentPatientData();
 }
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
-  Future<void> logoutHandler(context) async {
-    var res = await DioProvider().logout();
-    // TODO prompt "logout successful"
-    Navigator.pushNamed(context, '/login');
-  }
-
   @override
   Widget build(BuildContext context) {
-    fetchData();
     return SafeArea(
       minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
       child: SingleChildScrollView(
@@ -36,7 +26,7 @@ class SettingScreen extends StatelessWidget {
             const Text(
               "Settings",
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 28,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -48,7 +38,8 @@ class SettingScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfileDetails(),
+                      builder: (context) =>
+                          PatientProfileDetails(patient: patient),
                     ));
               },
               leading: Container(

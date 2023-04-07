@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_holo_date_picker/date_picker.dart';
-import 'package:flutter_holo_date_picker/i18n/date_picker_i18n.dart';
-import 'package:intl/intl.dart';
 import 'package:mydoc/providers/validators.dart';
+
+import '../../main.dart';
+import '../../providers/dio_provider.dart';
+import '../../utils/config.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
@@ -20,6 +23,19 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController _phoneController = TextEditingController();
   final String _profileImageURL = 'images/doctor1.jpg';
 
+  File? image;
+
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemp = File(image.path);
+      setState(() => this.image = imageTemp);
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -32,6 +48,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Config().init(context);
+    final patient = ModalRoute.of(context)!.settings.arguments as Map;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Profile'),
@@ -40,6 +58,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,8 +73,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       Icons.camera_alt,
                       color: Colors.white,
                     ),
-                    onPressed: () {
-                      // TODO: Implement photo selection
+                    onPressed: () async {
+                      pickImage();
                     },
                   ),
                 ),
@@ -108,21 +127,36 @@ class EditProfileScreenState extends State<EditProfileScreen> {
               ),
               const SizedBox(height: 16),
               TextFormField(
-                keyboardType: TextInputType.number,
-                      controller: _phoneController,
-                      validator: (value) => validatePhoneNumber(value),
-                      decoration: const InputDecoration(
-                        labelText: "Phone Number",
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.phone),
-                      ),
+                controller: _phoneNumberController,
+                keyboardType: TextInputType.phone,
+                decoration: const InputDecoration(
+                  labelText: 'Phone Number',
+                  prefixIcon: Icon(Icons.phone),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your phone number';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 32),
               Center(
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      // TODO: Implement profile update
+                      final res = await DioProvider().updatePatient(
+                          _nameController.text,
+                          _phoneNumberController.text,
+                          _idCardNumberController.text,
+                          _birthdayController.text,
+                          patient['patient_id']);
+
+                      // redirect to home page upon 200 status code
+                      if (res == 201) {
+                        MyApp.navigatorKey.currentState!
+                            .pushNamed('/patient_profile');
+                      }
                     }
                   },
                     style: ElevatedButton.styleFrom(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mydoc/screens/admin/AdminHome_screen.dart';
+import 'package:mydoc/screens/admin/adminhome_screen.dart';
 import 'add_doctor.dart';
 
 class AdminNavBar extends StatefulWidget {
@@ -29,7 +29,7 @@ class AdminNavBarRootsState extends State<AdminNavBar> {
           selectedItemColor: const Color(0xFF7165D6),
           unselectedItemColor: Colors.black26,
           selectedLabelStyle:
-              const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              const TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
           currentIndex: _selectedIndex,
           onTap: (index) {
             setState(() {

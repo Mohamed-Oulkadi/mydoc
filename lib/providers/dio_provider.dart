@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,8 +11,8 @@ class DioProvider {
     validateStatus: (_) => true,
     contentType: Headers.jsonContentType,
     receiveDataWhenStatusError: true,
-    connectTimeout: const Duration(seconds: 15),
-    receiveTimeout: const Duration(seconds: 15),
+    connectTimeout: const Duration(seconds: 10),
+    receiveTimeout: const Duration(seconds: 10),
   ));
 
   // login
@@ -23,8 +24,26 @@ class DioProvider {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString(
           'token', response.data['Authorization'].toString().split(' ')[1]);
+
       await prefs.setString('user', json.encode(response.data['user']));
+      String roleString = response.data['user']['role'];
+      await prefs.setString(roleString, json.encode(response.data[roleString]));
     }
+    return response.data;
+  }
+
+  // upload image
+  Future uploadImage(image, userId) async {
+    Uint8List imageBytes = await image.readAsBytes();
+    String base64Image = base64Encode(imageBytes);
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var response = await _dio.patch('/api/user/$userId',
+        data: {'image': base64Image},
+        options: Options(
+            headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
+
     return response.data;
   }
 
@@ -53,10 +72,19 @@ class DioProvider {
   }
 
   // update specific user data
-  Future updateUser(id) async {
+  Future updateUser(id, [email, password, image]) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map data = {};
+
+    if (!image) {
+      data = {'email': email, 'password': password};
+    } else {
+      // TODO if an admin wants to change an image, handle it properly
+      data = {'email': email, 'password': password, 'image': image};
+    }
 
     var response = await _dio.patch('/api/user/$id',
+        data: data,
         options: Options(
             headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
 
@@ -98,10 +126,26 @@ class DioProvider {
   }
 
   // update specific doctor data
-  Future updateDoctor(id) async {
+  Future updateDoctor(id,
+      [fullName, phoneNumber, description, qualifications]) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map data = {};
+
+    if (!fullName) {
+      data.addAll({'full_name': fullName});
+    }
+    if (!phoneNumber) {
+      data.addAll({'phone_number': phoneNumber});
+    }
+    if (!description) {
+      data.addAll({'description': description});
+    }
+    if (!qualifications) {
+      data.addAll({'qualifications': qualifications});
+    }
 
     var response = await _dio.patch("/api/doctors/$id",
+        data: data,
         options: Options(
             headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
 
@@ -156,9 +200,27 @@ class DioProvider {
   }
 
 // update specific patient data
-  Future updatePatient(id) async {
+  Future updatePatient(patientId,
+      [fullName, phoneNumber, idCard, city, birthday]) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var response = await _dio.patch("/api/patients/$id",
+    Map data = {};
+    if (!fullName) {
+      data.addAll({'full_name': fullName});
+    }
+    if (!phoneNumber) {
+      data.addAll({'phone_number': phoneNumber});
+    }
+    if (!idCard) {
+      data.addAll({'id_card': idCard});
+    }
+    if (!city) {
+      data.addAll({'city': city});
+    }
+    if (!birthday) {
+      data.addAll({'birthday': birthday});
+    }
+    var response = await _dio.patch("/api/patients/$patientId",
+        data: data,
         options: Options(
             headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
 
@@ -172,31 +234,6 @@ class DioProvider {
         options: Options(
             headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
 
-    return response.data;
-  }
-
-// get current patient data
-  Future getCurrentPatient() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    var response = await _dio.get("/api/patients",
-        options: Options(
-            headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
-
-    await prefs.setString('patient', json.encode(response.data));
-
-    return response.data;
-  }
-
-  // get current patient data
-  Future getCurrentDoctor() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    var response = await _dio.get("/api/doctors",
-        options: Options(
-            headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
-
-    await prefs.setString('doctor', json.encode(response.data));
     return response.data;
   }
 
@@ -236,11 +273,10 @@ class DioProvider {
   }
 
   // update appointment details
-  Future updateAppointment(
-      String date, String day, String time, int doctorId) async {
+  Future updateAppointment(appointmentId, doctorId, [date, day, time]) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await Dio().patch('/api/appointments',
+    var response = await _dio.patch('/api/appointments/$appointmentId',
         data: {'date': date, 'day': day, 'time': time, 'doctor_id': doctorId},
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
@@ -248,10 +284,10 @@ class DioProvider {
   }
 
   // delete appointment
-  Future deleteAppointment(id) async {
+  Future deleteAppointment(appointmentId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await Dio().delete('/api/appointments/$id',
+    var response = await _dio.delete('/api/appointments/$appointmentId',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     return response.data;
@@ -272,7 +308,7 @@ class DioProvider {
       String reviews, double ratings, int id, int doctorId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await Dio().post('/api/reviews',
+    var response = await _dio.post('/api/reviews',
         data: {
           'ratings': ratings,
           'reviews': reviews,
@@ -284,10 +320,10 @@ class DioProvider {
   }
 
   // delete specefic review
-  Future deleteReview(id) async {
+  Future deleteReview(reviewId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await Dio().delete('/api/reviews/$id',
+    var response = await _dio.delete('/api/reviews/$reviewId',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
     return response.data;
   }
@@ -296,42 +332,47 @@ class DioProvider {
   Future getReviews() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await Dio().delete('/api/reviews',
+    var response = await _dio.delete('/api/reviews',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
     return response.data;
   }
 
   // get specifc review
-  Future getReview(id) async {
+  Future getReview(reviewId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await Dio().delete('/api/reviews/$id',
+    var response = await _dio.delete('/api/reviews/$reviewId',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     return response.data;
   }
 
-  // store availability date
+ // store availability date
   Future storeAvailability(
-      String date, String day, String time, int doctor) async {
+      String date, String start_time, String end_time, int doctor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await Dio().post('/api/availability',
-        data: {'date': date, 'day': day, 'time': time, 'doctor_id': doctor},
+    var response = await _dio.post('/api/availabilities',
+        data: {
+          'doctor_id': doctor,
+          'unavailable_date': date,
+          'start_time': start_time,
+          'end_time': end_time
+        },
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
-    if (response.statusCode == 200 && response.data != '') {
+    if (response.statusCode == 201 && response.data != '') {
       return response.statusCode;
     } else {
       return 'Error';
     }
   }
 
-  // get availability date
+  // get specific availability
   Future getAvailability(id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await Dio().get('/api/availability/$id',
+    var response = await _dio.get('/api/availabilities/$id',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     return response.data;
@@ -341,7 +382,7 @@ class DioProvider {
   Future getMessages() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await Dio().get('/api/chat',
+    var response = await _dio.get('/api/chat',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     prefs.setString('messages', json.encode(response.data['messsages']));
@@ -354,10 +395,25 @@ class DioProvider {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
 
-    var response = await Dio().post('/api/chat',
+    var response = await _dio.post('/api/chat',
         data: {'receiver_id': receiverId, 'message': message},
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     return response.data;
+  }
+
+  Future fetchCurrentUserData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await json.decode(prefs.getString('user') as String);
+  }
+
+  Future fetchCurrentDoctorData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await json.decode(prefs.getString('doctor') as String);
+  }
+
+  Future fetchCurrentPatientData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await json.decode(prefs.getString('patient') as String);
   }
 }
