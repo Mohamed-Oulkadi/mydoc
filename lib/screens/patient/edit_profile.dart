@@ -1,6 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_holo_date_picker/date_picker.dart';
+import 'package:flutter_holo_date_picker/i18n/date_picker_i18n.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:mydoc/providers/validators.dart';
 
 import '../../main.dart';
@@ -127,7 +132,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: _phoneNumberController,
+                controller: _phoneController,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
                   labelText: 'Phone Number',
@@ -147,8 +152,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     if (_formKey.currentState!.validate()) {
                       final res = await DioProvider().updatePatient(
                           _nameController.text,
-                          _phoneNumberController.text,
-                          _idCardNumberController.text,
+                          _phoneController.text,
+                          _cinController.text,
                           _birthdayController.text,
                           patient['patient_id']);
 
