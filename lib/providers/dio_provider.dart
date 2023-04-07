@@ -369,10 +369,10 @@ class DioProvider {
   }
 
   // get specific availability
-  Future getAvailability(availabilityId) async {
+  Future getAvailability(id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await _dio.get('/api/availability/$availabilityId',
+    var response = await _dio.get('/api/availabilities/$id',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     return response.data;
