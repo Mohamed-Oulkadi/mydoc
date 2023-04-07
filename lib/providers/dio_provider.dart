@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:mydoc/screens/patient/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DioProvider {
@@ -258,14 +259,15 @@ class DioProvider {
   }
 
   //store appointment details
-  Future bookAppointment(String date, String time, int doctorId) async {
+  Future bookAppointment(int patientId, String date, String time, int doctorId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
     var response = await _dio.post('/api/appointments',
         data: {
+          'patient_id': patientId,
+          'doctor_id': doctorId,
           'appointment_date': date,
           'appointment_time': time,
-          'doctor_id': doctorId
         },
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
