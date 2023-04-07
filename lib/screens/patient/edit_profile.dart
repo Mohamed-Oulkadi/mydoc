@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_holo_date_picker/date_picker.dart';
+import 'package:flutter_holo_date_picker/i18n/date_picker_i18n.dart';
+import 'package:intl/intl.dart';
 import 'package:mydoc/providers/validators.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -13,8 +16,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
-  final TextEditingController _idCardNumberController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _cinController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final String _profileImageURL = 'images/doctor1.jpg';
 
   @override
@@ -22,8 +25,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     _nameController.dispose();
     _ageController.dispose();
     _birthdayController.dispose();
-    _idCardNumberController.dispose();
-    _phoneNumberController.dispose();
+    _cinController.dispose();
+    _phoneController.dispose();
     super.dispose();
   }
 
@@ -32,6 +35,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Profile'),
+        backgroundColor: const Color(0xFF7165D6),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -42,6 +46,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
             children: [
               Center(
                 child: CircleAvatar(
+                  backgroundColor: const Color(0xFF7165D6),
                   radius: 50,
                   backgroundImage: NetworkImage(_profileImageURL),
                   child: IconButton(
@@ -58,51 +63,59 @@ class EditProfileScreenState extends State<EditProfileScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Full Name',
-                  prefixIcon: Icon(Icons.person),
-                ),
-                validator: (value) => validateFullName(value),
+                      validator: (value) => validateFullName(value),
+                      decoration: const InputDecoration(
+                        labelText: "Full Name",
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.person),
+                      ),
               ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _birthdayController,
-                decoration: const InputDecoration(
-                  labelText: 'Birthday',
-                  prefixIcon: Icon(Icons.calendar_today),
-                ),
-                validator: (value) {
-                  // TODO proper birthday validation
-                  // (to add in providers/validators.dart)
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your birthday';
-                  }
-                  return null;
-                },
+                      readOnly: true,
+                      validator: (value) => validateBirthdayDate(value),
+                      decoration: const InputDecoration(
+                        labelText: "Birthday Date",
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.calendar_today),
+                      ),
+                      onTap: () async {
+                        var pickedDate = await DatePicker.showSimpleDatePicker(
+                          context,
+                          initialDate: DateTime(1994),
+                          firstDate: DateTime(1960),
+                          lastDate: DateTime(2012),
+                          dateFormat: "dd-MMMM-yyyy",
+                          locale: DateTimePickerLocale.en_us,
+                          looping: true,
+                        );
+                        if (pickedDate != null) {
+                          _birthdayController.text =
+                              DateFormat('yyyy-MM-dd').format(pickedDate);
+                        }
+                      },
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: _idCardNumberController,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.badge),
-                  labelText: 'ID Card Number',
-                ),
-                validator: (value) => validateIdCard(value),
+                controller: _cinController,
+                      validator: (value) => validateIdCard(value),
+                      decoration: const InputDecoration(
+                        labelText: "CIN",
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.badge),
+                      ),
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: _phoneNumberController,
-                keyboardType: TextInputType.phone,
-                decoration: const InputDecoration(
-                  labelText: 'Phone Number',
-                  prefixIcon: Icon(Icons.phone),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your phone number';
-                  }
-                  return null;
-                },
+                keyboardType: TextInputType.number,
+                      controller: _phoneController,
+                      validator: (value) => validatePhoneNumber(value),
+                      decoration: const InputDecoration(
+                        labelText: "Phone Number",
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.phone),
+                      ),
               ),
               const SizedBox(height: 32),
               Center(
@@ -112,6 +125,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       // TODO: Implement profile update
                     }
                   },
+                    style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF7165D6), // Background color
+                  ),
                   child: const Text('Save Changes'),
                 ),
               ),
