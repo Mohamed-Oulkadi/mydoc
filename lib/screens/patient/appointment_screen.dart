@@ -6,15 +6,15 @@ import 'package:mydoc/providers/dio_provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-var doctors;
+var doctor;
 
 void fetchData() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  doctors = await json.decode(prefs.get('doctors') as String);
+  doctor = await json.decode(prefs.get('doctor') as String);
 }
 
 Future<void> bookingHandler(context) async {
-  Navigator.pushNamed(context, '/booking');
+  Navigator.pushNamed(context, '/booking', arguments:{'doctor_id': doctor['doctor_id']});
 }
 
 class AppointmentScreen extends StatelessWidget {
@@ -271,7 +271,7 @@ class DoctorName extends StatelessWidget {
             return Text('Error: ${snapshot.error}');
           } else {
             return Text(
-              doctors[0]['full_name'],
+              doctor['full_name'],
               style: const TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.w500,
@@ -299,7 +299,7 @@ class AboutPage extends StatelessWidget {
             return Text('Error: ${snapshot.error}');
           } else {
             return Text(
-              doctors[0]['qualifications'],
+              doctor['qualifications'],
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.black54,
