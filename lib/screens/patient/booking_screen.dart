@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:mydoc/components/button.dart';
 import 'package:mydoc/components/custom_appbar.dart';
 import 'package:mydoc/models/booking_datetime_converted.dart';
@@ -7,13 +8,20 @@ import 'package:mydoc/providers/dio_provider.dart';
 import 'package:mydoc/utils/config.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mydoc/utils/flash_message_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:time_range_picker/time_range_picker.dart';
 
-var unavailableDate;
+var unavailableDate, patient;
+
+void fetchData() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  patient = await json.decode(prefs.get('patient') as String);
+}
 
 void fetchAvailability(id) async {
-  var unavailableDate = await DioProvider().getAvailability(id);
+  unavailableDate = await DioProvider().getAvailability(id);
 }
 
 class BookingPage extends StatefulWidget {
@@ -29,22 +37,54 @@ class _BookingPageState extends State<BookingPage> {
   DateTime _focusDay = DateTime.now();
   DateTime _currentDay = DateTime.now();
   int? _currentIndex;
-  bool _isWeekend = false;
-  bool _isUnavailableDate = false;
-  bool _dateSelected = false;
+  bool _dateSelected = true;
   bool _timeSelected = false;
-  String? _startTime;
-  String? endTime;
+  TimeOfDay? time;
 
-  Future<void> appointmentHandler(context, doctor) async {
+  Future displayTimePicker(BuildContext context) async {
+    // convert to TimeOfDay to int
+    int convertTimeOfDay(TimeOfDay time) => time.hour * 60 + time.minute;
+
+    time = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    int selectedTime = time!.hour * 60 + time!.minute;
+    DateTime date = DateTime.parse(unavailableDate['available_date']);
+
+    var startTime =
+        TimeOfDay.fromDateTime(DateTime.parse(unavailableDate['start_time']));
+    int _startTime = convertTimeOfDay(startTime);
+
+    var endTime =
+        TimeOfDay.fromDateTime(DateTime.parse(unavailableDate['end_time']));
+    int _endTime = convertTimeOfDay(endTime);
+
+    // check if unavailable time is selected
+    if (_currentDay.year == date.year &&
+        _currentDay.month == date.month &&
+        _currentDay.day == date.day) {
+      if (selectedTime > _startTime && selectedTime < _endTime) {
+        _timeSelected = false;
+
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: CustomSnackBar(
+              errorText: 'Selected time is not available currently.'),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ));
+      }
+    } else {
+      _timeSelected = true;
+    }
+  }
+
+  Future<void> appointmentHandler(context, patient, doctor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-
     //convert date/day/time into string first
     final getDate = DateConverted.getDate(_currentDay);
-    final getTime = DateConverted.getTime(_currentIndex!);
+    final getTime = '${time!.hour}:00';
 
-    final res = await DioProvider()
-        .bookAppointment(getDate, getTime, doctor['doctor_id']);
+    final res = await DioProvider().bookAppointment(
+        patient['patient_id'], getDate, getTime, doctor['doctor_id']);
 
     if (res['error'] == 'false') {
       Navigator.pushReplacementNamed(context, '/home');
@@ -57,6 +97,7 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     Config().init(context);
     final doctor = ModalRoute.of(context)!.settings.arguments as Map;
+    fetchData();
     fetchAvailability(doctor['doctor_id']);
     return Scaffold(
       appBar: const CustomAppBar(
@@ -69,85 +110,28 @@ class _BookingPageState extends State<BookingPage> {
             child: Column(
               children: <Widget>[
                 _tableCalendar(),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 25),
-                  child: Center(
-                    child: Text(
-                      'Select Consultation Time',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                )
               ],
             ),
           ),
-          (_isWeekend || _isUnavailableDate)
-              ? SliverToBoxAdapter(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 30),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      'This date is not available, please select another one',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                )
-              : SliverGrid(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return InkWell(
-                        splashColor: Colors.transparent,
-                        onTap: () {
-                          setState(() {
-                            _currentIndex = index;
-                            _timeSelected = true;
-                          });
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: _currentIndex == index
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                            borderRadius: BorderRadius.circular(15),
-                            color: _currentIndex == index
-                                ? const Color(0xFF7165D6)
-                                : null,
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            '${index + 9}:00 ${index + 9 > 11 ? "PM" : "AM"}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color:
-                                  _currentIndex == index ? Colors.white : null,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                    childCount: 8,
-                  ),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4, childAspectRatio: 1.5),
-                ),
+          SliverToBoxAdapter(
+              child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Button(
+              width: double.infinity,
+              title: 'Select Consultation Time',
+              onPressed: () async {
+                displayTimePicker(context);
+              },
+              disable: _dateSelected ? false : true,
+            ),
+          )),
           SliverToBoxAdapter(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 80),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Button(
                 width: double.infinity,
                 title: 'Make Appointment',
-                onPressed: () => appointmentHandler(context, doctor),
+                onPressed: () => appointmentHandler(context, patient, doctor),
                 disable: _timeSelected && _dateSelected ? false : true,
               ),
             ),
@@ -186,20 +170,16 @@ class _BookingPageState extends State<BookingPage> {
 
           //check if weekend is selected
           if (selectedDay.weekday == 6 || selectedDay.weekday == 7) {
-            _isWeekend = true;
-            _timeSelected = false;
-            _currentIndex = null;
-          } else {
-            _isWeekend = false;
-          }
+            _dateSelected = false;
 
-          // check if unavailable date is selected
-          if (DateTime.parse(unavailableDate['unavailable_date']) == selectedDay) {
-            _isUnavailableDate = true;
-            _timeSelected = false;
-            _currentIndex = null;
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: CustomSnackBar(errorText: 'Weekend is not available'),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ));
           } else {
-            _isUnavailableDate = false;
+            _dateSelected = true;
           }
         });
       }),
