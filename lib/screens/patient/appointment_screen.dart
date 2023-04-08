@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mydoc/providers/dio_provider.dart';
-
+import 'package:rating_dialog/rating_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 var doctor;
@@ -14,7 +14,8 @@ void fetchData() async {
 }
 
 Future<void> bookingHandler(context) async {
-  Navigator.pushNamed(context, '/booking', arguments:{'doctor_id': doctor['doctor_id']});
+  Navigator.pushNamed(context, '/booking',
+      arguments: {'doctor_id': doctor['doctor_id']});
 }
 
 class AppointmentScreen extends StatelessWidget {
@@ -110,6 +111,77 @@ class AppointmentScreen extends StatelessWidget {
                                       ),
                                       child: const Icon(
                                         CupertinoIcons.chat_bubble_text_fill,
+                                        color: Colors.white,
+                                        size: 25,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  InkWell(
+                                    borderRadius: BorderRadius.circular(30),
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return RatingDialog(
+                                                initialRating: 3.0,
+                                                title: const Text(
+                                                  'Rate the Doctor',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: 25,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                message: const Text(
+                                                  'Please help us to rate our Doctor',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                                image: const CircleAvatar(
+                                                  radius: 85,
+                                                  backgroundImage: AssetImage(
+                                                      "images/doctor1.jpg"),
+                                                ),
+                                                submitButtonText: 'Submit',
+                                                commentHint: 'Your Reviews',
+                                                onSubmitted: (response) async {
+                                                  final SharedPreferences
+                                                      prefs =
+                                                      await SharedPreferences
+                                                          .getInstance();
+                                                  final token = prefs
+                                                          .getString('token') ??
+                                                      '';
+
+                                                  /* final rating = await DioProvider()
+                                        .storeReviews(
+                                            response.comment,
+                                            response.rating,
+                                            widget.doctor['appointments']
+                                                ['id'], //this is appointment id
+                                            widget.doctor[
+                                                'doc_id'], //this is doctor id
+                                            token); */
+
+                                                  //if successful, then refresh
+                                                  /* if (rating == 200 && rating != '') {
+                                      MyApp.navigatorKey.currentState!
+                                          .pushNamed('main');
+                                    } */
+                                                });
+                                          });
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFF9F97E2),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        CupertinoIcons.star_fill,
                                         color: Colors.white,
                                         size: 25,
                                       ),
