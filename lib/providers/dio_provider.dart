@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:mydoc/screens/patient/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DioProvider {
@@ -258,14 +259,15 @@ class DioProvider {
   }
 
   //store appointment details
-  Future bookAppointment(String date, String time, int doctorId) async {
+  Future bookAppointment(int patientId, String date, String time, int doctorId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
     var response = await _dio.post('/api/appointments',
         data: {
+          'patient_id': patientId,
+          'doctor_id': doctorId,
           'appointment_date': date,
           'appointment_time': time,
-          'doctor_id': doctorId
         },
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
@@ -347,12 +349,12 @@ class DioProvider {
     return response.data;
   }
 
- // store availability date
+  // store availability date
   Future storeAvailability(
       String date, String start_time, String end_time, int doctor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await _dio.post('/api/availabilities',
+    var response = await _dio.post('/api/availability',
         data: {
           'doctor_id': doctor,
           'unavailable_date': date,
@@ -372,7 +374,7 @@ class DioProvider {
   Future getAvailability(id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await _dio.get('/api/availabilities/$id',
+    var response = await _dio.get('/api/availability/$id',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     return response.data;

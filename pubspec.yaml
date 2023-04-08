@@ -51,7 +51,7 @@ dependencies:
   flutter_svg: ^1.0.3
   line_awesome_flutter: ^2.0.0
   image_picker: ^0.8.3
-  time_range_picker : any
+  time_range_picker: ^2.2.0
 
 dev_dependencies:
   flutter_test:

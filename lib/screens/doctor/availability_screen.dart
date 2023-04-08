@@ -132,7 +132,10 @@ class _AvailabilityScreen extends State<AvailabilityScreen> {
                   //convert date into string first
                   final getDate = DateConverted.getDate(_currentDay);
                   final res = await DioProvider().storeAvailability(
-                      getDate, _startTime.toString(), _endTime.toString(), doctor['doctor_id']);
+                      getDate,
+                      _startTime.toString(),
+                      _endTime.toString(),
+                      doctor['doctor_id']);
                   // redirect to doctor home page upon 201 status code
                   if (res == 201) {
                     MyApp.navigatorKey.currentState!.pushNamed('/dr_home');
