@@ -3,7 +3,7 @@ import 'package:mydoc/providers/dio_provider.dart';
 import 'package:mydoc/providers/common.dart';
 
 import '../../utils/config.dart';
-
+final String _profileImageURL = 'images/doctor1.jpg';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -106,7 +106,8 @@ class DoctorsBuilder extends StatelessWidget {
                           CircleAvatar(
                             radius: 35,
                             backgroundImage:
-                                fetchImage(snapshot.data[index]['image']),
+                                //fetchImage(snapshot.data[index]['image']),
+                                NetworkImage(_profileImageURL),
                           ),
                           Text(
                             "Dr. ${snapshot.data[index]['full_name']}",

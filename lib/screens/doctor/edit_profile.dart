@@ -12,14 +12,14 @@ import '../../main.dart';
 import '../../providers/dio_provider.dart';
 import '../../utils/config.dart';
 
-class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({Key? key}) : super(key: key);
+class EditDocProfileScreen extends StatefulWidget {
+  const EditDocProfileScreen({Key? key}) : super(key: key);
 
   @override
   EditProfileScreenState createState() => EditProfileScreenState();
 }
 
-class EditProfileScreenState extends State<EditProfileScreen> {
+class EditProfileScreenState extends State<EditDocProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
@@ -96,42 +96,6 @@ class EditProfileScreenState extends State<EditProfileScreen> {
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: _birthdayController,
-                      readOnly: true,
-                      validator: (value) => validateBirthdayDate(value),
-                      decoration: const InputDecoration(
-                        labelText: "Birthday Date",
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.calendar_today),
-                      ),
-                      onTap: () async {
-                        var pickedDate = await DatePicker.showSimpleDatePicker(
-                          context,
-                          initialDate: DateTime(1994),
-                          firstDate: DateTime(1960),
-                          lastDate: DateTime(2012),
-                          dateFormat: "dd-MMMM-yyyy",
-                          locale: DateTimePickerLocale.en_us,
-                          looping: true,
-                        );
-                        if (pickedDate != null) {
-                          _birthdayController.text =
-                              DateFormat('yyyy-MM-dd').format(pickedDate);
-                        }
-                      },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _cinController,
-                      validator: (value) => validateIdCard(value),
-                      decoration: const InputDecoration(
-                        labelText: "CIN",
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.badge),
-                      ),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
                       keyboardType: TextInputType.number,
                       controller: _phoneController,
                       validator: (value) => validatePhoneNumber(value),
@@ -142,10 +106,30 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                     ),
               const SizedBox(height: 32),
+              TextFormField(
+                controller: _nameController,
+                      validator: (value) => validateFullName(value),
+                      decoration: const InputDecoration(
+                        labelText: "City",
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.map_outlined),
+                      ),
+              ),
+              const SizedBox(height: 32),
+              TextFormField(
+                controller: _nameController,
+                      validator: (value) => validateFullName(value),
+                      decoration: const InputDecoration(
+                        labelText: "Clinic Address",
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.maps_home_work_outlined),
+                      ),
+              ),
+              const SizedBox(height: 32),
               Center(
             child: FloatingActionButton.extended(
               label: Text('Update'),
-              backgroundColor: Color.fromARGB(255, 4, 243, 24),
+              backgroundColor: const Color(0xFF7165D6),
               icon: Icon(
                 Icons.update_sharp,
                 size: 24.0,
@@ -168,6 +152,30 @@ class EditProfileScreenState extends State<EditProfileScreen> {
               },
             ),
           ),
+              /* Center(
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      final res = await DioProvider().updateDoctor(
+                          _nameController.text,
+                          _phoneController.text,
+                          _cinController.text,
+                          _birthdayController.text,
+                          patient['patient_id']);
+
+                      // redirect to home page upon 200 status code
+                      if (res == 201) {
+                        MyApp.navigatorKey.currentState!
+                            .pushNamed('/patient_profile');
+                      }
+                    }
+                  },
+                    style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF7165D6), // Background color
+                  ),
+                  child: const Text('Update'),
+                ),
+              ), */
             ],
           ),
         ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mydoc/screens/admin/adminhome_screen.dart';
+import 'package:mydoc/screens/admin/patiens_list.dart';
 import 'add_doctor.dart';
+import 'appointmentlist.dart';
 
 class AdminNavBar extends StatefulWidget {
   const AdminNavBar({Key? key}) : super(key: key);
@@ -13,7 +15,8 @@ class AdminNavBarRootsState extends State<AdminNavBar> {
   late int _selectedIndex = 0;
   final List<Widget> _screens = [
     const AdminHomeScreen(),
-    const AddNewDoctor(),
+    const PatientsListeScreen(),
+    const AppointmentListScreen(),
   ];
 
   @override
@@ -22,7 +25,7 @@ class AdminNavBarRootsState extends State<AdminNavBar> {
       backgroundColor: Colors.white,
       body: _screens[_selectedIndex],
       bottomNavigationBar: SizedBox(
-        height: 80,
+        height: MediaQuery.of(context).size.height * 0.09,
         child: BottomNavigationBar(
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
@@ -38,12 +41,16 @@ class AdminNavBarRootsState extends State<AdminNavBar> {
           },
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_filled),
-              label: "Home",
+              icon: Icon(Icons.person_4),
+              label: "Doctors",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.add_circle_outline_outlined),
-              label: "Add",
+              icon: Icon(Icons.personal_injury_rounded),
+              label: "Patients",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_month),
+              label: "Appointments",
             ),
           ],
         ),

@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
               .pushNamedAndRemoveUntil('/dr_home', (route) => false);
         } else if (res['user']['role'] == 'admin') {
           Navigator.of(context)
-              .pushNamedAndRemoveUntil('/admin', (route) => false);
+              .pushNamedAndRemoveUntil('/admin_home', (route) => false);
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

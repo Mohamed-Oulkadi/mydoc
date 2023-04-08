@@ -8,4 +8,4 @@ Future<void> logoutHandler(context) async {
       .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
 }
 
-ImageProvider<Object> fetchImage(image) {}
+//ImageProvider<Object> fetchImage(image) {}

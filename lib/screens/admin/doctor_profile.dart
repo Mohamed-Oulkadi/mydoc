@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class DrProfileDetails extends StatelessWidget {
-  const DrProfileDetails({super.key, required this.doctor});
+class DrProfileDetailsScreen extends StatelessWidget {
+  const DrProfileDetailsScreen({super.key, required this.doctor});
 
   final Map<dynamic, dynamic> doctor;
 
@@ -45,15 +45,15 @@ class DrProfileDetails extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        /* actions: [
+        actions: [
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () => Navigator.pushNamed(context, '/edit_profile',
+                onTap: () => Navigator.pushNamed(context, '/edit_docprofile',
                     arguments: {"doctor_id": doctor['doctor_id']}),
                 child: const Icon(Icons.edit),
               ))
-        ], */
+        ],
       ),
       body: Stack(
         alignment: Alignment.center,
@@ -62,7 +62,7 @@ class DrProfileDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                height: 450,
+                height: 420,
                 width: double.infinity,
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
@@ -86,7 +86,20 @@ class DrProfileDetails extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
+              Center(
+            child: FloatingActionButton.extended(
+              label: Text('Delete'),
+              backgroundColor: Color.fromARGB(255, 218, 51, 51),
+              icon: Icon(
+                Icons.delete_rounded,
+                size: 24.0,
+              ),
+              onPressed: () {
+                
+              },
+            ),
+          ),
             ],
           ),
           CustomPaint(
@@ -99,10 +112,10 @@ class DrProfileDetails extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Padding(
+              /* const Padding(
                 padding: EdgeInsets.all(20),
                 child: Text(
-                  "Profile",
+                  "",
                   style: TextStyle(
                     fontSize: 35,
                     letterSpacing: 1.5,
@@ -110,7 +123,7 @@ class DrProfileDetails extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-              ),
+              ), */
               Container(
                 padding: const EdgeInsets.all(10.0),
                 width: MediaQuery.of(context).size.width / 3.5,
@@ -139,7 +152,7 @@ class HeaderCurvedContainer extends CustomPainter {
     Paint paint = Paint()..color = const Color(0xFF7165D6);
     Path path = Path()
       ..relativeLineTo(0, 150)
-      ..quadraticBezierTo(size.width / 2, 225, size.width, 150)
+      ..quadraticBezierTo(size.width / 2, 180, size.width, 150)
       ..relativeLineTo(0, -150)
       ..close();
     canvas.drawPath(path, paint);
