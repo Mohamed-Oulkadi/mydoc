@@ -139,53 +139,63 @@ class _TwoGiantButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        InkWell(
-          // TODO send to appointment page
-          onTap: () {},
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-                color: const Color(0xFF7165D6),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 6,
-                    spreadRadius: 4,
-                  )
-                ]),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.add,
-                    color: Color(0xFF7165D6),
-                    size: 35,
-                  ),
+        Expanded(
+          child: InkWell(
+            // TODO send to appointment page
+            onTap: () {},
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                  color: const Color(0xFF7165D6),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 6,
+                      spreadRadius: 4,
+                    )
+                  ]),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.add,
+                          color: Color(0xFF7165D6),
+                          size: 35,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: const Text(
+                        "Clinic Visit",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Center(
+                      child: const Text(
+                        "Make an appointment",
+                        style: TextStyle(
+                          color: Colors.white54,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-                const SizedBox(height: 30),
-                const Text(
-                  "Clinic Visit",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                const Text(
-                  "Make an appointment",
-                  style: TextStyle(
-                    color: Colors.white54,
-                  ),
-                )
-              ],
+              ),
             ),
           ),
         ),
@@ -193,3 +203,4 @@ class _TwoGiantButtons extends StatelessWidget {
     );
   }
 }
+

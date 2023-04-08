@@ -52,6 +52,7 @@ dependencies:
   line_awesome_flutter: ^2.0.0
   image_picker: ^0.8.3
   time_range_picker: ^2.2.0
+  flutter_smart_dialog: 4.2.5
 
 dev_dependencies:
   flutter_test:
