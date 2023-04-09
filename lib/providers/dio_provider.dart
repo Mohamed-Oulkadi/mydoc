@@ -380,14 +380,38 @@ class DioProvider {
     return response.data;
   }
 
-  // get all messages related to the current user
-  Future getMessages() async {
+    // get all chats related to the current user
+  Future getChats() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
     var response = await _dio.get('/api/chat',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     prefs.setString('messages', json.encode(response.data['messsages']));
+
+    return response.data;
+  }
+
+  // get a certain chat
+  Future getChat(id) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
+    var response = await _dio.get('/api/chat/$id',
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+    prefs.setString('messages', json.encode(response.data['messsages']));
+
+    return response.data;
+  }
+
+  // create a new chat
+  Future createChat(userId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
+
+    var response = await _dio.post('/api/chat',
+        data: {'user_id': userId},
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     return response.data;
   }
