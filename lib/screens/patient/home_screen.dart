@@ -4,6 +4,12 @@ import 'package:mydoc/providers/common.dart';
 
 import '../../utils/config.dart';
 final String _profileImageURL = 'images/doctor1.jpg';
+List imgs = [
+    "doctor4.jpg",
+    "doctor3.jpg",
+    "doctor3.jpg",
+    "doctor4.jpg",
+  ];
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -51,12 +57,28 @@ class Header extends StatelessWidget {
             return Text('Error: ${snapshot.error}');
           } else {
             var fullName = snapshot.data['full_name'];
-            return Text(
-              "Hello $fullName",
-              style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w500,
-              ),
+            return Row(
+              children: [
+                Text(
+                  "Hello ",
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  "$fullName",
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Spacer(),
+                CircleAvatar(
+                    radius: 25,
+                    backgroundImage: AssetImage("images/patient.jpg"),
+                  ),
+              ],
             );
           }
         });
@@ -89,7 +111,7 @@ class DoctorsBuilder extends StatelessWidget {
                     onTap: () => Navigator.pushNamed(context, '/appointments'),
                     child: Container(
                       margin: const EdgeInsets.all(5),
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
@@ -105,7 +127,8 @@ class DoctorsBuilder extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 35,
-                            backgroundImage: snapshot.data[index]['image'],
+                            //backgroundImage: snapshot.data[index]['image'],
+                            backgroundImage: AssetImage("images/${imgs[index]}"),
                           ),
                           Text(
                             "Dr. ${snapshot.data[index]['full_name']}",
@@ -121,6 +144,22 @@ class DoctorsBuilder extends StatelessWidget {
                               color: Colors.black45,
                             ),
                           ),
+                          Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            Text(
+                              "4.8",
+                              style: TextStyle(
+                                color: Colors.black45,
+                              ),
+                            )
+                          ],
+                        ),
                         ],
                       ),
                     ),
@@ -203,4 +242,16 @@ class _TwoGiantButtons extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 

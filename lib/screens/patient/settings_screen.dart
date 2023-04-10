@@ -175,6 +175,7 @@ class PatientName extends StatelessWidget {
   Widget build(BuildContext context) {
     Config().init(context);
     final patient = ModalRoute.of(context)!.settings.arguments as Map;
+    
     return FutureBuilder(
         future: DioProvider().getPatient(patient['patient_id']),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -186,7 +187,7 @@ class PatientName extends StatelessWidget {
             return ListTile(
               leading: const CircleAvatar(
                 radius: 30,
-                backgroundImage: AssetImage("images/doctor1.jpg"),
+                backgroundImage: AssetImage("images/doctor3.jpg"),
               ),
               title: Text(
                 "${snapshot.data['full_name']}",

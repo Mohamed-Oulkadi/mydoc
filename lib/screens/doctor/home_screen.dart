@@ -12,7 +12,8 @@ class DrHomeScreen extends StatelessWidget {
         minimum: const EdgeInsets.only(top: 50, left: 20, right: 20),
         child: SingleChildScrollView(
             child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Column(
+                crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
@@ -21,7 +22,7 @@ class DrHomeScreen extends StatelessWidget {
                   Header(),
                   CircleAvatar(
                     radius: 25,
-                    backgroundImage: AssetImage("images/doctor1.jpg"),
+                    backgroundImage: AssetImage("images/doctor3.jpg"),
                   )
                 ]),
           ),
