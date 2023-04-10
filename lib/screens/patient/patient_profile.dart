@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../providers/dio_provider.dart';
+import '../../utils/config.dart';
+
 class PatientProfileDetails extends StatelessWidget {
   const PatientProfileDetails({super.key, required this.patient});
 
@@ -58,41 +61,7 @@ class PatientProfileDetails extends StatelessWidget {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                height: 450,
-                width: double.infinity,
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    textfield(
-                      hintText: "${patient['full_name']}",
-                      prefixIcon: const Icon(Icons.person),
-                    ),
-                    textfield(
-                      hintText: "${patient['email']}",
-                      prefixIcon: const Icon(Icons.email),
-                    ),
-                    textfield(
-                      hintText: "${patient['phone_number']}",
-                      prefixIcon: const Icon(Icons.phone),
-                    ),
-                    textfield(
-                      hintText: "${patient['id_card']}",
-                      prefixIcon: const Icon(Icons.badge),
-                    ),
-                    textfield(
-                      hintText: "${patient['birthday']}",
-                      prefixIcon: const Icon(Icons.calendar_today),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+          PatientProf(),
           CustomPaint(
             painter: HeaderCurvedContainer(),
             child: SizedBox(
@@ -125,7 +94,7 @@ class PatientProfileDetails extends StatelessWidget {
                   color: Colors.white,
                   image: const DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage('images/doctor1.jpg'),
+                    image: AssetImage('images/patient.jpg'),
                   ),
                 ),
               ),
@@ -151,4 +120,170 @@ class HeaderCurvedContainer extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
+
+class PatientProf extends StatelessWidget {
+  const PatientProf({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Config().init(context);
+    return FutureBuilder(
+        future: DioProvider().fetchCurrentPatientData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text('Loading...');
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  height: 450,
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Material(
+                        elevation: 4,
+                        shadowColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              //prefixIcon: prefixIcon,
+                              hintText: "${snapshot.data['full_name']}",
+                              hintStyle: const TextStyle(
+                                letterSpacing: 2,
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              fillColor: Colors.white30,
+                              filled: true,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide.none)),
+                        ),
+                      ),
+                      Material(
+                        elevation: 4,
+                        shadowColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              //prefixIcon: prefixIcon,
+                              hintText: "${snapshot.data['id_card']}",
+                              hintStyle: const TextStyle(
+                                letterSpacing: 2,
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              fillColor: Colors.white30,
+                              filled: true,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide.none)),
+                        ),
+                      ),
+                      Material(
+                        elevation: 4,
+                        shadowColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              //prefixIcon: prefixIcon,
+                              hintText: "1990-4-23",
+                              hintStyle: const TextStyle(
+                                letterSpacing: 2,
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              fillColor: Colors.white30,
+                              filled: true,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide.none)),
+                        ),
+                      ),
+                      Material(
+                        elevation: 4,
+                        shadowColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              //prefixIcon: prefixIcon,
+                              hintText: "${snapshot.data['full_name']}@gmail.com",
+                              hintStyle: const TextStyle(
+                                letterSpacing: 2,
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              fillColor: Colors.white30,
+                              filled: true,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide.none)),
+                        ),
+                      ),
+                      Material(
+                        elevation: 4,
+                        shadowColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              //prefixIcon: prefixIcon,
+                              hintText: "${snapshot.data['phone_number']}",
+                              hintStyle: const TextStyle(
+                                letterSpacing: 2,
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              fillColor: Colors.white30,
+                              filled: true,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide.none)),
+                        ),
+                      ),
+                      /* textfield(
+                        hintText: "${patient['full_name']}",
+                        prefixIcon: const Icon(Icons.person),
+                      ),
+                      textfield(
+                        hintText: "Amina@gmail.com", //"${patient['email']}",
+                        prefixIcon: const Icon(Icons.email),
+                      ),
+                      textfield(
+                        hintText: "0667876545", //"${patient['phone_number']}",
+                        prefixIcon: const Icon(Icons.phone),
+                      ),
+                      textfield(
+                        hintText: "JM142356", //"${patient['id_card']}",
+                        prefixIcon: const Icon(Icons.badge),
+                      ),
+                      textfield(
+                        hintText: "1990-5-2", //"${patient['birthday']}",
+                        prefixIcon: const Icon(Icons.calendar_today),
+                      ), */
+                    ],
+                  ),
+                )
+              ],
+            );
+          }
+        });
+  }
 }
