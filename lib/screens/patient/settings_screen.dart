@@ -5,6 +5,8 @@ import 'package:mydoc/providers/dio_provider.dart';
 import 'package:mydoc/screens/patient/patient_profile.dart';
 
 import '../../utils/config.dart';
+import '../../widgets/about_us.dart';
+import '../../widgets/privacy_screen.dart';
 
 Map<String, dynamic> patient = {};
 
@@ -89,7 +91,14 @@ class SettingScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          PrivacyScreen(),
+                    ));
+              },
               leading: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -113,7 +122,14 @@ class SettingScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          AboutUsScreen(),
+                    ));
+              },
               leading: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(

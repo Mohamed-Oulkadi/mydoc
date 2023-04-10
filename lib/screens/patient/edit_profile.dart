@@ -92,6 +92,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                         labelText: "Full Name",
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.person),
+                        suffixIcon: Icon(Icons.edit), 
                       ),
               ),
               const SizedBox(height: 16),
@@ -103,6 +104,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                         labelText: "Birthday Date",
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.calendar_today),
+                        suffixIcon: Icon(Icons.edit), 
                       ),
                       onTap: () async {
                         var pickedDate = await DatePicker.showSimpleDatePicker(
@@ -128,6 +130,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                         labelText: "CIN",
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.badge),
+                        suffixIcon: Icon(Icons.edit), 
                       ),
               ),
               const SizedBox(height: 16),
@@ -139,13 +142,14 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                         labelText: "Phone Number",
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.phone),
+                        suffixIcon: Icon(Icons.edit), 
                       ),
                     ),
               const SizedBox(height: 32),
               Center(
             child: FloatingActionButton.extended(
               label: Text('Update'),
-              backgroundColor: Color.fromARGB(255, 4, 243, 24),
+              backgroundColor: Color.fromARGB(255, 28, 151, 38),
               icon: Icon(
                 Icons.update_sharp,
                 size: 24.0,
