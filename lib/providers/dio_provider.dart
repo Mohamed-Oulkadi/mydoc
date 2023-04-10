@@ -115,6 +115,17 @@ class DioProvider {
     return response.data;
   }
 
+  // get all doctors for a patient
+Future getDoctorsForPatient(int patientId) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  var response = await _dio.get("/api/doctors",
+        data: {'patient_id': patientId},
+        options: Options(
+            headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
+
+    return response.data;  
+}
+
   // get specific doctor data
   Future getDoctor(id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -189,6 +200,17 @@ class DioProvider {
 
     return response.data;
   }
+
+// get all patients for a doctor
+Future getPatientsForDoctor(int doctorId) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  var response = await _dio.get("/api/patients",
+        data: {'doctor_id': doctorId},
+        options: Options(
+            headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
+
+    return response.data;  
+}
 
 // get specific patient data
   Future getPatient(id) async {
