@@ -259,7 +259,8 @@ class DioProvider {
   }
 
   //store appointment details
-  Future bookAppointment(int patientId, String date, String time, int doctorId) async {
+  Future bookAppointment(
+      int patientId, String date, String time, int doctorId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
     var response = await _dio.post('/api/appointments',
@@ -380,7 +381,7 @@ class DioProvider {
     return response.data;
   }
 
-    // get all chats related to the current user
+  // get all chats related to the current user
   Future getChats() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
@@ -393,10 +394,10 @@ class DioProvider {
   }
 
   // get a certain chat
-  Future getChat(id) async {
+  Future getChat(int chatId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await _dio.get('/api/chat/$id',
+    var response = await _dio.get('/api/chat/$chatId',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     prefs.setString('messages', json.encode(response.data['messsages']));
@@ -405,7 +406,7 @@ class DioProvider {
   }
 
   // create a new chat
-  Future createChat(userId) async {
+  Future createChat(int userId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
 
@@ -416,13 +417,25 @@ class DioProvider {
     return response.data;
   }
 
-  // send a message to a specific user
-  Future sendMessage(receiverId, message) async {
+  // get chat messages
+  Future getChatMessages(int chatId, int page) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
 
-    var response = await _dio.post('/api/chat',
-        data: {'receiver_id': receiverId, 'message': message},
+    var response = await _dio.get('/api/chat_message',
+        data: {'chat_id': chatId, 'page': page},
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+    return response.data;
+  }
+
+  // send a message to a specific user
+  Future sendMessage(int chatId, String message) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.get('token');
+
+    var response = await _dio.post('/api/chat_message',
+        data: {'chat_id': chatId, 'message': message},
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     return response.data;
