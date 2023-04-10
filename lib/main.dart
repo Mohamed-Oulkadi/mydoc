@@ -3,6 +3,7 @@ import 'package:mydoc/screens/admin/nav_bar.dart';
 import 'package:mydoc/screens/auth/login_screen.dart';
 import 'package:mydoc/screens/auth/signup_screen.dart';
 import 'package:mydoc/screens/auth/welcome_screen.dart';
+import 'package:mydoc/screens/chat/chat_screen.dart';
 import 'package:mydoc/screens/doctor/availability_screen.dart';
 import 'package:mydoc/screens/doctor/doctor_profile.dart';
 import 'package:mydoc/screens/doctor/edit_profile.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
           '/edit_profile': (context) => const EditProfileScreen(),
           '/edit_docprofile': (context) => const EditDocProfileScreen(),
           '/availability': (context) => const AvailabilityScreen(),
+          '/chat_screen': (context) => const ChatScreen()
         });
   }
 }
