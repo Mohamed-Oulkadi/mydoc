@@ -4,6 +4,9 @@ import 'package:mydoc/providers/dio_provider.dart';
 import 'package:mydoc/providers/common.dart';
 import 'package:mydoc/screens/doctor/doctor_profile.dart';
 
+import '../../widgets/about_us.dart';
+import '../../widgets/privacy_screen.dart';
+
 Map<String, dynamic> doctor = {};
 
 void fetchData() async {
@@ -87,7 +90,14 @@ class DrSettingScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          PrivacyScreen(),
+                    ));
+              },
               leading: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -111,7 +121,14 @@ class DrSettingScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          AboutUsScreen(),
+                    ));
+              },
               leading: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -180,10 +197,11 @@ class DoctorName extends StatelessWidget {
             return ListTile(
               leading: const CircleAvatar(
                 radius: 30,
-                backgroundImage: AssetImage("images/doctor1.jpg"),
+                backgroundImage: AssetImage("images/doctor3.jpg"),
               ),
               title: Text(
                 "${snapshot.data['full_name']}",
+                //"lboj",
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 25,

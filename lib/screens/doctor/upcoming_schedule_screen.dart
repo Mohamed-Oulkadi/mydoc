@@ -30,12 +30,12 @@ class UpcomingSchedule extends StatelessWidget {
                 children: [
                   const ListTile(
                     title: Text(
-                      "Ali Zoubair",
+                      "Amina",
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                     trailing: CircleAvatar(
                       radius: 25,
-                      backgroundImage: AssetImage("images/doctor1.jpg"),
+                      backgroundImage: AssetImage("images/patient.jpg"),
                     ),
                   ),
                   const Padding(
@@ -83,13 +83,13 @@ class UpcomingSchedule extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(5),
                             decoration: const BoxDecoration(
-                              color: Colors.green,
+                              color: Color.fromARGB(255, 255, 201, 86),
                               shape: BoxShape.circle,
                             ),
                           ),
                           const SizedBox(width: 5),
                           const Text(
-                            "Confirmed",
+                            "Upcoming",
                             style: TextStyle(
                               color: Colors.black54,
                             ),
@@ -125,7 +125,7 @@ class UpcomingSchedule extends StatelessWidget {
                       InkWell(
                         onTap: () {},
                         child: Container(
-                          width: 150,
+                          width: 135,
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
                             color: const Color(0xFF7165D6),

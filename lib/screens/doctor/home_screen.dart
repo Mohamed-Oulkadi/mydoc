@@ -13,7 +13,8 @@ class DrHomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
             child:
                 Column(
-                crossAxisAlignment: CrossAxisAlignment.start, children: [
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
@@ -112,7 +113,7 @@ class PatientsBuilder extends StatelessWidget {
                       children: [
                         const CircleAvatar(
                           radius: 35,
-                          backgroundImage: AssetImage("images/doctor1.jpg"),
+                          backgroundImage: AssetImage("images/patient.jpg"),
                         ),
                         Text(
                           "${snapshot.data[index]['full_name']}",

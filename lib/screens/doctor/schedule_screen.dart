@@ -96,31 +96,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                                   : Colors.black38),
                         ),
                       )),
-                  InkWell(
-                      onTap: () {
-                        setState(() {
-                          _buttonIndex = 2;
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 22, horizontal: 25),
-                        decoration: BoxDecoration(
-                          color: _buttonIndex == 2
-                              ? const Color(0xFF7165D6)
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          "Canceled",
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: _buttonIndex == 2
-                                  ? Colors.white
-                                  : Colors.black38),
-                        ),
-                      )),
                 ],
               )),
           const SizedBox(height: 30),
