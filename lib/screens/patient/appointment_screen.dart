@@ -61,7 +61,7 @@ class AppointmentScreen extends StatelessWidget {
                               const CircleAvatar(
                                 radius: 35,
                                 backgroundImage:
-                                    AssetImage("images/doctor1.jpg"),
+                                    AssetImage("images/doctor3.jpg"),
                               ),
                               const SizedBox(height: 15),
                               const DoctorName(),
@@ -143,7 +143,7 @@ class AppointmentScreen extends StatelessWidget {
                                                 image: const CircleAvatar(
                                                   radius: 85,
                                                   backgroundImage: AssetImage(
-                                                      "images/doctor1.jpg"),
+                                                      "images/doctor3.jpg"),
                                                 ),
                                                 submitButtonText: 'Submit',
                                                 commentHint: 'Your Reviews',
@@ -212,7 +212,7 @@ class AppointmentScreen extends StatelessWidget {
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
                   )),
-              child: Column(
+              /* child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -225,6 +225,7 @@ class AppointmentScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   const AboutPage(),
+                  
                   const SizedBox(height: 30),
                   const Text(
                     "Location",
@@ -257,11 +258,167 @@ class AppointmentScreen extends StatelessWidget {
                     ),
                   )
                 ],
+              ), */
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    "About Doctor",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    "I am a Gynécologue with more than 7 years of experience ...",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Text(
+                        "Reviews",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Icon(Icons.star, color: Colors.amber),
+                      Text(
+                        "4.8",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        "(1)",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: Color(0xFF7165D6),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 160,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 1,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.all(10),
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 4,
+                                spreadRadius: 2,
+                              ),
+                            ],
+                          ),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width / 1.4,
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  leading: CircleAvatar(
+                                    radius: 25,
+                                    backgroundImage:
+                                        AssetImage("images/patient.jpg"),
+                                  ),
+                                  title: Text(
+                                    "Patient",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  trailing: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(Icons.star,
+                                      color: Colors.amber,
+                                      ),
+                                      Text(
+                                      "4.8",
+                                        style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  child: Text(
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    "Many thanks to Dr. Ahmed Karim. He is a great doctor",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                    ),
+                                  
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "Location",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  ListTile(
+                    leading: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF0EEFA),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.location_on,
+                        color: Color(0xFF7165D6),
+                        size: 30,
+                      ),
+                    ),
+                    title: Text(
+                      "Agadir, Medical center",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                ],
               ),
             )
           ],
         ),
       ),
+         /*    )
+          ],
+        ),
+      ), */
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(15),
         height: 130,
@@ -344,6 +501,7 @@ class DoctorName extends StatelessWidget {
           } else {
             return Text(
               doctor['full_name'],
+              //"Dr. Ahmed Karim",
               style: const TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.w500,
@@ -371,7 +529,8 @@ class AboutPage extends StatelessWidget {
             return Text('Error: ${snapshot.error}');
           } else {
             return Text(
-              doctor['qualifications'],
+              //doctor['qualifications'],
+              "I am a Gynecologue with more than 7 years of experience.",
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.black54,
