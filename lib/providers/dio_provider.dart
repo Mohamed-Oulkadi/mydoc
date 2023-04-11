@@ -115,17 +115,6 @@ class DioProvider {
     return response.data;
   }
 
-  // get all doctors for a patient
-Future getDoctorsForPatient(int patientId) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  var response = await _dio.get("/api/doctors",
-        data: {'patient_id': patientId},
-        options: Options(
-            headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
-
-    return response.data;  
-}
-
   // get specific doctor data
   Future getDoctor(id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -200,17 +189,6 @@ Future getDoctorsForPatient(int patientId) async {
 
     return response.data;
   }
-
-// get all patients for a doctor
-Future getPatientsForDoctor(int doctorId) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  var response = await _dio.get("/api/patients",
-        data: {'doctor_id': doctorId},
-        options: Options(
-            headers: {'Authorization': 'Bearer ${prefs.get("token")}'}));
-
-    return response.data;  
-}
 
 // get specific patient data
   Future getPatient(id) async {
@@ -407,7 +385,7 @@ Future getPatientsForDoctor(int doctorId) async {
   Future getChats() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await _dio.get('/api/chat',
+    var response = await _dio.get('/api/chats',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     prefs.setString('messages', json.encode(response.data['messsages']));
@@ -419,7 +397,7 @@ Future getPatientsForDoctor(int doctorId) async {
   Future getChat(int chatId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
-    var response = await _dio.get('/api/chat/$chatId',
+    var response = await _dio.get('/api/chats/$chatId',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     prefs.setString('messages', json.encode(response.data['messsages']));
@@ -432,7 +410,7 @@ Future getPatientsForDoctor(int doctorId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
 
-    var response = await _dio.post('/api/chat',
+    var response = await _dio.post('/api/chats',
         data: {'user_id': userId},
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
@@ -444,7 +422,7 @@ Future getPatientsForDoctor(int doctorId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
 
-    var response = await _dio.get('/api/chat_message',
+    var response = await _dio.get('/api/chat_messages',
         data: {'chat_id': chatId, 'page': page},
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
@@ -456,7 +434,7 @@ Future getPatientsForDoctor(int doctorId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.get('token');
 
-    var response = await _dio.post('/api/chat_message',
+    var response = await _dio.post('/api/chat_messages',
         data: {'chat_id': chatId, 'message': message},
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 

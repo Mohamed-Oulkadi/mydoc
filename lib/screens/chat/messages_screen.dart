@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:mydoc/providers/dio_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'chat_screen.dart';
+
+var users, user;
+
+void fetchData() async {
+  user = await DioProvider().fetchCurrentUserData();
+
+  if (user['role'] == 'doctor') {
+    users = await DioProvider().getPatients();
+  } else {
+    users = await DioProvider().getDoctors();
+  }
+}
 
 class MessagesScreen extends StatelessWidget {
   const MessagesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    fetchData();
+    
     List imgs = [
       "doctor1.jpg",
       "doctor2.jpg",
@@ -105,18 +121,31 @@ class MessagesScreen extends StatelessWidget {
 }
 
 class CustomSearchDelegate extends SearchDelegate<String?> {
+  final List<String> _history = <String>[];
+
   @override
   String get searchFieldLabel => "Search people";
 
   @override
   List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.clear),
-        onPressed: () {
-          query = "";
-        },
-      )
+    return <Widget>[
+      if (query.isEmpty)
+        IconButton(
+          tooltip: 'Voice Search',
+          icon: const Icon(Icons.mic),
+          onPressed: () {
+            query = '';
+          },
+        )
+      else
+        IconButton(
+          tooltip: 'Clear',
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            query = '';
+            showSuggestions(context);
+          },
+        ),
     ];
   }
 
@@ -135,16 +164,109 @@ class CustomSearchDelegate extends SearchDelegate<String?> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return const Text('results');
+    final String? searched = query;
+    if (searched == null || !users.contains(searched)) {
+      return Center(
+        child: Text(
+          '"$query"\n is not a valid search.\nTry again.',
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+
+    return ListView(
+      children: <Widget>[Title(color: Colors.red, child: Text('hello'))],
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestions = [];
+    final Iterable<dynamic> suggestions = query.isEmpty
+        ? users
+        : users.where((dynamic s) => '$s'.startsWith(query));
+    return _SuggestionList(
+      query: query,
+      suggestions: suggestions,
+      onSelected: (String suggestion) {
+        query = suggestion;
+        showResults(context);
+        _history.add(suggestion);
+      },
+    );
+  }
+}
+
+class _SuggestionList extends StatelessWidget {
+  const _SuggestionList(
+      {required this.suggestions,
+      required this.query,
+      required this.onSelected});
+
+  final Iterable<dynamic> suggestions;
+  final String query;
+  final ValueChanged<String> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: suggestions.length,
-      itemBuilder: (content, index) => ListTile(
-          leading: Icon(Icons.arrow_left), title: Text(suggestions[index])),
+      itemBuilder: (BuildContext context, int i) {
+        final suggestion = suggestions.elementAt(i);
+        return ListTile(
+          leading: query.isEmpty
+              ? Icon(Icons.account_circle, size: 50.0)
+              : const Icon(null),
+          title: Text(suggestion['full_name']),
+          subtitle: Text(suggestion['phone_number']),
+          onTap: () {
+            // selected user
+            onSelected(suggestion['full_name']);
+
+            // create new chat
+            final res = DioProvider().createChat(user['role'] == 'doctor'
+                ? suggestion['patient_id']
+                : suggestion['doctor_id']);
+
+            /// push to chat screen
+            Navigator.pushNamed(context, '/chat_screen',
+                arguments: {'chat_id': 1});
+          },
+        );
+      },
+    );
+  }
+}
+
+class _ResultCard extends StatelessWidget {
+  const _ResultCard(
+      {required this.integer,
+      required this.title,
+      required this.searchDelegate});
+
+  final int integer;
+  final String title;
+  final SearchDelegate<int> searchDelegate;
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    return GestureDetector(
+      onTap: () {
+        searchDelegate.close(context, integer);
+      },
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              Text(title),
+              Text(
+                '$integer',
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

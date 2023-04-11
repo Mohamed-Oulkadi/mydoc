@@ -1,13 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:mydoc/providers/dio_provider.dart';
 
-import '../doctor/prescrip_screen.dart';
+import '../../utils/config.dart';
 import 'chat_sample.dart';
 
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+var messages;
+
+void fetchMessages(chatId) async {
+  messages = DioProvider().getChatMessages(chatId, 1);
+}
+
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({Key? key}) : super(key: key);
+
+  @override
+  ChatScreenState createState() => ChatScreenState();
+}
+
+class ChatScreenState extends State<ChatScreen> {
+  final TextEditingController _messageController = TextEditingController();
+
+  void _sendMessage(context, chatId, message) async {
+    final res = await DioProvider().sendMessage(chatId, message);
+  }
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    Config().init(context);
+    //final chat = ModalRoute.of(context)!.settings.arguments as Map;
+    fetchMessages(1);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
@@ -34,6 +61,16 @@ class ChatScreen extends StatelessWidget {
               ],
             ),
           ),
+          actions: const [
+            Padding(
+              padding: EdgeInsets.only(top: 8, right: 10),
+              child: Icon(
+                Icons.more_vert,
+                color: Colors.white,
+                size: 26,
+              ),
+            )
+          ],
         ),
       ),
       body: ListView.builder(
@@ -55,18 +92,19 @@ class ChatScreen extends StatelessWidget {
         ),
         child: Row(
           children: [
-             Padding(
+            const Padding(
               padding: EdgeInsets.only(left: 8),
-              child: IconButton(
-                iconSize: 30,
-                icon: Icon(Icons.document_scanner_outlined),
-                onPressed: () {
-                  Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>  newPresc(),
-                          ));
-                },
+              child: Icon(
+                Icons.add,
+                size: 30,
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 5),
+              child: Icon(
+                Icons.emoji_emotions_outlined,
+                color: Colors.amber,
+                size: 30,
               ),
             ),
             Padding(
@@ -75,6 +113,7 @@ class ChatScreen extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 width: MediaQuery.of(context).size.width / 1.6,
                 child: TextFormField(
+                  controller: _messageController,
                   decoration: const InputDecoration(
                     hintText: "Type something",
                     border: InputBorder.none,
@@ -83,14 +122,15 @@ class ChatScreen extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            const Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: Icon(
-                Icons.send,
-                size: 30,
-                color: Color(0xFF7165D6),
-              ),
-            )
+            Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: IconButton(
+                  icon: const Icon(Icons.send),
+                  color: Color(0xFF7165D6),
+                  onPressed: () {
+                    _sendMessage(context, 1, _messageController.text);
+                  },
+                ))
           ],
         ),
       ),
