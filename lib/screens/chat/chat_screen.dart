@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../doctor/prescrip_screen.dart';
 import 'chat_sample.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -33,16 +34,6 @@ class ChatScreen extends StatelessWidget {
               ],
             ),
           ),
-          actions: const [
-            Padding(
-              padding: EdgeInsets.only(top: 8, right: 10),
-              child: Icon(
-                Icons.more_vert,
-                color: Colors.white,
-                size: 26,
-              ),
-            )
-          ],
         ),
       ),
       body: ListView.builder(
@@ -64,19 +55,18 @@ class ChatScreen extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const Padding(
+             Padding(
               padding: EdgeInsets.only(left: 8),
-              child: Icon(
-                Icons.add,
-                size: 30,
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 5),
-              child: Icon(
-                Icons.emoji_emotions_outlined,
-                color: Colors.amber,
-                size: 30,
+              child: IconButton(
+                iconSize: 30,
+                icon: Icon(Icons.document_scanner_outlined),
+                onPressed: () {
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>  newPresc(),
+                          ));
+                },
               ),
             ),
             Padding(

@@ -54,6 +54,7 @@ dependencies:
   time_range_picker: ^2.2.0
   flutter_smart_dialog: 4.2.5
   rating_dialog: ^2.0.4
+  pdf: ^3.10.1
 
 dev_dependencies:
   flutter_test:
