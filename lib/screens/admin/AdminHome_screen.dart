@@ -5,8 +5,15 @@ import '../../providers/dio_provider.dart';
 import 'add_doctor.dart';
 import 'doctor_profile.dart';
 
-final String _profileImageURL = 'images/doctor1.jpg';
+final String _profileImageURL = 'images/doctor3.jpg';
 
+List imgs = [
+    "doctor4.jpg",
+    "doctor3.jpg",
+    "doctor3.jpg",
+    "doctor4.jpg",
+  ];
+  
 class AdminHomeScreen extends StatelessWidget {
   const AdminHomeScreen({super.key});
 
@@ -126,9 +133,9 @@ class DoctorsBuilder extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 35,
-                            backgroundImage:
+                            backgroundImage:AssetImage("images/${imgs[index]}"),
                                 //fetchImage(snapshot.data[index]['image']),
-                                NetworkImage(_profileImageURL),
+                                //NetworkImage(_profileImageURL),
                           ),
                           Text(
                             "Dr. ${snapshot.data[index]['full_name']}",

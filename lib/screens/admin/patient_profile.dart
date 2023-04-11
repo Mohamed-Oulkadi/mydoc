@@ -126,7 +126,7 @@ class PatientProfDetails extends StatelessWidget {
                   color: Colors.white,
                   image: const DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage('images/doctor1.jpg'),
+                    image: AssetImage('images/patient.jpg'),
                   ),
                 ),
               ),
